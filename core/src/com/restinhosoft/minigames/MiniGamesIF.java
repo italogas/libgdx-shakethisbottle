@@ -12,7 +12,7 @@ public interface MiniGamesIF {
 	int getGamelevel();
 	
 	/**
-	 * The difficulty is 0 to easy; 1 to normal; and 2 to hard
+	 * The difficulty is 1 to easy; 2 to normal; and 3 to hard
 	 * @return
 	 */
 	int getGameDifficulty();
@@ -32,5 +32,7 @@ public interface MiniGamesIF {
 	void setGameMusic(String soundArchiveName);
 	
 	void addToGameSoundTrack(String soundArchiveName);
-	void removeFromGameSoundTrack(String soundArchiveName);
+	boolean removeFromGameSoundTrack(String soundArchiveName);
+	
+	void game();
 }
