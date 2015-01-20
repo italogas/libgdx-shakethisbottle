@@ -46,6 +46,7 @@ public class Player {
 	public Options getPlayerOptions(){ return this.option;}
 	
 	public boolean setID(String ID){ 
+		System.out.println(gametest.validIDSet(ID));
 		if(gametest.validIDSet(ID)){//classe teste enquanto nao eh implementado o banco de dados
 			this.ID = ID;
 			return true;
