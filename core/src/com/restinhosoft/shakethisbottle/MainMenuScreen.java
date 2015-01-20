@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -21,14 +20,22 @@ public class MainMenuScreen implements Screen {
 	final ShakeThisBottle game;
 	private OrthographicCamera cam;
 	private Texture menuImg;
-	private Texture startButtonImg;
+	private Texture selectGameButtonImg;
 	private Texture optionsButtonImg;
+	private Texture exitButtonImg;
 	private Rectangle startButtonArea;
-	private int startX;
-	private int startY;
+	private Rectangle optionsButtonArea;
+	private Rectangle exitButtonArea;
+	private int selectX;
+	private int selectY;
 	private int optionsX;
 	private int optionsY;
-	private Rectangle optionsButtonArea;
+	private int exitX;
+	private int exitY;
+	private Texture registerButtonImg;
+	private int registerX;
+	private int registerY;
+	private Rectangle registerButtonArea;
 
 	/**
 	 * @param shakeThisBottle 
@@ -41,17 +48,27 @@ public class MainMenuScreen implements Screen {
 		cam.setToOrtho(false, 320, 480);
 		
 		menuImg = new Texture(Gdx.files.internal("menu.png"));
-		startButtonImg = new Texture(Gdx.files.internal("play.png"));
+		selectGameButtonImg = new Texture(Gdx.files.internal("selectgame.png"));
 		optionsButtonImg = new Texture(Gdx.files.internal("options.png"));
+		registerButtonImg = new Texture(Gdx.files.internal("register.png"));
+		exitButtonImg = new Texture(Gdx.files.internal("exit.png"));
 		
-		startX = 320 / 2 -  startButtonImg.getWidth() / 2;
-		startY = 480 / 2 +  startButtonImg.getHeight() / 2;
+		selectX = 320 / 2 -  selectGameButtonImg.getWidth() / 2;
+		selectY = 480 / 2 +  selectGameButtonImg.getHeight() / 2;
 		
 		optionsX = 320 / 2 -  optionsButtonImg.getWidth() / 2;
-		optionsY = 480 / 2 -  (optionsButtonImg.getHeight() / 2 + 16); 
+		optionsY = selectY - optionsButtonImg.getHeight() - 16;
 		
-		startButtonArea = new Rectangle(startX, startY, startButtonImg.getWidth(), startButtonImg.getWidth());
+		registerX = 320 / 2 -  registerButtonImg.getWidth() / 2;
+		registerY = optionsY - registerButtonImg.getHeight() - 16;
+		
+		exitX = 320 / 2 -  exitButtonImg.getWidth() / 2;
+		exitY = registerY - exitButtonImg.getHeight() - 16;
+		
+		startButtonArea = new Rectangle(selectX, selectY, selectGameButtonImg.getWidth(), selectGameButtonImg.getWidth());
 		optionsButtonArea = new Rectangle(optionsX, optionsY, optionsButtonImg.getWidth(), optionsButtonImg.getWidth());
+		exitButtonArea = new Rectangle(exitX, exitY, exitButtonImg.getWidth(), exitButtonImg.getWidth());
+		registerButtonArea = new Rectangle(registerX, registerY, registerButtonImg.getWidth(), registerButtonImg.getWidth());
 		
 		
 	}
@@ -76,8 +93,10 @@ public class MainMenuScreen implements Screen {
 		game.batch.setProjectionMatrix(cam.combined);
 		game.batch.begin();
 		game.batch.draw(menuImg, 0, 0);
-		game.batch.draw(startButtonImg, startX, startY);
+		game.batch.draw(selectGameButtonImg, selectX, selectY);
 		game.batch.draw(optionsButtonImg, optionsX, optionsY);
+		game.batch.draw(registerButtonImg, registerX, registerY);
+		game.batch.draw(exitButtonImg, exitX, exitY);
 		game.batch.end();
 		
 		if(Gdx.input.isTouched()){
@@ -90,6 +109,10 @@ public class MainMenuScreen implements Screen {
 			}
 			if(optionsButtonArea.contains(touchPos.x, touchPos.y)){
 				game.setScreen(new OptionsScreen(game));
+				return;
+			}
+			if(exitButtonArea.contains(touchPos.x, touchPos.y)){
+//				System.exit(0);
 				return;
 			}
 		}
@@ -130,8 +153,10 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void dispose() {
 		menuImg.dispose();
-		startButtonImg.dispose();
+		selectGameButtonImg.dispose();
 		optionsButtonImg.dispose();
+		registerButtonImg.dispose();
+		exitButtonImg.dispose();
 
 	}
 
