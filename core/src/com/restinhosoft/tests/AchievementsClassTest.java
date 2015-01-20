@@ -34,8 +34,9 @@ public class AchievementsClassTest {
 		achieviementJames.setID(2);
 		assertEquals(achieviementJames.getID(),2);
 		
-		gt.addAchievements(achieviementJames);
-		assertFalse(gt.addAchievements(new Achievements(2, "oto", "description oto"))); 
+		assertTrue(gt.addAchievements(achieviementJames));
+		assertTrue(gt.addAchievements(new Achievements(1, "oto", "description oto")));
+		assertFalse(gt.addAchievements(new Achievements(1, "oto", "description oto")));
 		
 		assertFalse(gt.removeAchievements(new Achievements(2, "oto", "description oto")));
 		assertTrue(gt.removeAchievements(achieviementJames));

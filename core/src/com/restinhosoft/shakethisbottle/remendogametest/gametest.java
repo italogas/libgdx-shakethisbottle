@@ -68,7 +68,7 @@ public class gametest {
 		*/
 		
 		for(int i=0; i<achievementsList.size();i++){
-			if(c.equals(achievementsList.get(i))){
+			if(c.getID()==achievementsList.get(i).getID()){
 				return false;
 			}
 		}

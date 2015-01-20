@@ -28,7 +28,7 @@ public class Achievements {
 	public void setDescription(String descritpion) {this.description = descritpion;}
 	
 	public boolean getEquals(Achievements achievement){
-		if(this.id == achievement.getID()){return true;}
+		if(this.id==achievement.getID()){return true;}
 		return false;
 	}
 	
