@@ -10,7 +10,7 @@ public class Scores {
 	
 	
 	public Scores(int score, int gameId){
-		this.id     = gameID + "&" + gameId;
+		this.id     = gameId + "&" + gameId;
 		this.score  = score;
 		this.gameID = gameId;
 	}
@@ -21,11 +21,11 @@ public class Scores {
 	
 	public int getGameID(){return this.gameID;}
 	
-	public void setScore(int score){ this.score = score;}
+	public void setScore(int score){if(score>=0 && score>this.score) this.score = score;}
 	
 	public void setGameID(int gameId){
 		this.gameID = gameId;
-		this.id     = gameID + "&" + gameId;
+		this.id     = gameId + "&" + gameId;
 	}
 	
 	public boolean equals(Scores score){
