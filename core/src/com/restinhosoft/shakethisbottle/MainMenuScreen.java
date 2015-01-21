@@ -104,10 +104,12 @@ public class MainMenuScreen implements Screen {
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			cam.unproject(touchPos);
 			if(startButtonArea.contains(touchPos.x, touchPos.y)){
+				this.dispose();
 				game.setScreen(new GameSelectionScreen(game));
 				return;
 			}
 			if(optionsButtonArea.contains(touchPos.x, touchPos.y)){
+				this.dispose();
 				game.setScreen(new OptionsScreen(game));
 				return;
 			}
