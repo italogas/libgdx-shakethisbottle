@@ -2,6 +2,8 @@ package com.restinhosoft.minigames;
 
 import java.util.ArrayList;
 
+import com.restinho.exceptions.invalidGameNameException;
+
 /**
  * @author Mailson
  *
@@ -23,6 +25,15 @@ public interface MiniGamesIF {
 	String getGameDescription();
 	String getGameMusic();
 	
+	/**
+	 * the available language are brazilian's portuguese and english, english by default
+	 * @return "pt-br" to portuguese, "eng" to english
+	 */
+	String language();//"pt-br" to portuguese, "eng" to english
+	
+	String congratsMessage();
+	String gameOverMessage();
+	
 	ArrayList<String> getGameSoundTrack();
 	
 	void setGameID(int id);
@@ -31,12 +42,12 @@ public interface MiniGamesIF {
 	void setGameLevel(int level);
 	void setGameTimer(int timer);
 	void setGameDifficulty(int difficulty);
-	void setGameName(String name);
-	void setGameDescription(String description);
-	void setGameMusic(String soundArchiveName);
+	void setGameName(String name) throws Exception;
+	void setGameDescription(String description) throws Exception;
+	void setGameMusic(String soundArchiveName)	throws Exception;
 	
-	boolean addToGameSoundTrack(String soundArchiveName);
-	boolean removeFromGameSoundTrack(String soundArchiveName);
+	boolean addToGameSoundTrack(String soundArchiveName)throws Exception;
+	boolean removeFromGameSoundTrack(String soundArchiveName)throws Exception;
 	
 	void theGame();
 	void resetTimer();
@@ -49,6 +60,9 @@ public interface MiniGamesIF {
 	boolean gamePaused();
 	boolean gameResume();
 	
-	String language();//"pt-br" to portuguese, "eng" to english
+	void setPause();
+	void setResume();
+	
+	
 	
 }
