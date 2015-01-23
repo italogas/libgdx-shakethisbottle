@@ -1,6 +1,7 @@
 package com.restinhosoft.minigames;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -8,8 +9,7 @@ import java.util.TimerTask;
  * @author Mailson
  *
  */
-public class ShakeThisBottle implements MiniGamesIF{
-	
+public class MemorizeFast implements MiniGamesIF{
 	private int id;
 	private String name;
 	private String description;
@@ -24,15 +24,16 @@ public class ShakeThisBottle implements MiniGamesIF{
 	private boolean congrats;
 	private boolean gameOver;
 	
-	private int level;//posicao no modo survival
+	private int level;
 	
-	public ShakeThisBottle(int difficulty, int level){
-		this.id = 1;
-		this.name = "SHAKE THIS BOTTLE";
+	public MemorizeFast(int difficulty,int level){
+		this.id = 4;
+		this.name = "MEMORIZE FAST";
 		
-		this.description = "In this minigame you have to shake the bottle to celebrate the new year,"
-						+ " if the bottle not burst will be the end of the world,"
-						+ " you have until the end of the count to save the world, good luck.";
+		this.description = "News !? the world is in danger and you once again have to save it."
+						+ " This time a very ardilozo villain prepared a trap with missiles."
+						+ " To stop him you have to record the color sequence given by him."
+						+ " You have 10 seconds to set the color sequence if err it's game over.";
 		
 		if(difficulty>=1 && difficulty<=3){
 			this.difficulty = difficulty;
@@ -45,20 +46,10 @@ public class ShakeThisBottle implements MiniGamesIF{
 		
 		if(level >=1) this.level = level;
 		
-		//this game
 		this.gameOver = false;
 		this.congrats = false;
-		this.timer = defaultTime;
-		this.counterTimer = null;
-		this.shake = 0;
-
-		if(difficulty == 1) minimumShakeMove  = 30;
-		if(difficulty == 2) minimumShakeMove  = 40;
-		if(difficulty == 3) minimumShakeMove  = 45;
-		
 	}
-	 
-
+	
 	@Override
 	public int getGameID() {
 		return this.id;
@@ -149,9 +140,8 @@ public class ShakeThisBottle implements MiniGamesIF{
 
 	@Override
 	public void game() {
-		if(shake >= minimumShakeMove){
-			this.congrats = true;
-			this.score = minimumShakeMove*timer;
+		if(complete()) {
+			congrats = true;
 		}
 		else if(!gameOver){
 			//contadorRegressivo
@@ -163,7 +153,7 @@ public class ShakeThisBottle implements MiniGamesIF{
 	                public void run() {  
 	                    try { 
 	                    	if(timer > 0) timer--;
-	                    	if(timer == 0 && (shake<minimumShakeMove) ) gameOver = true;
+	                    	if(timer == 0 && !complete() ) gameOver = true;
 	                     } catch (Exception e) {  
 	                          e.printStackTrace();  
 	                     }  
@@ -183,25 +173,29 @@ public class ShakeThisBottle implements MiniGamesIF{
 
 	@Override
 	public boolean congrats() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.congrats;
 	}
 
 
 	@Override
 	public boolean gameOver() {
-		return gameOver;
+		return this.gameOver;
 	}
 	
-	//this game methods
-	
-	private Timer counterTimer;
-	private int shake;
-	private int minimumShakeMove;
-	
-	private final int defaultTime = 30;//segundos
+	//memorize fast
 	
 	private int timer;
+	private int next;//the next to add on chooseSequence
+	
+	private Timer counterTimer;
+	
+	private final int defaultTime = 10;//segundos
+
+	
+	private ArrayList<Integer> trueSequence, chooseSequence;
+	//colors sequence 0-red; 1-yellow; 2-green; 3-blue
+	
+	
 	
 	public int getTimer(){
 		return this.timer;		
@@ -211,7 +205,39 @@ public class ShakeThisBottle implements MiniGamesIF{
 		this.timer = defaultTime;
 	}
 	
-	public void moved(){
-		shake++;
+	
+	public int getNext(){
+		return this.next;
+	}
+	
+	private void buildGameSequence(){
+		for(int i = 0;i < 4;i++){ trueSequence.add(i);}
+		Collections.shuffle(trueSequence);
+	}
+	
+	public boolean complete(){
+		for(int i = 0;i < trueSequence.size();i++){
+			if(trueSequence.get(i)!= chooseSequence.get(i)){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean addColors(int color){
+		if(color >=0 && color <= 3){
+			if(color==trueSequence.get(next)){
+				synchronized (this) {
+					chooseSequence.add(color);
+					next++;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public ArrayList<Integer> getSequence(){
+		return trueSequence;
 	}
 }

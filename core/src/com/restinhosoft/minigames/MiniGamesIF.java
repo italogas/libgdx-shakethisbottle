@@ -35,4 +35,8 @@ public interface MiniGamesIF {
 	boolean removeFromGameSoundTrack(String soundArchiveName);
 	
 	void game();
+	void playing();
+	
+	boolean congrats();
+	boolean gameOver();
 }

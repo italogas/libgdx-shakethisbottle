@@ -21,6 +21,9 @@ public class DonotShakeThisBottle implements MiniGamesIF{
 	
 	private ArrayList<String> soundTrack;
 	
+	private boolean congrats;
+	private boolean gameOver;
+	
 	private int level;//posicao no modo survival
 	
 	public DonotShakeThisBottle(int difficulty, int level){
@@ -166,13 +169,28 @@ public class DonotShakeThisBottle implements MiniGamesIF{
 		}
 	}
 	
+	@Override
+	public void playing() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean congrats() {
+		return this.congrats;
+	}
+
+
+	@Override
+	public boolean gameOver() {
+		return this.gameOver;
+	}
 	//this game methods
 	
 	private Timer counterTimer;
 	
 	private boolean moved;
-	private boolean congrats;
-	private boolean gameOver;
 	
 	private final int defaultTime = 30;
 	
@@ -186,10 +204,6 @@ public class DonotShakeThisBottle implements MiniGamesIF{
 		return this.moved;
 	}
 	
-	public boolean getCongrats(){
-		return this.congrats;
-	}
-	
 	public void resetTimer(){
 		this.timer = defaultTime*difficulty;
 	}
@@ -197,7 +211,4 @@ public class DonotShakeThisBottle implements MiniGamesIF{
 	public void setMoved(boolean moved){
 		this.moved = moved;
 	}
-	
-	public boolean getGameOver(){ return gameOver;}
-	
 }
