@@ -10,7 +10,7 @@ import com.restinho.exceptions.invalidGameNameException;
  * @author Mailson
  *
  */
-public class ShakeThisBottle implements MiniGamesIF{
+public class ShakeThisBottleMG implements MiniGamesIF{
 		
 	private int id;
 	private int score;
@@ -45,7 +45,7 @@ public class ShakeThisBottle implements MiniGamesIF{
 	private int shake;
 	private int minimumShakeMove;
 	
-	public ShakeThisBottle(int difficulty, int level, String language){
+	public ShakeThisBottleMG(int difficulty, int level, String language){
 		this.id = 1;
 		this.score = 0;
 		this.bonus = 0;

@@ -7,8 +7,11 @@ import java.util.TimerTask;
 
 import com.restinho.exceptions.invalidGameNameException;
 
-public class HitTheCircle  implements MiniGamesIF{
-
+/**
+ * @author Mailson
+ *
+ */
+public class MemorizeFastMG implements MiniGamesIF{
 	private int id;
 	private int score;
 	private int bonus;
@@ -39,19 +42,21 @@ public class HitTheCircle  implements MiniGamesIF{
 	private final long second = 1000;
 	
 	//My miniGame Variables
-	private ArrayList<Boolean> isQuare;
-		
+	private ArrayList<Integer> villainSequence;
+	private ArrayList<Integer> playerSequence;
+	
 	//My private methods
-	private void buildisQuareList(){
-		for(int i = 0;i <= 11;i++) {
-			if(i<=5){ isQuare.add(true); }
-			else	{ isQuare.add(false);}
-		}
-		Collections.shuffle(isQuare);
+	private void buildVillainSequence(){
+		villainSequence.add(1);//red
+		villainSequence.add(2);//green
+		villainSequence.add(3);//yellow
+		villainSequence.add(4);//blue
+		
+		Collections.shuffle(villainSequence);
 	}
 	
 	
-	public HitTheCircle(int difficulty, int level, String language){
+	public MemorizeFastMG(int difficulty, int level, String language){
 		this.id = 1;
 		this.score = 0;
 		this.bonus = 0;
@@ -65,43 +70,43 @@ public class HitTheCircle  implements MiniGamesIF{
 		
 		
 		if(language =="eng"){
-			this.name = " HIT THE CIRCLE ";
+			this.name = "MEMORIZE FAST";
 			
-			this.description = "A bomb was armed and to save the world you have to disarm it."
-							+ " This is quite simple, you have to turn the circles into squares before time runs out."
-							+ " In this minigame you need to hit the circles on the screen to turn them into squares."
-							+ " When there are only squares in screen you win the minigame.";
+			this.description = "News !? the world is in danger and you once again have to save it."
+							+ " This time a very ardilozo villain prepared a trap with missiles."
+							+ " To stop him you have to record the color sequence given by him."
+							+ " You have 10 seconds to set the color sequence if err it's game over.";
 
 			this.language = language;
-				
-			this.congratsMessage = "Wow, you did it, you are really fast";
-			this.gameOverMessage = "Sorry but you are not fast enough";
+			
+			this.congratsMessage = "Wow, you really have a great memory.";
+			this.gameOverMessage = "Oh no, the missiles were shot ";
 			
 		}else if(language =="pt-br"){
-			this.name = "Acerte o circulo";
+			this.name = "MEMORIZE RÁPIDO";
 
-			this.description = "Uma bomba foi armada e para salvar o mundo é preciso desarmá-la."
-			+ "Isso é muito simples, você tem que transformar os círculos em quadrados antes do tempo acabar."
-			+ "Neste minigame você precisa acertar os círculos na tela para transformá-los em quadrados."
-			+ "Quando restarem apenas quadrados na tela que você ganhar o minigame.";
+			this.description = "Novidades !? o mundo está em perigo e mais uma vez tem que salvá-lo."
+			+ "Desta vez um vilão muito ardilozo preparado uma armadilha com mísseis."
+			+ "Para detê-lo você tem que gravar a sequência de cores dada por ele."
+			+ "Você tem 10 segundos para definir a sequência de cores, se errar é game over.";
 
 			this.language = language;
-
-			this.congratsMessage = "Uau, você fez isso, você é realmente rápido";
-			this.gameOverMessage = "Desculpe, mas você não é rápido o suficiente";
+			
+			this.congratsMessage = "Cara, você realmente tem uma boa memória.";
+			this.gameOverMessage = "Oh não, os mísseis foram disparados";
 			
 		}else{
-			this.name = " HIT THE CIRCLE ";
+			this.name = "MEMORIZE FAST";
 			
-			this.description = "A bomb was armed and to save the world you have to disarm it."
-							+ " This is quite simple, you have to turn the circles into squares before time runs out."
-							+ " In this minigame you need to hit the circles on the screen to turn them into squares."
-							+ " When there are only squares in screen you win the minigame.";
+			this.description = "News !? the world is in danger and you once again have to save it."
+							+ " This time a very ardilozo villain prepared a trap with missiles."
+							+ " To stop him you have to record the color sequence given by him."
+							+ " You have 10 seconds to set the color sequence if err it's game over.";
 
 			this.language = language;
-				
-			this.congratsMessage = "Wow, you did it, you are really fast";
-			this.gameOverMessage = "Sorry but you are not fast enough";
+			
+			this.congratsMessage = "Wow, you really have a great memory.";
+			this.gameOverMessage = "Oh no, the missiles were shot ";
 		}
 		
 		if(difficulty>=1 && difficulty<=3){
@@ -119,9 +124,10 @@ public class HitTheCircle  implements MiniGamesIF{
 		this.pause	  = false;
 		
 		//My miniGame variables
-		this.isQuare = new ArrayList<Boolean>();
+		villainSequence = new ArrayList<Integer>();
+		playerSequence  = new ArrayList<Integer>();
 		
-		buildisQuareList();
+		buildVillainSequence();
 				
 		if(difficulty == 1){
 			this.defaultTime  = 10;
@@ -305,7 +311,7 @@ public class HitTheCircle  implements MiniGamesIF{
 		}if(resume){
 			task.run();	
 			if(timer > 0){
-				if(completeSequence()){
+				if(villainSequence.size()==playerSequence.size()){
 					this.gameOver = false;
 					this.congrats = true;
 				}
@@ -380,23 +386,19 @@ public class HitTheCircle  implements MiniGamesIF{
 	}
 	 
 	//My miniGame methods
-	public boolean hittingCircles(int position){
-		if(position>=0 && position<=11){
-			if(!isQuare.get(position)){//not a square
-				isQuare.set(position, true);
-				return true;
-			}
+	public boolean addPlayerSequence(int color){
+		if(color<1||color>4){//is not a valid color 
+			this.gameOver=true;
+			this.congrats=false;
+			return false;	
+		}else if(villainSequence.get(playerSequence.size())!= color){// the sequences are different
+			this.gameOver=true;
+			this.congrats=false;
+			return false;
+		}else{
+			playerSequence.add(color);
+			return true;
 		}
-		return false;
-	}
-	
-	public boolean completeSequence(){
-		for(int i=0; i < isQuare.size();i++){
-			if(!isQuare.get(i)){
-				return false;
-			}
-		}
-		return true;
 	}
 	
 }
