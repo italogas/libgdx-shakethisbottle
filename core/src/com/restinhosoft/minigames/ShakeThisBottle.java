@@ -9,22 +9,27 @@ import java.util.TimerTask;
  *
  */
 public class ShakeThisBottle implements MiniGamesIF{
-	
+		
 	private int id;
+	private int score;
+	private int bonus;
+	private int level;//posicao no modo survival
+	private int timer;
+	private int difficulty;//The difficulty is 1 to easy; 2 to normal; and 3 to hard
+	
 	private String name;
 	private String description;
-	
-	private int difficulty;
-	private int score;
-	
 	private String music;
 	
 	private ArrayList<String> soundTrack;
 	
+	private boolean playing;
 	private boolean congrats;
 	private boolean gameOver;
+	private boolean pause;
+	private boolean resume;
 	
-	private int level;//posicao no modo survival
+	
 	
 	public ShakeThisBottle(int difficulty, int level){
 		this.id = 1;
@@ -44,7 +49,7 @@ public class ShakeThisBottle implements MiniGamesIF{
 		this.soundTrack =  new ArrayList<String>();
 		
 		if(level >=1) this.level = level;
-		
+		/*
 		//this game
 		this.gameOver = false;
 		this.congrats = false;
@@ -54,132 +59,159 @@ public class ShakeThisBottle implements MiniGamesIF{
 
 		if(difficulty == 1) minimumShakeMove  = 30;
 		if(difficulty == 2) minimumShakeMove  = 40;
-		if(difficulty == 3) minimumShakeMove  = 45;
+		if(difficulty == 3) minimumShakeMove  = 45;*/
 		
 	}
-	 
 
 	@Override
 	public int getGameID() {
-		return this.id;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
-	public int getGameScore() {	
-		return this.score;
+	public int getGameScore() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getGameBonus() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int getGamelevel() {
-		return this.level;
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getGameTimer() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int getGameDifficulty() {
-		return this.difficulty;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public String getGameName() {
-		return this.name;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getGameDescription() {
-		return this.description;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getGameMusic() {
-		return this.music;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public ArrayList<String> getGameSoundTrack() {
-		return this.soundTrack;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public void setGameID(int id) {//ainda a pensar
-		if(id >=0){ this.id = id;}
-	}
-
-	@Override
-	public void setGameScore(int score) {
-		if(score>=0) this.score = score;
-	}
-
-	@Override
-	public void setGameLevel(int level) {
-		if(level >=1) this.level = level;
-	}
-
-	@Override
-	public void setGameDifficulty(int difficulty) {
-		if(difficulty>=1 && difficulty<=2){
-			this.difficulty = difficulty;
-		}
-	}
-
-	@Override
-	public void setGameName(String name) {
-		this.name = name;
-	}
-
-	@Override
-	public void setGameDescription(String description) {
-		this.description = description;
-	}
-
-	@Override
-	public void setGameMusic(String soundArchiveName) {
-		this.music = soundArchiveName;
-	}
-
-	@Override
-	public void addToGameSoundTrack(String soundArchiveName) {
-		this.soundTrack.add(soundArchiveName);
-	}
-
-	@Override
-	public boolean removeFromGameSoundTrack(String soundArchiveName) {
-		if(this.soundTrack.remove(soundArchiveName))return true;
-		else return false;
-	}
-
-	@Override
-	public void game() {
-		if(shake >= minimumShakeMove){
-			this.congrats = true;
-			this.score = minimumShakeMove*timer;
-		}
-		else if(!gameOver){
-			//contadorRegressivo
-			long second = 1000;   
-		      
-		    if (counterTimer == null) {  
-		    	counterTimer = new Timer();  
-		        TimerTask task = new TimerTask() {  
-	                public void run() {  
-	                    try { 
-	                    	if(timer > 0) timer--;
-	                    	if(timer == 0 && (shake<minimumShakeMove) ) gameOver = true;
-	                     } catch (Exception e) {  
-	                          e.printStackTrace();  
-	                     }  
-	                }  
-		       };  
-		       counterTimer.scheduleAtFixedRate(task, second, second);  
-		    }	
-		}
-	}
-	
-	@Override
-	public void playing() {
+	public void setGameID(int id) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
+	public void setGameScore(int score) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGameBonus(int bonus) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGameLevel(int level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGameTimer(int timer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGameDifficulty(int difficulty) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGameName(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGameDescription(String description) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGameMusic(String soundArchiveName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean addToGameSoundTrack(String soundArchiveName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeFromGameSoundTrack(String soundArchiveName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void theGame() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resetTimer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void timerCount() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean playing() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	@Override
 	public boolean congrats() {
@@ -187,31 +219,24 @@ public class ShakeThisBottle implements MiniGamesIF{
 		return false;
 	}
 
-
 	@Override
 	public boolean gameOver() {
-		return gameOver;
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
-	//this game methods
-	
-	private Timer counterTimer;
-	private int shake;
-	private int minimumShakeMove;
-	
-	private final int defaultTime = 30;//segundos
-	
-	private int timer;
-	
-	public int getTimer(){
-		return this.timer;		
+
+	@Override
+	public boolean gamePaused() {
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
-	public void resetTimer(){
-		this.timer = defaultTime;
+
+	@Override
+	public boolean gameResume() {
+		// TODO Auto-generated method stub
+		return false;
 	}
+	 
+
 	
-	public void moved(){
-		shake++;
-	}
 }

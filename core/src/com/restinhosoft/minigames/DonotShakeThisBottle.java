@@ -143,7 +143,7 @@ public class DonotShakeThisBottle implements MiniGamesIF{
 	}
 
 	@Override
-	public void game() {
+	public void theGame() {
 		if(timer == 0){
 			congrats = true;
 			score = timer*difficulty;
@@ -170,7 +170,7 @@ public class DonotShakeThisBottle implements MiniGamesIF{
 	}
 	
 	@Override
-	public void playing() {
+	public void timerCount() {
 		// TODO Auto-generated method stub
 		
 	}

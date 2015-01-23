@@ -139,7 +139,7 @@ public class HitTheCircle  implements MiniGamesIF{
 	}
 
 	@Override
-	public void game() {
+	public void theGame() {
 		if(complete()) {
 			congrats = true;
 		}
@@ -165,7 +165,7 @@ public class HitTheCircle  implements MiniGamesIF{
 	}
 	
 	@Override
-	public void playing() {
+	public void timerCount() {
 		// TODO Auto-generated method stub
 		
 	}
