@@ -59,10 +59,22 @@ public class HitTheCircleMG  implements MiniGamesIF{
 		if(level >=1){
 			this.level = level;
 		}
+				
+		if(difficulty>=1 && difficulty<=3){
+			this.difficulty = difficulty;
+		}
+		
+		if(difficulty == 1){
+			this.defaultTime  = 10;
+		}else if(difficulty == 2){
+			this.defaultTime  = 8;
+		}else if(difficulty == 3){
+			this.defaultTime  = 6;
+		}else{
+			this.defaultTime  = 10;//by default
+		}
 		
 		this.timer = defaultTime;
-		this.difficulty = difficulty;
-		
 		
 		if(language =="eng"){
 			this.name = " HIT THE CIRCLE ";
@@ -104,10 +116,6 @@ public class HitTheCircleMG  implements MiniGamesIF{
 			this.gameOverMessage = "Sorry but you are not fast enough";
 		}
 		
-		if(difficulty>=1 && difficulty<=3){
-			this.difficulty = difficulty;
-		}
-
 		this.music = "none";
 		this.soundTrack =  new ArrayList<String>();
 		
@@ -123,15 +131,7 @@ public class HitTheCircleMG  implements MiniGamesIF{
 		
 		buildisQuareList();
 				
-		if(difficulty == 1){
-			this.defaultTime  = 10;
-		}else if(difficulty == 2){
-			this.defaultTime  = 8;
-		}else if(difficulty == 3){
-			this.defaultTime  = 6;
-		}else{
-			this.defaultTime  = 10;//by default
-		}
+		
 		
 		counterTimer = new Timer();
 		
@@ -297,13 +297,13 @@ public class HitTheCircleMG  implements MiniGamesIF{
 	@Override
 	public void theGame() {
 		if(pause){
-			try {
+			/*try {
 				task.wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 		}if(resume){
-			task.run();	
+			//task.run();	
 			if(timer > 0){
 				if(completeSequence()){
 					this.gameOver = false;
@@ -318,6 +318,7 @@ public class HitTheCircleMG  implements MiniGamesIF{
 
 	@Override
 	public void resetTimer() {
+		theGame();
 		this.timer = defaultTime;
 	}
 
@@ -355,12 +356,14 @@ public class HitTheCircleMG  implements MiniGamesIF{
 	public void setPause() {
 		this.pause  = true;
 		this.resume = false;
+		theGame();
 	}
 
 	@Override
 	public void setResume() {
 		this.pause  = false;
 		this.resume = true;
+		theGame();
 	}
 
 
@@ -384,9 +387,11 @@ public class HitTheCircleMG  implements MiniGamesIF{
 		if(position>=0 && position<=11){
 			if(!isQuare.get(position)){//not a square
 				isQuare.set(position, true);
+				theGame();
 				return true;
 			}
 		}
+		theGame();
 		return false;
 	}
 	

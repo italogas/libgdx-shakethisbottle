@@ -7,16 +7,15 @@ import java.util.TimerTask;
 
 import org.junit.Test;
 
-import com.restinhosoft.minigames.ShakeThisBottleMG;
-
+import com.restinhosoft.minigames.DonotShakeThisBottleMG;
 
 /**
  * @author Mailson
  *
  */
-public class ShakeThisBottleMiniGameTest {
-	private ShakeThisBottleMG gameEng = new ShakeThisBottleMG(1,1,"eng");
-	private ShakeThisBottleMG gamePtBR = new ShakeThisBottleMG(1,1,"pt-br");
+public class DonotShakeThisBottleMiniGameTest {
+	private DonotShakeThisBottleMG gameEng  = new DonotShakeThisBottleMG(1,1,"eng");
+	private DonotShakeThisBottleMG gamePtBR = new DonotShakeThisBottleMG(1,1,"pt-br");
 	
 	private Timer counterTimer; 
 	private int timer = 30;
@@ -31,10 +30,10 @@ public class ShakeThisBottleMiniGameTest {
 		assertEquals(gameEng.getGameDifficulty(),1);
 		assertEquals(gamePtBR.getGameDifficulty(),1);
 		
-		gamePtBR.setGameLevel(2);
+		gameEng.setGameLevel(2);
 		
-		assertEquals(gameEng.getGamelevel(),1);
-		assertEquals(gamePtBR.getGamelevel(),2);
+		assertEquals(gameEng.getGamelevel(),2);
+		assertEquals(gamePtBR.getGamelevel(),1);
 	}
 	
 	@Test
@@ -45,7 +44,7 @@ public class ShakeThisBottleMiniGameTest {
 		    task = new TimerTask() {  
 		    	public void run() {  
 	                try { 
-	                  	if(timer > 0) timer--; //System.out.println("Timer: "+timer);
+	                  	if(timer > 0) timer--; System.out.println("Timer: "+timer);
 	                } catch (Exception e) {  
 	                    e.printStackTrace();  
 	                }  
@@ -53,67 +52,27 @@ public class ShakeThisBottleMiniGameTest {
 		    };  
 		    counterTimer.scheduleAtFixedRate(task, second, second);  
 		}	
-	  //**************************************************************************	
+	    //**************************************************************************	
 		
-		assertEquals(gameEng.getGameTimer(),timer); 
-		 
-		assertFalse(gameEng.gamePaused());
-		assertTrue(gameEng.gameResume());
+		assertEquals(timer, gameEng.getGameTimer());
+		assertEquals(timer, gamePtBR.getGameTimer());
 		
-		assertEquals(gameEng.getGameTimer(),timer);
-		
-		gameEng.setPause();
-		
-		assertTrue(gameEng.gamePaused());
-		assertFalse(gameEng.gameResume());
-
-		gameEng.setResume();
-		
-		assertFalse(gameEng.gamePaused());
-		assertTrue(gameEng.gameResume());
-		
-		assertEquals(gameEng.getGameTimer(),timer);
-		
-		assertFalse(gameEng.congrats());
-		
-		for(int i=0;i<29;i++){
-			gameEng.shake();
-			gameEng.theGame();
-		}
-		
-		assertTrue(!gameEng.congrats());
-	
-		gameEng.shake();
-		gameEng.theGame();
-		assertTrue(gameEng.congrats());
-		
-		gameEng.setPause();
-		gameEng.theGame();
-		
-		assertTrue(gameEng.congrats());
-		assertFalse(gameEng.gameOver());
-		
-		for(int i=0;i<29;i++){
-			gamePtBR.shake();
-			gamePtBR.theGame();
-		}
 		
 		try {
-			Thread.sleep(31000);
-			gamePtBR.theGame();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Thread.sleep(15000);
+			gamePtBR.shake();
+			//gamePtBR.theGame();
+			assertTrue(gamePtBR.gameOver());
+			Thread.sleep(15000);
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		
-		assertTrue(gamePtBR.gameOver());
-		assertFalse(gamePtBR.congrats());
 		
-		assertTrue(gameEng.getGameTimer()!=timer);
-		//problema com pausa
+		gameEng.theGame();
+		assertTrue(gameEng.congrats());
 		
 	}
-	
 
 	@Test
 	public void settingGameNameTest(){
@@ -153,7 +112,6 @@ public class ShakeThisBottleMiniGameTest {
 		
 		
 	}
-	
 	
 	
 	

@@ -55,20 +55,7 @@ public class MemorizeFastMG implements MiniGamesIF{
 		Collections.shuffle(villainSequence);
 	}
 	
-	
-	public MemorizeFastMG(int difficulty, int level, String language){
-		this.id = 1;
-		this.score = 0;
-		this.bonus = 0;
-		
-		if(level >=1){
-			this.level = level;
-		}
-		
-		this.timer = defaultTime;
-		this.difficulty = difficulty;
-		
-		
+	private void setMessages(String language){
 		if(language =="eng"){
 			this.name = "MEMORIZE FAST";
 			
@@ -108,11 +95,55 @@ public class MemorizeFastMG implements MiniGamesIF{
 			this.congratsMessage = "Wow, you really have a great memory.";
 			this.gameOverMessage = "Oh no, the missiles were shot ";
 		}
-		
+	}
+	
+	private void settingDifficulty(int difficulty){
 		if(difficulty>=1 && difficulty<=3){
 			this.difficulty = difficulty;
+		}else{ this.difficulty =1;}
+		
+		if(difficulty == 1){
+			this.defaultTime  = 10;
+		}else if(difficulty == 2){
+			this.defaultTime  = 8;
+		}else if(difficulty == 3){
+			this.defaultTime  = 6;
+		}else{
+			this.defaultTime  = 10;//by default
 		}
-
+	}
+	
+	private void counterTime(){
+		counterTimer = new Timer();
+		
+		this.task = new TimerTask() {  
+            public void run() {  
+                try { 
+                	if(timer > 0) timer--;
+                 } catch (Exception e) {  
+                      e.printStackTrace();  
+                 }  
+            }  
+       };  
+       
+       counterTimer.scheduleAtFixedRate(task, second, second);
+	}
+	
+	public MemorizeFastMG(int difficulty, int level, String language){
+		this.id = 1;
+		this.score = 0;
+		this.bonus = 0;
+		
+		if(level >=1){
+			this.level = level;
+		}
+		
+		settingDifficulty(difficulty);
+		
+		this.timer = defaultTime;
+		
+		setMessages(language);
+				
 		this.music = "none";
 		this.soundTrack =  new ArrayList<String>();
 		
@@ -128,30 +159,8 @@ public class MemorizeFastMG implements MiniGamesIF{
 		playerSequence  = new ArrayList<Integer>();
 		
 		buildVillainSequence();
-				
-		if(difficulty == 1){
-			this.defaultTime  = 10;
-		}else if(difficulty == 2){
-			this.defaultTime  = 8;
-		}else if(difficulty == 3){
-			this.defaultTime  = 6;
-		}else{
-			this.defaultTime  = 10;//by default
-		}
+		counterTime();		
 		
-		counterTimer = new Timer();
-		
-		this.task = new TimerTask() {  
-            public void run() {  
-                try { 
-                	if(timer > 0) timer--;
-                 } catch (Exception e) {  
-                      e.printStackTrace();  
-                 }  
-            }  
-       };  
-       
-       counterTimer.scheduleAtFixedRate(task, second, second);
 	}
 
 	@Override
@@ -303,19 +312,22 @@ public class MemorizeFastMG implements MiniGamesIF{
 	@Override
 	public void theGame() {
 		if(pause){
-			try {
+			/*try {
 				task.wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 		}if(resume){
-			task.run();	
+			
+			//task.run();	
 			if(timer > 0){
 				if(villainSequence.size()==playerSequence.size()){
+				
 					this.gameOver = false;
 					this.congrats = true;
 				}
 			}else{
+				System.out.println("oi");
 				this.gameOver = true;
 				this.congrats = false;
 			}
@@ -361,12 +373,14 @@ public class MemorizeFastMG implements MiniGamesIF{
 	public void setPause() {
 		this.pause  = true;
 		this.resume = false;
+		theGame();
 	}
 
 	@Override
 	public void setResume() {
 		this.pause  = false;
 		this.resume = true;
+		theGame();
 	}
 
 
@@ -401,4 +415,8 @@ public class MemorizeFastMG implements MiniGamesIF{
 		}
 	}
 	
+	//************************test method
+	public ArrayList<Integer> getVillainSequence(){
+		return villainSequence;
+	}
 }

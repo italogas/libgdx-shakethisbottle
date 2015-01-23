@@ -52,6 +52,16 @@ public class DonotShakeThisBottleMG implements MiniGamesIF{
 			this.level = level;
 		}
 		
+		if(difficulty == 1){
+			this.defaultTime  = 30;
+		}else if(difficulty == 2){
+			this.defaultTime  = 45;
+		}else if(difficulty == 3){
+			this.defaultTime  = 60;
+		}else{
+			this.defaultTime  = 30;//by default
+		}
+		
 		this.timer = defaultTime;
 		this.difficulty = difficulty;
 		
@@ -92,6 +102,8 @@ public class DonotShakeThisBottleMG implements MiniGamesIF{
 			this.gameOverMessage = "Boom ...";
 		}
 		
+		
+		
 		if(difficulty>=1 && difficulty<=3){
 			this.difficulty = difficulty;
 		}
@@ -110,15 +122,7 @@ public class DonotShakeThisBottleMG implements MiniGamesIF{
 		
 		this.shake = 0;
 		
-		if(difficulty == 1){
-			this.defaultTime  = 30;
-		}else if(difficulty == 2){
-			this.defaultTime  = 45;
-		}else if(difficulty == 3){
-			this.defaultTime  = 60;
-		}else{
-			this.defaultTime  = 30;//by default
-		}
+		
 		
 		counterTimer = new Timer();
 		
@@ -284,21 +288,21 @@ public class DonotShakeThisBottleMG implements MiniGamesIF{
 	@Override
 	public void theGame() {
 		if(pause){
-			try {
+			/*try {
 				task.wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 		}if(resume){
-			task.run();	
+			//task.run();	
 			if(timer > 0){
-				if(shake != 0){
-					this.gameOver = false;
-					this.congrats = true;
+				if(shake > 0){
+					this.gameOver = true;
+					this.congrats = false;
 				}
 			}else{
-				this.gameOver = true;
-				this.congrats = false;
+				this.gameOver = false;
+				this.congrats = true;
 			}
 		}
 	}
@@ -342,12 +346,14 @@ public class DonotShakeThisBottleMG implements MiniGamesIF{
 	public void setPause() {
 		this.pause  = true;
 		this.resume = false;
+		theGame();
 	}
 
 	@Override
 	public void setResume() {
 		this.pause  = false;
 		this.resume = true;
+		theGame();
 	}
 
 
@@ -369,6 +375,7 @@ public class DonotShakeThisBottleMG implements MiniGamesIF{
 	//My miniGame methods
 	public void shake(){
 		this.shake++;
+		theGame();
 	}
 	
 }

@@ -128,7 +128,8 @@ public class ShakeThisBottleMG implements MiniGamesIF{
                       e.printStackTrace();  
                  }  
             }  
-       };  
+       }; 
+       counterTimer.scheduleAtFixedRate(task, second, second);  
 	}
 
 	@Override
@@ -200,6 +201,7 @@ public class ShakeThisBottleMG implements MiniGamesIF{
 		if(bonus>0){
 			this.bonus = bonus;
 		}
+		theGame();
 	}
 
 	@Override
@@ -207,6 +209,7 @@ public class ShakeThisBottleMG implements MiniGamesIF{
 		if(level>0){
 			this.level = level;
 		}
+		theGame();
 	}
 
 	@Override
@@ -214,6 +217,7 @@ public class ShakeThisBottleMG implements MiniGamesIF{
 		if(timer > 5){
 			this.timer = timer;
 		}
+		theGame();
 	}
 
 	@Override
@@ -279,14 +283,16 @@ public class ShakeThisBottleMG implements MiniGamesIF{
 
 	@Override
 	public void theGame() {
+		
 		if(pause){
-			try {
+			/*try {
 				task.wait();
 			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 		}if(resume){
-			task.run();	//****************************GET IT
+			//task.notify();
 			if(timer > 0){
 				if(this.shake == this.minimumShakeMove){
 					this.gameOver = false;
@@ -338,12 +344,14 @@ public class ShakeThisBottleMG implements MiniGamesIF{
 	public void setPause() {
 		this.pause  = true;
 		this.resume = false;
+		theGame();
 	}
 
 	@Override
 	public void setResume() {
 		this.pause  = false;
 		this.resume = true;
+		theGame();
 	}
 
 
@@ -365,6 +373,7 @@ public class ShakeThisBottleMG implements MiniGamesIF{
 	//My miniGame methods
 	public void shake(){
 		this.shake++;
+		theGame();
 	}
 	
 	public int getNumbersOfShake(){
