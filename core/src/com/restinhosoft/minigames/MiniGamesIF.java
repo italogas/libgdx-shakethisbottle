@@ -49,6 +49,6 @@ public interface MiniGamesIF {
 	boolean gamePaused();
 	boolean gameResume();
 	
-
+	String language();//"pt-br" to portuguese, "eng" to english
 	
 }
