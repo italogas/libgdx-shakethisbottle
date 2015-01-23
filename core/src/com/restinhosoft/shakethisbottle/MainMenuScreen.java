@@ -113,6 +113,10 @@ public class MainMenuScreen implements Screen {
 				game.setScreen(new OptionsScreen(game));
 				return;
 			}
+			if(registerButtonArea.contains(touchPos.x, touchPos.y)){
+				this.dispose();
+				game.setScreen(new PlayerProfileScreen(game));
+			}
 			if(exitButtonArea.contains(touchPos.x, touchPos.y)){
 //				System.exit(0);
 				return;
