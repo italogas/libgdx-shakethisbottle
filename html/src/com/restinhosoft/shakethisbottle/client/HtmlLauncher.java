@@ -3,7 +3,7 @@ package com.restinhosoft.shakethisbottle.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.restinhosoft.shakethisbottle.ShakeThisBottle;
+import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 public class HtmlLauncher extends GwtApplication {
 
