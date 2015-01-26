@@ -8,8 +8,17 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.restinhosoft.shakethisbottle.hitthecircle.HitTheBalloonStartScreen;
 
 /**
@@ -23,34 +32,140 @@ public class GameSelectionScreen implements Screen {
 	private Texture background;
 	private Texture button;
 	private Texture backtomenu;
-	private Rectangle backButtonArea;
-	private float backX;
-	private float backY;
-	private Rectangle firstSquareArea;
+	private Stage stage;
+	private Texture menuImg;
+	private TextureAtlas atlas1;
+	private Skin skin1;
+	private BitmapFont bitmapFont;
+	private Table table;
+	private ImageButton imageButton1;
+	private ImageButton imageButton2;
+	private ImageButton imageButton3;
+	private ImageButton imageButton4;
+	private ImageButton imageButton5;
+	private Actor imageButton6;
+	private TextureAtlas atlas2;
+	private Skin skin2;
+	private TextButton textButton;
 
-	public GameSelectionScreen(ShakeThisBottle game) {
-		this.game = game;
 		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, 320, 480);
-		
-		background = new Texture(Gdx.files.internal("menu.png"));
-		button = new Texture(Gdx.files.internal("shakeitbutton.png"));
-		backtomenu = new Texture(Gdx.files.internal("backtomenu.png"));
-		
-		backX = 320/2 - backtomenu.getWidth()/2;
-		backY = 16;
-		
-		backButtonArea = new Rectangle(backX, backY, backtomenu.getWidth(), backtomenu.getHeight());
-		firstSquareArea = new Rectangle(32, 480- 480/3 - button.getHeight(), button.getWidth(), button.getHeight());
-		
-	}
-
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
 	@Override
-	public void show() {}
+	public void show() {
+		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		cam = new OrthographicCamera();
+		cam.setToOrtho(false, 320, 480);
+		
+		stage = new Stage();
+		
+		Gdx.input.setInputProcessor(stage);
+		
+		menuImg = new Texture(Gdx.files.internal("menu.png"));
+		atlas1 = new TextureAtlas(Gdx.files.internal("shakeit_button.atlas"));
+		atlas2 = new TextureAtlas(Gdx.files.internal("button.atlas"));
+		
+		
+		skin1 = new Skin(atlas1);
+		skin2 = new Skin(atlas2);
+		
+		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
+		
+		table = new Table();
+		table.setFillParent(true);
+		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		table.setDebug(true);
+		stage.addActor(table);
+		
+		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+		textButtonStyle.up = skin2.getDrawable("blue_button");
+		textButtonStyle.down = skin2.getDrawable("blue_button");
+		textButtonStyle.pressedOffsetX = 1;
+		textButtonStyle.pressedOffsetY = -1;
+		textButtonStyle.font = bitmapFont;
+		
+		textButton = new TextButton("Back", textButtonStyle);
+		textButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new MainMenuScreen());
+			}
+		});
+		
+		ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+		imageButtonStyle.up = skin1.getDrawable("shakeitbutton");
+		imageButtonStyle.down = skin1.getDrawable("shakeitbutton");
+		imageButtonStyle.pressedOffsetX = 1;
+		imageButtonStyle.pressedOffsetX = -1;
+		
+		imageButton1 = new ImageButton(imageButtonStyle);
+		imageButton1.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new HitTheBalloonStartScreen());
+				
+			}
+		});
+		
+		imageButton2 = new ImageButton(imageButtonStyle);
+		imageButton2.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		imageButton3 = new ImageButton(imageButtonStyle);
+		imageButton3.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		imageButton4 = new ImageButton(imageButtonStyle);
+		imageButton4.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		imageButton5 = new ImageButton(imageButtonStyle);
+		imageButton5.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		imageButton6 = new ImageButton(imageButtonStyle);
+		imageButton6.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		table.add(imageButton1);
+		table.add(imageButton2);
+		table.add(imageButton3);
+		table.row();
+		table.add(imageButton4);
+		table.add(imageButton5);
+		table.add(imageButton6);
+		table.row();
+		table.add();
+		table.add(textButton);
+
+	}
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#render(float)
@@ -58,43 +173,16 @@ public class GameSelectionScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		GL20 gl = Gdx.gl;
-		gl.glClearColor(1, 0, 0, 1);
+		gl.glClearColor(1, 1, 1, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		cam.update();
-		game.batch.setProjectionMatrix(cam.combined);
 		game.batch.begin();
-		
-		game.batch.draw(background, 0, 0);
-		game.batch.draw(button, 32, 480- 480/3 - button.getHeight());
-		game.batch.draw(button, 32 + button.getWidth() + 8, 480 - 480/3 -button.getHeight());
-		game.batch.draw(button, 32 + 2*(button.getWidth() + 8), 480 - 480/3 -button.getHeight());
-		
-		game.batch.draw(button, 32, 480 - 480/3 - (button.getHeight()+8)*2);
-		game.batch.draw(button, 32 + button.getWidth() + 8, 480 - 480/3 - (button.getHeight()+8)*2);
-		game.batch.draw(button, 32 + 2*(button.getWidth() + 8), 480 - 480/3 - (button.getHeight()+8)*2);
-		
-		game.batch.draw(button, 32, 480 - 480/3 - (button.getHeight()+8)*3);
-		game.batch.draw(button, 32 + button.getWidth() + 8, 480 - 480/3 - (button.getHeight()+8)*3);
-		game.batch.draw(button, 32 + 2*(button.getWidth() + 8), 480 - 480/3 - (button.getHeight()+8)*3);
-		
-		game.batch.draw(backtomenu, backX, backY);
-		
+		game.batch.draw(menuImg, 0, 0);
 		game.batch.end();
 		
-		if(Gdx.input.isTouched()){
-			Vector3 touchPos = new Vector3();
-			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			cam.unproject(touchPos);
-			if(backButtonArea.contains(touchPos.x, touchPos.y)){
-				game.setScreen(new MainMenuScreen(game));
-				return;
-			}
-			if(firstSquareArea.contains(touchPos.x, touchPos.y)){
-				game.setScreen(new HitTheBalloonStartScreen());
-				return;
-			}
-		}
+		stage.act(delta);
+		stage.draw();
+		
 
 	}
 

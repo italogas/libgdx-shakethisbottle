@@ -1,12 +1,13 @@
 package com.restinhosoft.shakethisbottle.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.restinhosoft.shakethisbottle.impl.Achievements;
 import com.restinhosoft.shakethisbottle.impl.gametest;
-import com.sun.corba.se.impl.corba.AsynchInvoke;
 
 /**
  * @author Mailson

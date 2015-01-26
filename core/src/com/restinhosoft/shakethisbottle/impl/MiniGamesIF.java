@@ -2,8 +2,6 @@ package com.restinhosoft.shakethisbottle.impl;
 
 import java.util.ArrayList;
 
-import com.restinhosoft.shakethisbottle.exception.invalidGameNameException;
-
 /**
  * @author Mailson
  *

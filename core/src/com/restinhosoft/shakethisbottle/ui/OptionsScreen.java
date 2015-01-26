@@ -4,107 +4,105 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class OptionsScreen implements Screen {
 
 	private ShakeThisBottle game;
-	private BitmapFont bitmapFont;
-	private int regionHeight;
-	private int regionWidth;
-	private int soundX;
-	private int soundY;
-	private int languageX;
-	private int languageY;
-	private int exitX;
-	private int exitY;
-	private Texture backgroundImg;
-	private Rectangle soundRec;
-	private Rectangle languageRec;
-	private Rectangle exitRec;
 	private OrthographicCamera cam;
-	private Texture languageImg;
-	private Texture soundImg;
-	private Texture backtomenuImg;
-
-	public OptionsScreen(ShakeThisBottle game) {
-		this.game = game;
+	private Stage stage;
+	private TextureAtlas atlas;
+	private Skin skin;
+	private BitmapFont bitmapFont;
+	private Table table;
+	private TextButton textButton1;
+	private TextButton textButton2;
+	private TextButton textButton3;
+	
+	@Override
+	public void show() {
+		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, 320, 480);
 		
-		backgroundImg =  new Texture(Gdx.files.internal("menu.png"));
-		languageImg =  new Texture(Gdx.files.internal("language.png"));
-		soundImg =  new Texture(Gdx.files.internal("sound_options.png"));
-		backtomenuImg =  new Texture(Gdx.files.internal("backtomenu.png"));
+		stage = new Stage();
 		
-		soundX = 320 / 2 -  soundImg.getWidth() / 2;
-		soundY = 480 / 2 +  soundImg.getHeight() / 2;
+		Gdx.input.setInputProcessor(stage);
 		
-		soundRec = new Rectangle();
-		soundRec.set(soundX, soundY, soundImg.getWidth(), soundImg.getHeight());
+		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
-		languageX = 320 / 2 -  languageImg.getWidth() / 2;
-		languageY = soundY - languageImg.getHeight() / 2 - 32;
+		skin = new Skin(atlas);
 		
-		languageRec = new Rectangle();
-		languageRec.set(languageX, languageY, languageImg.getWidth(), languageImg.getHeight());
+		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
-		exitX = 320 / 2 -  backtomenuImg.getWidth() / 2;
-		exitY = languageY  - backtomenuImg.getHeight() / 2 - 32;
+		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+		textButtonStyle.up = skin.getDrawable("blue_button");
+		textButtonStyle.down = skin.getDrawable("blue_button");
+		textButtonStyle.pressedOffsetX = 1;
+		textButtonStyle.pressedOffsetY = -1;
+		textButtonStyle.font = bitmapFont;
 		
-		exitRec = new Rectangle();
-		exitRec.set(exitX, exitY, backtomenuImg.getWidth(), backtomenuImg.getHeight());
+		table = new Table();
+		table.setFillParent(true);
+		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		table.setDebug(true);
+		stage.addActor(table);
+		
+		textButton1 = new TextButton("Language", textButtonStyle);
+		textButton1.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new LanguageOptionsScreen());
+			}
+		});
+		
+		textButton2 = new TextButton("Sound Options", textButtonStyle);
+		textButton2.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new SoundOptionsScreen());
+			}
+		});
+		
+		textButton3 = new TextButton("Exit", textButtonStyle);
+		textButton3.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new MainMenuScreen());
+			}
+		});
+		
+		table.add(textButton1);
+		table.row();
+		table.add(textButton2);
+		table.row();
+		table.add(textButton3);
+		
 	}
-
-	@Override
-	public void show() {}
 
 	@Override
 	public void render(float delta) {
 		GL20 gl = Gdx.gl;
-		gl.glClearColor(1, 0, 0, 1);
+		gl.glClearColor(1, 1, 1, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		cam.update();
-		game.batch.setProjectionMatrix(cam.combined);
-		game.batch.begin();
-		game.batch.draw(backgroundImg, 0, 0);
-		game.batch.draw(soundImg, soundX, soundY);
-		game.batch.draw(languageImg, languageX, languageY);
-		game.batch.draw(backtomenuImg, exitX, exitY);
-//		bitmapFont.draw(game.batch, "SOUND MENU", soundX, soundY);
-//		bitmapFont.draw(game.batch, "LANGUAGE", languageX, languageY);
-//		bitmapFont.draw(game.batch, "EXIT", exitX, exitY);
-		game.batch.end();
-		
-		if(Gdx.input.isTouched()){
-			Vector3 touchPos = new Vector3();
-			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			cam.unproject(touchPos);
-			if(soundRec.contains(touchPos.x, touchPos.y)){
-				this.dispose();
-				game.setScreen(new SoundOptionsScreen());
-				return;
-			}
-			if(languageRec.contains(touchPos.x, touchPos.y)){
-				this.dispose();
-				game.setScreen(new LanguageOptionsScreen());
-				return;
-			}
-			if(exitRec.contains(touchPos.x, touchPos.y)){
-				this.dispose();
-				game.setScreen(new MainMenuScreen(game));
-				return;
-			}
-		}
+		stage.act(delta);
+		stage.draw();
 	}
 
 	@Override
-	public void resize(int width, int height) {}
+	public void resize(int width, int height) {
+		stage.getViewport().update(width, height, true);
+	}
 
 	@Override
 	public void pause() {}
@@ -117,10 +115,10 @@ public class OptionsScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		backgroundImg.dispose();
-		soundImg.dispose();
-		languageImg.dispose();
-		backtomenuImg.dispose();
+		atlas.dispose();
+		skin.dispose();
+		stage.dispose();
+		bitmapFont.dispose();
 	}
 
 }

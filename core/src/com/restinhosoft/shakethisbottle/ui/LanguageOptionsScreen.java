@@ -13,9 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class LanguageOptionsScreen implements Screen {
@@ -27,7 +27,7 @@ public class LanguageOptionsScreen implements Screen {
 	private Skin skin;
 	private BitmapFont bitmapFont;
 	private Label label;
-	private VerticalGroup verticalGroup;
+	private Table table;
 	private CheckBox checkBox0;
 	private CheckBox checkBox1;
 	private TextButton textButton;
@@ -73,20 +73,23 @@ public class LanguageOptionsScreen implements Screen {
 		textButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new OptionsScreen(game));
+				game.setScreen(new OptionsScreen());
 			}
 		});
 		
-		verticalGroup = new VerticalGroup();
-		verticalGroup.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		verticalGroup.setFillParent(true);
-		verticalGroup.setDebug(true);
-		stage.addActor(verticalGroup);
+		table = new Table();
+		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setFillParent(true);
+		table.setDebug(true);
+		stage.addActor(table);
 		
-		verticalGroup.addActor(label);
-		verticalGroup.addActor(checkBox0);
-		verticalGroup.addActor(checkBox1);
-		verticalGroup.addActor(textButton);
+		table.add(label);
+		table.row();
+		table.add(checkBox0);
+		table.row();
+		table.add(checkBox1);
+		table.row();
+		table.add(textButton);
 
 	}
 

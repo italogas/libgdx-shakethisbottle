@@ -20,6 +20,7 @@ public class Balloon extends Actor {
 		RED, BLUE, GREEN, YELLOW
 	}
 
+	@SuppressWarnings("unused")
 	private Vector2 velocity;
 	private Vector2 position;
 	private BalloonColor color;

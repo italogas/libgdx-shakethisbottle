@@ -1,13 +1,13 @@
 package com.restinhosoft.shakethisbottle.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.junit.Test;
 
-import com.restinhosoft.shakethisbottle.impl.DonotShakeThisBottleMG;
 import com.restinhosoft.shakethisbottle.impl.HitTheCircleMG;
 
 /**

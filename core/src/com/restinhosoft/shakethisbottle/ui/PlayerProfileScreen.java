@@ -116,7 +116,7 @@ public class PlayerProfileScreen implements Screen {
 			}
 			if(achievementsRec.contains(touchPos.x, touchPos.y)){
 				this.dispose();
-				game.setScreen(new GameSelectionScreen(game));
+				game.setScreen(new GameSelectionScreen());
 				try {
 					this.finalize();
 				} catch (Throwable e) {
@@ -127,7 +127,7 @@ public class PlayerProfileScreen implements Screen {
 			}
 			if(backgroundbuttonRec.contains(touchPos.x, touchPos.y)){
 				this.dispose();
-				game.setScreen(new MainMenuScreen(game));
+				game.setScreen(new MainMenuScreen());
 				try {
 					this.finalize();
 				} catch (Throwable e) {

@@ -12,6 +12,7 @@ public class gametest {
 	
 	private ArrayList<Scores> scoresList;
 	
+	@SuppressWarnings("static-access")
 	public gametest(){
 		this.playersIdList  = new ArrayList<String>();
 		this.playersNameList= new ArrayList<String>();

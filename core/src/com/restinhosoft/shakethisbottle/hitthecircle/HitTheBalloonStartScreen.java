@@ -93,7 +93,7 @@ public class HitTheBalloonStartScreen implements Screen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				game.setScreen(new GameSelectionScreen(game));
+				game.setScreen(new GameSelectionScreen());
 				return true;
 			}
 		});
