@@ -27,12 +27,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
-
 /**
  * @author Mailson
  *
  */
-public class PlayerProfileScreen implements Screen {
+public class SubMenuPlayScreen implements Screen {
 	ShakeThisBottle game;
 	
 	private OrthographicCamera cam;
@@ -44,25 +43,17 @@ public class PlayerProfileScreen implements Screen {
 	private TextureAtlas atlas;
 	
 	private Skin skin;
-	private Skin textSkin;
-	
+
 	private BitmapFont bitmapFont;
 	
 	private Table table;
 	
-	private TextButton playerProfileText;
-	private TextButton scoreText;
-	private TextButton achievementText;
-	private TextButton friendsText;
-	private TextButton backText;
+	private TextButton gameModtxBT;
+	private TextButton difficultytxBT;
+	private TextButton backtxBT;
 
 	private int width = 320;
 	private int height= 480;
-	
-	//private int width = Gdx.graphics.getWidth();
-	//private int height= Gdx.graphics.getHeight();
-	
-	private TextField profileTextArea;
 	
 	
 	/* (non-Javadoc)
@@ -97,57 +88,36 @@ public class PlayerProfileScreen implements Screen {
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
-		
-		playerProfileText = new TextButton("NAME: Player Name "+"\n ID: 26EAD857", textButtonEnableStyle);
-		playerProfileText.setColor(Color.BLACK);
-		playerProfileText.setHeight(height);
-		playerProfileText.setWidth(width);
-		playerProfileText.setDisabled(true);
-		
-		
-		scoreText = new TextButton("SCORE", textButtonEnableStyle);
-		scoreText.addListener(new ChangeListener(){
+	
+		gameModtxBT = new TextButton("GAME MODE", textButtonEnableStyle);
+		gameModtxBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ScoreScreen());
+				game.setScreen(new GameModSelectionScreen());
 			}
 		});
 		
-		achievementText = new TextButton("ACHIEVEMENTS", textButtonEnableStyle);
-		achievementText.addListener(new ChangeListener(){
+		difficultytxBT = new TextButton("DIFFICULTY", textButtonEnableStyle);
+		difficultytxBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new AchievementsScreen());	
+				game.setScreen(new DifficultySelectScreen());	
 			}
 		});
 		
-		friendsText = new TextButton("FRIEND", textButtonEnableStyle);
-		friendsText.setColor(Color.LIGHT_GRAY);
-		friendsText.setDisabled(true);
-		friendsText.addListener(new ChangeListener(){
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-					
-			}
-		});
-		
-		backText = new TextButton("BACK", textButtonEnableStyle);
-		backText.addListener(new ChangeListener(){
+		backtxBT = new TextButton("BACK", textButtonEnableStyle);
+		backtxBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new MainMenuScreen());
 			}
 		});
 		
-		table.add(playerProfileText);
+		table.add(gameModtxBT);
 		table.row();
-		table.add(scoreText);
+		table.add(difficultytxBT);
 		table.row();
-		table.add(achievementText);
-		table.row();
-		table.add(friendsText);
-		table.row();
-		table.add(backText);
+		table.add(backtxBT);
 	
 	}
 

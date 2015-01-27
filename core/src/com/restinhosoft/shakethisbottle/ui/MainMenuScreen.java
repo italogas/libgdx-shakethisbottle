@@ -71,11 +71,11 @@ public class MainMenuScreen implements Screen {
 //		table.setDebug(true);
 		stage.addActor(table);
 		
-		textButton1 = new TextButton("Select Game", textButtonStyle);
+		textButton1 = new TextButton("Play Game", textButtonStyle);
 		textButton1.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new GameSelectionScreen());
+				game.setScreen(new SubMenuPlayScreen());
 			}
 		});
 		
@@ -87,7 +87,7 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 		
-		textButton3 = new TextButton("Register", textButtonStyle);
+		textButton3 = new TextButton("Player Profile", textButtonStyle);
 		textButton3.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

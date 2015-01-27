@@ -32,7 +32,7 @@ import com.sun.javafx.scene.control.skin.TextAreaSkin;
  * @author Mailson
  *
  */
-public class PlayerProfileScreen implements Screen {
+public class ScoreScreen implements Screen {
 	ShakeThisBottle game;
 	
 	private OrthographicCamera cam;
@@ -50,12 +50,9 @@ public class PlayerProfileScreen implements Screen {
 	
 	private Table table;
 	
-	private TextButton playerProfileText;
 	private TextButton scoreText;
-	private TextButton achievementText;
-	private TextButton friendsText;
 	private TextButton backText;
-
+	
 	private int width = 320;
 	private int height= 480;
 	
@@ -98,36 +95,15 @@ public class PlayerProfileScreen implements Screen {
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
-		playerProfileText = new TextButton("NAME: Player Name "+"\n ID: 26EAD857", textButtonEnableStyle);
-		playerProfileText.setColor(Color.BLACK);
-		playerProfileText.setHeight(height);
-		playerProfileText.setWidth(width);
-		playerProfileText.setDisabled(true);
-		
-		
-		scoreText = new TextButton("SCORE", textButtonEnableStyle);
+		scoreText = new TextButton("SCORES "+"\n 1000"+"\n 1000"+"\n 1000", textButtonEnableStyle);
+		scoreText.setColor(Color.LIGHT_GRAY);
+		scoreText.setHeight(height);
+		scoreText.setWidth(width);
+		scoreText.setDisabled(true);
 		scoreText.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ScoreScreen());
-			}
-		});
-		
-		achievementText = new TextButton("ACHIEVEMENTS", textButtonEnableStyle);
-		achievementText.addListener(new ChangeListener(){
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new AchievementsScreen());	
-			}
-		});
-		
-		friendsText = new TextButton("FRIEND", textButtonEnableStyle);
-		friendsText.setColor(Color.LIGHT_GRAY);
-		friendsText.setDisabled(true);
-		friendsText.addListener(new ChangeListener(){
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-					
+				
 			}
 		});
 		
@@ -135,19 +111,15 @@ public class PlayerProfileScreen implements Screen {
 		backText.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new MainMenuScreen());
+				game.setScreen(new PlayerProfileScreen());
 			}
 		});
 		
-		table.add(playerProfileText);
-		table.row();
+		
 		table.add(scoreText);
 		table.row();
-		table.add(achievementText);
-		table.row();
-		table.add(friendsText);
-		table.row();
 		table.add(backText);
+		
 	
 	}
 

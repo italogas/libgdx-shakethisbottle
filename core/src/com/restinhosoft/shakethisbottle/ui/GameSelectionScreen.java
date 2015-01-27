@@ -86,7 +86,7 @@ public class GameSelectionScreen implements Screen {
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		textButton = new TextButton("Back", textButtonStyle);
+		textButton = new TextButton("Back to MAIN MENU", textButtonStyle);
 		textButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

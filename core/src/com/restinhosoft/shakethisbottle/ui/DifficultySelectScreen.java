@@ -94,7 +94,9 @@ public class DifficultySelectScreen implements Screen {
 		easytxBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new SubMenuPlayScreen());
 				
+				//MISS
 			}
 		});
 		
@@ -102,7 +104,8 @@ public class DifficultySelectScreen implements Screen {
 		normaltxBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				
+				game.setScreen(new SubMenuPlayScreen());
+				//MISS
 			}
 		});
 		
@@ -110,7 +113,8 @@ public class DifficultySelectScreen implements Screen {
 		hardtxBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-						
+				game.setScreen(new SubMenuPlayScreen());
+				//MISS
 			}
 		});
 		
@@ -118,7 +122,8 @@ public class DifficultySelectScreen implements Screen {
 		insanetxBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				
+				game.setScreen(new SubMenuPlayScreen());
+				//MISS
 			}
 		});
 		
@@ -133,7 +138,6 @@ public class DifficultySelectScreen implements Screen {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.badlogic.gdx.Screen#render(float)
 	 */
 	@Override
 	public void render(float delta) {
