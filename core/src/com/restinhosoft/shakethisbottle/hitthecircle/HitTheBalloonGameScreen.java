@@ -1,56 +1,57 @@
-/**
- * 
- */
 package com.restinhosoft.shakethisbottle.hitthecircle;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
-import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
-/**
- * @author Ítalo
- *
- */
-public class HitTheBalloonGameScreen extends ScreenAdapter {
+public class HitTheBalloonGameScreen implements ApplicationListener {
 
-	private OrthographicCamera cam;
-	@SuppressWarnings("unused")
-	private Vector3 touchPoint;
-	@SuppressWarnings("unused")
-	private Texture red_balloon;
-	/**
-	 * 
-	 */
-	public HitTheBalloonGameScreen(ShakeThisBottle game) {
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, 320, 480);
-		touchPoint = new Vector3();
+	private Stage stage;
+
+	@Override
+	public void create() {
+//		stage = new Stage(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		stage = new Stage();
+		Gdx.input.setInputProcessor(stage);
 		
-//		circle = new Texture(Gdx.files.internal("circle.png"));
-//		square = new Texture(Gdx.files.internal("square.png"));
-		red_balloon = new Texture(Gdx.files.internal("red_balloon.png"));
-		red_balloon = new Texture(Gdx.files.internal("blue_balloon.png"));
-		red_balloon = new Texture(Gdx.files.internal("green_balloon.png"));
-		red_balloon = new Texture(Gdx.files.internal("yellow_balloon.png"));
-		red_balloon = new Texture(Gdx.files.internal("purple_balloon.png"));
-		red_balloon = new Texture(Gdx.files.internal("red_balloon.png"));
-		red_balloon = new Texture(Gdx.files.internal("red_balloon.png"));
+		Balloon balloon = new Balloon();
+		balloon.setTouchable(Touchable.enabled);
+		
+//		Group group = new Group();
+//		group.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		group.setVisible(true);
+//		group.addActor(balloon);
+		
+//		stage.addActor(group);
+		stage.addActor(balloon);
 		
 	}
-	
+
 	@Override
-	public void render(float delta) {
-		// TODO Auto-generated method stub
-		super.render(delta);
-	}
-	
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		super.pause();
+	public void render() {
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();
+		
 	}
 
+	@Override
+	public void resize(int width, int height) {}
+	
+	@Override
+	public void pause() {}
+
+	@Override
+	public void resume() {}
+
+	@Override
+	public void dispose() {
+		stage.dispose();
+	}
+
+	
 }
