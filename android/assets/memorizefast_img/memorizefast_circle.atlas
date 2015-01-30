@@ -1,0 +1,12 @@
+
+memorizefast_circle.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+memorizefast_circle
+  rotate: false
+  xy: 1, 1
+  size: 70, 100
+  orig: 70, 100
+  offset: 0, 0
+  index: -1

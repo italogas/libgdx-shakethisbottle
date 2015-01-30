@@ -1,0 +1,12 @@
+
+memorizefast_levelup_yellow.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+levelup_yellow
+  rotate: false
+  xy: 1, 1
+  size: 320, 480
+  orig: 320, 480
+  offset: 0, 0
+  index: -1

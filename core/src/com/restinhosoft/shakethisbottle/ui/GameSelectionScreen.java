@@ -19,6 +19,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.game.hitthecircle.HitTheCircleStartScreen;
+import com.restinhosoft.game.memorizefast.MemorizeFastStartScreen;
+import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
 import com.restinhosoft.shakethisbottle.hitthecircle.HitTheBalloonStartScreen;
 
 /**
@@ -113,7 +116,7 @@ public class GameSelectionScreen implements Screen {
 		imageButton2.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
+				game.setScreen(new ShakeThisBottleStartScreen());
 				
 			}
 		});
@@ -123,7 +126,7 @@ public class GameSelectionScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
-				
+				game.setScreen(new MemorizeFastStartScreen());
 			}
 		});
 		
@@ -132,7 +135,7 @@ public class GameSelectionScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
-				
+				game.setScreen(new HitTheCircleStartScreen());
 			}
 		});
 		

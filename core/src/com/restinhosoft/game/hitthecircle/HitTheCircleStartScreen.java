@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.restinhosoft.shakethisbottle.ui;
+package com.restinhosoft.game.hitthecircle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -19,14 +19,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
+import com.restinhosoft.shakethisbottle.ui.AchievementsScreen;
+import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
+import com.restinhosoft.shakethisbottle.ui.MainMenuScreen;
+import com.restinhosoft.shakethisbottle.ui.ScoreScreen;
+import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 
 /**
  * @author Mailson
  *
  */
-public class PlayerProfileScreen implements Screen {
+public class HitTheCircleStartScreen implements Screen {
 	ShakeThisBottle game;
 	
 	private OrthographicCamera cam;
@@ -36,19 +40,20 @@ public class PlayerProfileScreen implements Screen {
 	private Stage stage;
 	
 	private TextureAtlas atlas;
+	private TextureAtlas gameImageAtlas;
 	
 	private Skin skin;
-	private Skin textSkin;
+	private Skin gameImageSkin;
 	
 	private BitmapFont bitmapFont;
 	
 	private Table table;
 	
-	private TextButton playerProfileText;
-	private TextButton scoreText;
-	private TextButton achievementText;
-	private TextButton friendsText;
-	private TextButton backText;
+	private TextButton gameImageBTFake;
+	private TextButton descriptionButton;
+	private TextButton tutorialButton;
+	private TextButton playButton;
+	private TextButton backButton;
 
 	private int width = 320;
 	private int height= 480;
@@ -67,16 +72,20 @@ public class PlayerProfileScreen implements Screen {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
 		cam = new OrthographicCamera();
-		cam.setToOrtho(false, width, height);
+		//cam.setToOrtho(false, width, height);
+		cam.setToOrtho(false, 320, 480);
 		
 		stage = new Stage();
 		
 		Gdx.input.setInputProcessor(stage);
 		
 		menuImg = new Texture(Gdx.files.internal("background_profile_screen.png"));
+		
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
+		gameImageAtlas = new TextureAtlas(Gdx.files.internal("hitthecircle_img/hitthecircle.atlas"));
 		
 		skin = new Skin(atlas);
+		gameImageSkin = new Skin(gameImageAtlas);
 		
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
@@ -87,62 +96,74 @@ public class PlayerProfileScreen implements Screen {
 		textButtonEnableStyle.pressedOffsetY = -1;
 		textButtonEnableStyle.font = bitmapFont;
 		
+		TextButtonStyle gameImageButtonStyle = new TextButton.TextButtonStyle();
+		gameImageButtonStyle.up = gameImageSkin.getDrawable("hitthecircle_intro");
+		gameImageButtonStyle.down = gameImageSkin.getDrawable("hitthecircle_intro");
+		gameImageButtonStyle.pressedOffsetX = 1;
+		gameImageButtonStyle.pressedOffsetY = -1;
+		gameImageButtonStyle.font = bitmapFont;
+		
 		table = new Table();
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
-		playerProfileText = new TextButton("NAME: Player Name "+"\n ID: 26EAD857", textButtonEnableStyle);
-		playerProfileText.setColor(Color.BLACK);
-		playerProfileText.setHeight(height);
-		playerProfileText.setWidth(width);
-		playerProfileText.setDisabled(true);
+		gameImageBTFake = new TextButton("", gameImageButtonStyle);
+		gameImageBTFake.setDisabled(true);
 		
 		
-		scoreText = new TextButton("SCORE", textButtonEnableStyle);
-		scoreText.addListener(new ChangeListener(){
+		descriptionButton = new TextButton("DESCRIPTION", textButtonEnableStyle);
+		descriptionButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ScoreScreen());
+				gameImageBTFake.setText(
+				    "A bomb was armed and"
+				+"\n to save the world you"
+				+"\n have to disarm it."
+				+"\n This is quite simple,"
+				+"\n you have to"
+				+"\n hit the circles with"
+				+"\n the correct color"
+				+"\n before time runs out."	);
 				
 			}
 		});
 		
-		achievementText = new TextButton("ACHIEVEMENTS", textButtonEnableStyle);
-		achievementText.addListener(new ChangeListener(){
+		tutorialButton = new TextButton("TUTORIAL", textButtonEnableStyle);
+		tutorialButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new AchievementsScreen());	
+				gameImageBTFake.setText(
+					     "Touch the circles with the requested"
+						+"\n color to get points in the game" );
 			}
 		});
 		
-		friendsText = new TextButton("FRIEND", textButtonEnableStyle);
-		friendsText.setColor(Color.LIGHT_GRAY);
-		friendsText.setDisabled(true);
-		friendsText.addListener(new ChangeListener(){
+		playButton = new TextButton("PLAY", textButtonEnableStyle);
+		playButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-					
+				game.setScreen(new HitTheCircleGameScreen());
 			}
 		});
 		
-		backText = new TextButton("BACK", textButtonEnableStyle);
-		backText.addListener(new ChangeListener(){
+		backButton = new TextButton("BACK", textButtonEnableStyle);
+		backButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new MainMenuScreen());
+				game.setScreen(new GameSelectionScreen());
 			}
 		});
 		
-		table.add(playerProfileText);
+		table.add(gameImageBTFake);
 		table.row();
-		table.add(scoreText);
+		table.add(descriptionButton);
 		table.row();
-		table.add(achievementText);
+		table.add(tutorialButton);
 		table.row();
-		table.add(friendsText);
+		table.add(playButton);
 		table.row();
-		table.add(backText);
+		table.add(backButton);
 	
 	}
 
@@ -201,6 +222,7 @@ public class PlayerProfileScreen implements Screen {
 	 */
 	@Override
 	public void dispose() {
+		gameImageAtlas.dispose();
 		atlas.dispose();
 		bitmapFont.dispose();
 		menuImg.dispose();

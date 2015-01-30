@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.restinhosoft.shakethisbottle.ui;
+package com.restinhosoft.game.hitthecircle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -19,14 +19,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
+import com.restinhosoft.shakethisbottle.ui.AchievementsScreen;
+import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
+import com.restinhosoft.shakethisbottle.ui.MainMenuScreen;
+import com.restinhosoft.shakethisbottle.ui.ScoreScreen;
+import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 
 /**
  * @author Mailson
  *
  */
-public class PlayerProfileScreen implements Screen {
+public class HitTheCircleGameScreen implements Screen {
 	ShakeThisBottle game;
 	
 	private OrthographicCamera cam;
@@ -36,28 +40,27 @@ public class PlayerProfileScreen implements Screen {
 	private Stage stage;
 	
 	private TextureAtlas atlas;
+	private TextureAtlas gameImageAtlas;
 	
 	private Skin skin;
-	private Skin textSkin;
+	private Skin gameImageSkin;
 	
 	private BitmapFont bitmapFont;
 	
-	private Table table;
+	private Table tableTimer;
+	private Table tableBottle;
 	
-	private TextButton playerProfileText;
-	private TextButton scoreText;
-	private TextButton achievementText;
-	private TextButton friendsText;
-	private TextButton backText;
+	private TextButton bottleBTfake;
+	private TextButton level;
+	private TextButton timer;
+	//private TextButton playButton;
+	//private TextButton backButton;
 
 	private int width = 320;
 	private int height= 480;
 	
 	//private int width = Gdx.graphics.getWidth();
 	//private int height= Gdx.graphics.getHeight();
-	
-	private TextField profileTextArea;
-	
 	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -74,9 +77,12 @@ public class PlayerProfileScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 		
 		menuImg = new Texture(Gdx.files.internal("background_profile_screen.png"));
+		
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
+		gameImageAtlas = new TextureAtlas(Gdx.files.internal("garrafa.atlas"));
 		
 		skin = new Skin(atlas);
+		gameImageSkin = new Skin(gameImageAtlas);
 		
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
@@ -87,62 +93,77 @@ public class PlayerProfileScreen implements Screen {
 		textButtonEnableStyle.pressedOffsetY = -1;
 		textButtonEnableStyle.font = bitmapFont;
 		
-		table = new Table();
-		table.setFillParent(true);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		stage.addActor(table);
+		TextButtonStyle gameImageButtonStyle = new TextButton.TextButtonStyle();
+		gameImageButtonStyle.up   = gameImageSkin.getDrawable("garrafaimg");
+		gameImageButtonStyle.down = gameImageSkin.getDrawable("garrafaimg");
+		gameImageButtonStyle.font = bitmapFont;
 		
-		playerProfileText = new TextButton("NAME: Player Name "+"\n ID: 26EAD857", textButtonEnableStyle);
-		playerProfileText.setColor(Color.BLACK);
-		playerProfileText.setHeight(height);
-		playerProfileText.setWidth(width);
-		playerProfileText.setDisabled(true);
+		tableTimer = new Table();
+		tableTimer.top();
+		tableTimer.setHeight(50);
+		tableTimer.setWidth(300);
+		tableTimer.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/4);
 		
 		
-		scoreText = new TextButton("SCORE", textButtonEnableStyle);
-		scoreText.addListener(new ChangeListener(){
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ScoreScreen());
+		tableBottle = new Table();
+		tableBottle.bottom();
+		//tableBottle.setFillParent(true);
+		tableTimer.setHeight(400);
+		tableTimer.setWidth(300);
+		tableTimer.setBounds(0,Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()*(3/4));
+		
+		stage.addActor(tableTimer);
+		stage.addActor(tableBottle);
 				
-			}
-		});
+		bottleBTfake = new TextButton("", gameImageButtonStyle);
+		bottleBTfake.setDisabled(true);
 		
-		achievementText = new TextButton("ACHIEVEMENTS", textButtonEnableStyle);
-		achievementText.addListener(new ChangeListener(){
+		
+		level = new TextButton("LEVEL", textButtonEnableStyle);
+		level.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new AchievementsScreen());	
+			
 			}
 		});
 		
-		friendsText = new TextButton("FRIEND", textButtonEnableStyle);
-		friendsText.setColor(Color.LIGHT_GRAY);
-		friendsText.setDisabled(true);
-		friendsText.addListener(new ChangeListener(){
+		timer = new TextButton("TIMER", textButtonEnableStyle);
+		timer.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+		}
+		});
+	/*	
+		playButton = new TextButton("BOTTLE", textButtonEnableStyle);
+		playButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 					
 			}
 		});
 		
-		backText = new TextButton("BACK", textButtonEnableStyle);
-		backText.addListener(new ChangeListener(){
+		backButton = new TextButton("BACK TEST", textButtonEnableStyle);
+		backButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new MainMenuScreen());
+				game.setScreen(new ShakeThisBottleStartScreen());
 			}
 		});
+		*/
+		//table.setFillParent(true);
 		
-		table.add(playerProfileText);
+		tableTimer.add(level);
+		tableTimer.columnDefaults(100);
+		tableTimer.add(timer);
+		tableTimer.row();
+		
+		//tableBottle.center();
+		tableBottle.row();
+		tableBottle.add(bottleBTfake);
+		
+		/*table.add(playButton);
 		table.row();
-		table.add(scoreText);
-		table.row();
-		table.add(achievementText);
-		table.row();
-		table.add(friendsText);
-		table.row();
-		table.add(backText);
+		table.add(backButton);*/
 	
 	}
 
@@ -201,6 +222,7 @@ public class PlayerProfileScreen implements Screen {
 	 */
 	@Override
 	public void dispose() {
+		gameImageAtlas.dispose();
 		atlas.dispose();
 		bitmapFont.dispose();
 		menuImg.dispose();

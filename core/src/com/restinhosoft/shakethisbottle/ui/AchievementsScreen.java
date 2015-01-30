@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
 
 /**
  * @author Ítalo
@@ -122,7 +123,7 @@ public class AchievementsScreen implements Screen {
 		achievement01BT.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				achievement01BT.setColor(Color.RED);
+				game.setScreen(new ShakeThisBottleStartScreen());
 				
 			}
 		});

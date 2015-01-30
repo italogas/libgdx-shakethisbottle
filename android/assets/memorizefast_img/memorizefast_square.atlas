@@ -1,0 +1,12 @@
+
+memorizefast_square.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+memorizefast_square
+  rotate: false
+  xy: 1, 1
+  size: 70, 75
+  orig: 70, 75
+  offset: 0, 0
+  index: -1
