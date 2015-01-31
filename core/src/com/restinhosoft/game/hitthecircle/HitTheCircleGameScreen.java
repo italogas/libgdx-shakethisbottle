@@ -86,7 +86,8 @@ public class HitTheCircleGameScreen implements Screen {
 				Collections.shuffle(colorCopy);
 				buttonSequence.add(colorCopy.get(0));
 			}for(int i=0;i<12;i++){
-				/*if(buttonSequence.get(i)==1){
+				
+				if(buttonSequence.get(i)==1){
 					buttonList.get(i).setColor(Color.RED);
 				}else if(buttonSequence.get(i)==2){
 					buttonList.get(i).setColor(Color.GREEN);
@@ -94,13 +95,14 @@ public class HitTheCircleGameScreen implements Screen {
 					buttonList.get(i).setColor(Color.YELLOW);
 				}else if(buttonSequence.get(i)==4){
 					buttonList.get(i).setColor(Color.BLUE);
-				}*/
-				if(buttonSequence.get(i)==colorSequence.get(0)){
-					System.out.println("sim");
-					hit++;
 				}
+				
+				if(buttonList.get(i).getColor().equals(hitBT.getColor())){	hit++;	}
 			}
 		} 
+		
+		
+		
 	//********************GRAPHICS***************************************
 		ShakeThisBottle game;
 		
@@ -230,9 +232,11 @@ public class HitTheCircleGameScreen implements Screen {
 			circle01.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(0)){
+					System.out.println("circle01");
+					if(circle01.getColor().equals(hitBT.getColor())){
 						buttonList.get(0).setText("OK");
 						hit--;
+						System.out.println("hit"+hit);
 					}else{gameOver=true;}
 				}
 			});
@@ -240,7 +244,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle02.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(1)){
+					if(circle02.getColor().equals(hitBT.getColor())){
 						buttonList.get(1).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -250,7 +254,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle03.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(2)){
+					if(circle03.getColor().equals(hitBT.getColor())){
 						buttonList.get(2).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -260,7 +264,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle04.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(3)){
+					if(circle04.getColor().equals(hitBT.getColor())){
 						buttonList.get(3).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -270,7 +274,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle05.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(4)){
+					if(circle05.getColor().equals(hitBT.getColor())){
 						buttonList.get(4).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -280,7 +284,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle06.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(5)){
+					if(circle06.getColor().equals(hitBT.getColor())){
 						buttonList.get(5).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -290,7 +294,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle07.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(6)){
+					if(circle07.getColor().equals(hitBT.getColor())){
 						buttonList.get(6).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -300,7 +304,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle08.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(7)){
+					if(circle08.getColor().equals(hitBT.getColor())){
 						buttonList.get(7).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -310,7 +314,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle09.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(8)){
+					if(circle09.getColor().equals(hitBT.getColor())){
 						buttonList.get(8).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -320,7 +324,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle10.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(9)){
+					if(circle10.getColor().equals(hitBT.getColor())){
 						buttonList.get(9).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -330,7 +334,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle11.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(10)){
+					if(circle11.getColor().equals(hitBT.getColor())){
 						buttonList.get(10).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -340,7 +344,7 @@ public class HitTheCircleGameScreen implements Screen {
 			circle12.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(colorSequence.get(0)==buttonSequence.get(11)){
+					if(circle12.getColor().equals(hitBT.getColor())){
 						buttonList.get(11).setText("OK");
 						hit--;
 					}else{gameOver=true;}
@@ -426,7 +430,7 @@ public class HitTheCircleGameScreen implements Screen {
 	        }; 
 	       
 	        counterTimer.scheduleAtFixedRate(task, second, second);
-			
+	    	
 			//creating graphics
 			this.atlasLeft     =creatingAtlas( "hitthecircle_img/hitthecircle_left.atlas");
 			this.atlasMiddle   =creatingAtlas("hitthecircle_img/hitthecircle_middle.atlas");
@@ -534,6 +538,7 @@ public class HitTheCircleGameScreen implements Screen {
 				}
 				
 				buildHitColor();
+				buildButtonColor();
 				showSequence();	
 				
 			}else if(gameOver){
