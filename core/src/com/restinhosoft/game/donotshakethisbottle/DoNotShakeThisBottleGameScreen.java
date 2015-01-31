@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.restinhosoft.game.shakethisbottle;
+package com.restinhosoft.game.donotshakethisbottle;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,14 +43,14 @@ import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
  * @author Mailson
  *
  */
-public class ShakeThisBottleGameScreen implements Screen{
+public class DoNotShakeThisBottleGameScreen implements Screen{
 	//*******************************Accel*****************************
-	private float minimalX =4.0f;
+	private float minimalX =0.5f;
 	
 	//********************LOGICS*****************************************
 	private int shakes = 0;
 	
-	private final int maxGameTimer = 15;
+	private final int maxGameTimer = 30;
 	private final int initialLevel = 1; 
 	private final int initialBonus = 0;
 	private final int initialScore = 0;
@@ -70,7 +70,7 @@ public class ShakeThisBottleGameScreen implements Screen{
 	
 	private OrthographicCamera camera;
 	
-	private Texture memorizefastGameBackground;
+	private Texture gameBackground;
 	
 	private Stage stage;
 	
@@ -169,7 +169,7 @@ public class ShakeThisBottleGameScreen implements Screen{
 		
 	}
 	
-	public ShakeThisBottleGameScreen(int score,int level,int bonus){
+	public DoNotShakeThisBottleGameScreen(int score,int level,int bonus){
 		this.score = score;
 		this.level=level;
 		this.bonus=bonus;
@@ -189,7 +189,7 @@ public class ShakeThisBottleGameScreen implements Screen{
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		memorizefastGameBackground = new Texture(Gdx.files.internal("background_profile_screen.png"));
+		gameBackground = new Texture(Gdx.files.internal("background_profile_screen.png"));
 												// "shakethisbottle/shakethebottle_background.png"));
 		
 		//timer
@@ -213,7 +213,7 @@ public class ShakeThisBottleGameScreen implements Screen{
         counterTimer.scheduleAtFixedRate(task, second, second);
 		
 		//creating graphics
-		this.atlasBottle=creatingAtlas( "shakethisbottle/garrafa.atlas");
+		this.atlasBottle=creatingAtlas( "donotshakethisbottle/garrafa.atlas");
 		
 		this.atlasSpace=creatingAtlas( "space.atlas");
 		this.atlasGameTexts    =creatingAtlas( "imageghostsqr.atlas");
@@ -254,7 +254,7 @@ public class ShakeThisBottleGameScreen implements Screen{
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		game.batch.begin();
-		game.batch.draw(memorizefastGameBackground, 0, 0);
+		game.batch.draw(gameBackground, 0, 0);
 
 		game.batch.end();
 		
@@ -263,15 +263,14 @@ public class ShakeThisBottleGameScreen implements Screen{
 		if(timer<0){
 			gameOver = true;
 		}
-		if(shakes>=30){
-			score = timer*level;
-			if(timer>difficultyTimer/2){
-				bonus = timer*level;
-				score = score+bonus;
+		if(timer==0){
+			score = (difficultyTimer-timer)*level;
+			score = score+bonus;
 			
-			}
+			if(level%2==0){	difficultyTimer++;	}
+			
 			level++;
-			game.setScreen(new ShakeThisBottleLevelUpScreen(score, level, bonus));
+			game.setScreen(new DoNotShakeThisBottleLevelUpScreen(score, level, bonus));
 		}
 		if(levelUp){
 			levelUp=false;
@@ -279,16 +278,13 @@ public class ShakeThisBottleGameScreen implements Screen{
 			
 			timer = 10;
 			showTimer=5;
-				
-			if(level%2==0){
-				difficultyTimer--;
-			}
+			
 			
 			showSequence();	
 			
 		}else if(gameOver){
 			bonus=0;
-			game.setScreen(new ShakeThisBottleGameOverScreen(score, level, bonus));
+			game.setScreen(new DoNotShakeThisBottleGameOverScreen(score, level, bonus));
 		}else{
 			if(showTimer>0)			timerBT.setText( "SHOWING: "+ showTimer);
 			else if(showTimer==0)	timerBT.setText( "START");
@@ -301,8 +297,7 @@ public class ShakeThisBottleGameScreen implements Screen{
 		float accelX = Gdx.input.getAccelerometerX();
 		move = accelX+minimalX;
 		if(accelX>minimalX &&play){// && accelX!=move){//(accelX>move+minimalX ||accelX<move+minimalX)){
-			shakes++;
-			try{Thread.currentThread().sleep(100);}catch(Exception e){gameOver=true;};
+			gameOver=true;
 		}
 		stage.act(delta);
 		stage.draw();
@@ -354,7 +349,7 @@ public class ShakeThisBottleGameScreen implements Screen{
 		
 		bitmapFont.dispose();
 		
-		memorizefastGameBackground.dispose();
+		gameBackground.dispose();
 		
 		stage.dispose();
 

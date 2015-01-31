@@ -1,0 +1,12 @@
+
+donotshake_intro.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+donotshake_intro
+  rotate: false
+  xy: 1, 1
+  size: 300, 240
+  orig: 300, 240
+  offset: 0, 0
+  index: -1
