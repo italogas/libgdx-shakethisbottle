@@ -176,7 +176,7 @@ public class DoNotShakeThisBottleLevelUpScreen implements Screen {
 		okBT.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new DoNotShakeThisBottleGameScreen(score,level,bonus));
+//				game.setScreen(new DoNotShakeThisBottleGameScreen(score,level,bonus));
 			}
 		});
 				

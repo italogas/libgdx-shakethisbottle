@@ -144,7 +144,7 @@ public class DoNotShakeThisBottleStartScreen implements Screen {
 		playButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new DoNotShakeThisBottleGameScreen(0,1,0));
+//				game.setScreen(new DoNotShakeThisBottleGameScreen(0,1,0));
 			}
 		});
 		
