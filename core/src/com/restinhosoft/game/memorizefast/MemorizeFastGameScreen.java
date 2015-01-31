@@ -17,17 +17,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
-import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 
@@ -37,11 +32,8 @@ import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
  */
 public class MemorizeFastGameScreen implements Screen {
 //********************LOGICS*****************************************
-	private ArrayList<TextButton> circleList = new ArrayList<TextButton>();
-	private ArrayList<TextButton> squareList = new ArrayList<TextButton>();
-	
+	private ArrayList<TextButton> circleList   = new ArrayList<TextButton>();
 	private ArrayList<Integer> villainSequence = new ArrayList<Integer>();
-	private ArrayList<Integer> playerSequence  = new ArrayList<Integer>();
 	
 	private int next = 0;
 	
@@ -50,11 +42,8 @@ public class MemorizeFastGameScreen implements Screen {
 	private final int initialBonus = 0;
 	private final int initialScore = 0;
 	
-	private final int levelUpGameTimer = 2;
-	
 	private int timer = maxGameTimer;
 	private int difficultyTimer = maxGameTimer;
-	private int lvlUpTimer = levelUpGameTimer;
 	private int level = initialLevel;
 	
 	private int score = initialScore;
@@ -78,30 +67,28 @@ public class MemorizeFastGameScreen implements Screen {
 	private OrthographicCamera camera;
 	
 	private Texture memorizefastGameBackground;
-	private Texture memorizefastGameLevelUpYellow;
-	private Texture memorizefastGameLevelUpRed;
-	private Texture memorizefastGameBackGroundScreen;
 	
 	private Stage stage;
 	
 	private TextureAtlas atlasCircle;
 	private TextureAtlas atlasSquare;
-	private TextureAtlas atlasImageGhostRec;
+	private TextureAtlas atlasSpace;
 	private TextureAtlas atlasImageGhostSqr;
 	private TextureAtlas atlasGameTexts;
 	
 	private Skin circleSkin;
 	private Skin squareSkin;
+	private Skin spaceSkin;
 	private Skin gameTextSkin;
 	
 	private BitmapFont bitmapFont;
 	
 	private Table gameTextTable;
-	private Table gameButtonsTable;
+	//private Table gameButtonsTable;
 	
 	private TextButton levelBT;
 	private TextButton scoreBT;
-	private TextButton bonusBT;
+	private TextButton spaceBT;
 	private TextButton timerBT;
 	
 	
@@ -118,6 +105,7 @@ public class MemorizeFastGameScreen implements Screen {
 	
 	private TextButtonStyle circleStyle;
 	private TextButtonStyle squareStyle;
+	private TextButtonStyle spaceStyle;
 	private TextButtonStyle gameStatsStyle;
 
 	private int width = 320;
@@ -262,38 +250,27 @@ public class MemorizeFastGameScreen implements Screen {
 		scoreBT.setText( "SCORE: "+ score);
 	}
 
-	private void levelUp(){
-		levelUp=true;
-		level++;
-		timer = 10;
-		updates();
-	}
-	
 	private void addGameButtons(){
-		//gameTextTable.setFillParent(true);
-		//gameTextTable.add(scoreBT);
-		
 		gameTextTable.add(levelBT);
-		//gameTextTable.row();
 		gameTextTable.add(timerBT);
 		gameTextTable.row();
+
 		
+		gameTextTable.add(circle01);
+		gameTextTable.add(circle02);
+		gameTextTable.add(circle03);
+		gameTextTable.add(circle04);
+		
+		gameTextTable.row();
+		gameTextTable.add(spaceBT);
+		gameTextTable.row();
+		
+		gameTextTable.add(square01);
+		gameTextTable.add(square02);
+		gameTextTable.add(square03);
+		gameTextTable.add(square04);
 		gameTextTable.top();
 		
-		//gameButtonsTable.setFillParent(true);
-		gameButtonsTable.bottom();
-		
-		gameButtonsTable.add(circle01);
-		gameButtonsTable.add(circle02);
-		gameButtonsTable.add(circle03);
-		gameButtonsTable.add(circle04);
-		
-		gameButtonsTable.row();
-		
-		gameButtonsTable.add(square01);
-		gameButtonsTable.add(square02);
-		gameButtonsTable.add(square03);
-		gameButtonsTable.add(square04);
 	}
 	
 	public MemorizeFastGameScreen(int score,int level,int bonus) {
@@ -318,11 +295,6 @@ public class MemorizeFastGameScreen implements Screen {
 		
 		memorizefastGameBackground = new Texture(Gdx.files.internal(
 												 "memorizefast_img/memorizefast_background.png"));
-		memorizefastGameLevelUpYellow = new Texture(Gdx.files.internal(
-				 								 "memorizefast_img/memorizefast_levelup_yellow.png"));
-		memorizefastGameLevelUpRed   = new Texture(Gdx.files.internal(
-												 "memorizefast_img/memorizefast_levelup_red.png"));
-		memorizefastGameBackGroundScreen = memorizefastGameBackground;
 		
 		//timer
 		counterTimer = new Timer();
@@ -348,12 +320,12 @@ public class MemorizeFastGameScreen implements Screen {
 		this.atlasCircle=creatingAtlas( "memorizefast_img/memorizefast_circle.atlas");
 		this.atlasSquare=creatingAtlas( "memorizefast_img/memorizefast_square.atlas");
 		
-		this.atlasImageGhostRec=creatingAtlas( "imageghostrec.atlas");
-		this.atlasImageGhostSqr=creatingAtlas( "imageghostsqr.atlas");
+		this.atlasSpace=creatingAtlas( "space.atlas");
 		this.atlasGameTexts    =creatingAtlas( "imageghostsqr.atlas");
 		
 		this.circleSkin  =creatingSkin( this.atlasCircle);
 		this.squareSkin  =creatingSkin( this.atlasSquare);
+		this.spaceSkin   =creatingSkin(this.atlasSpace);
 		this.gameTextSkin=creatingSkin( this.atlasGameTexts);
 		
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
@@ -361,6 +333,7 @@ public class MemorizeFastGameScreen implements Screen {
 		this.gameStatsStyle=creatingTextButtonStyles( this.gameTextSkin, "imageghost_sqr", bitmapFont);
 		this.circleStyle   =creatingTextButtonStyles( this.circleSkin, "memorizefast_circle", bitmapFont);
 		this.squareStyle   =creatingTextButtonStyles( this.squareSkin, "memorizefast_square", bitmapFont);
+		this.spaceStyle    =creatingTextButtonStyles( this.spaceSkin, "space", bitmapFont);
 		
 		this.circle01=creatingTextButton( "", this.circleStyle, true);
 		this.circle02=creatingTextButton( "", this.circleStyle, true);
@@ -374,14 +347,12 @@ public class MemorizeFastGameScreen implements Screen {
 		
 		this.levelBT=creatingTextButton( "LEVEL: "+ level+"      ", this.gameStatsStyle, true);
 		this.timerBT=creatingTextButton( "TIMER: "+ showTimer, this.gameStatsStyle, true);
-		
+		this.spaceBT=creatingTextButton("", this.spaceStyle, true);
 		this.scoreBT=creatingTextButton( "SCORE: "+ score, this.gameStatsStyle, true);
 				
 		this.gameTextTable   =creatingTable( 0,30, Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
-		this.gameButtonsTable=creatingTable( 0, 150, Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
 		
 		stage.addActor(gameTextTable);
-		stage.addActor(gameButtonsTable);
 			
 		//********************************Logic Game*****************************************************
 		circleList.add(circle01);
@@ -414,7 +385,7 @@ public class MemorizeFastGameScreen implements Screen {
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		game.batch.begin();
-		game.batch.draw(memorizefastGameBackGroundScreen, 0, 0);
+		game.batch.draw(memorizefastGameBackground, 0, 0);
 		game.batch.end();
 		
 		//************************game logic*******************************************
@@ -503,7 +474,7 @@ public class MemorizeFastGameScreen implements Screen {
 	public void dispose() {
 		atlasCircle.dispose();
 		atlasSquare.dispose();
-		atlasImageGhostRec.dispose();
+		atlasSpace.dispose();
 		atlasImageGhostSqr.dispose();
 		atlasGameTexts.dispose();
 		

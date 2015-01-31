@@ -1,0 +1,12 @@
+
+hitthecircle_intro.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+hitthecircle_intro
+  rotate: false
+  xy: 1, 1
+  size: 320, 240
+  orig: 320, 240
+  offset: 0, 0
+  index: -1

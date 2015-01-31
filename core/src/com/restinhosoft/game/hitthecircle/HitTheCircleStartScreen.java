@@ -82,7 +82,7 @@ public class HitTheCircleStartScreen implements Screen {
 		menuImg = new Texture(Gdx.files.internal("background_profile_screen.png"));
 		
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
-		gameImageAtlas = new TextureAtlas(Gdx.files.internal("hitthecircle_img/hitthecircle.atlas"));
+		gameImageAtlas = new TextureAtlas(Gdx.files.internal("hitthecircle_img/hitthecircle_intro.atlas"));
 		
 		skin = new Skin(atlas);
 		gameImageSkin = new Skin(gameImageAtlas);
@@ -143,7 +143,7 @@ public class HitTheCircleStartScreen implements Screen {
 		playButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new HitTheCircleGameScreen());
+				game.setScreen(new HitTheCircleGameScreen(0,1,0));
 			}
 		});
 		
