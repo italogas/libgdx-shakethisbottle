@@ -23,7 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
 
 /**
- * @author Ítalo
+ * @author ï¿½talo
  *
  */
 public class AchievementsScreen implements Screen {
@@ -80,7 +80,7 @@ public class AchievementsScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		menuImg = new Texture(Gdx.files.internal("background_profile_screen.png"));
+		menuImg = new Texture(Gdx.files.internal("menu.png"));
 		
 		atlas1 = new TextureAtlas(Gdx.files.internal("conquistas00_button.atlas"));
 		

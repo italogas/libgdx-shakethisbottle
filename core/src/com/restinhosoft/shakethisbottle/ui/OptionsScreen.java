@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -26,6 +27,7 @@ public class OptionsScreen implements Screen {
 	private TextButton textButton1;
 	private TextButton textButton2;
 	private TextButton textButton3;
+	private Texture background;
 	
 	@Override
 	public void show() {
@@ -37,6 +39,8 @@ public class OptionsScreen implements Screen {
 		stage = new Stage();
 		
 		Gdx.input.setInputProcessor(stage);
+		
+		background = new Texture(Gdx.files.internal("menu.png"));
 		
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
@@ -82,8 +86,10 @@ public class OptionsScreen implements Screen {
 		});
 		
 		table.add(textButton1);
+		table.getCell(textButton1).spaceBottom(10);
 		table.row();
 		table.add(textButton2);
+		table.getCell(textButton2).spaceBottom(10);
 		table.row();
 		table.add(textButton3);
 		
@@ -94,6 +100,10 @@ public class OptionsScreen implements Screen {
 		GL20 gl = Gdx.gl;
 		gl.glClearColor(1, 1, 1, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		game.batch.begin();
+		game.batch.draw(background, 0, 0);
+		game.batch.end();
 		
 		stage.act(delta);
 		stage.draw();
@@ -115,6 +125,7 @@ public class OptionsScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		background.dispose();
 		atlas.dispose();
 		skin.dispose();
 		stage.dispose();

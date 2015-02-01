@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 /**
- * @author Õtalo
+ * @author √çtalo
  *
  */
 public class MainMenuScreen implements Screen {
@@ -101,17 +101,22 @@ public class MainMenuScreen implements Screen {
 		textButton4.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				System.exit(0);
+				//	app closed correctly
+				Gdx.app.exit();
 			}
 		});
 		
 		table.add(textButton1);
+		table.getCell(textButton1).spaceBottom(10);
 		table.row();
 		table.add(textButton2);
+		table.getCell(textButton2).spaceBottom(10);
 		table.row();
 		table.add(textButton3);
+		table.getCell(textButton3).spaceBottom(10);
 		table.row();
 		table.add(textButton4);
+//		table.getCell(textButton4).spaceBottom(15);
 	
 	}
 
@@ -138,6 +143,10 @@ public class MainMenuScreen implements Screen {
 	 */
 	@Override
 	public void resize(int width, int height) {
+		//	app must be resized correctly
+		stage.getViewport().update(width, height, true);
+		table.invalidateHierarchy();
+		table.setSize(width, height);
 	}
 
 	/* (non-Javadoc)

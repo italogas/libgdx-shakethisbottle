@@ -1,4 +1,4 @@
-package com.restinhosoft.shakethisbottle.hitthecircle;
+package com.restinhosoft.game.hittheballoon;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -23,7 +23,6 @@ public class HitTheBalloonStartScreen implements Screen {
 
 	private ShakeThisBottle game;
 	private OrthographicCamera cam;
-	private Texture background;
 	private Texture play;
 	private Table table;
 	private TextButton playButton;
@@ -41,7 +40,6 @@ public class HitTheBalloonStartScreen implements Screen {
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, 320, 480);
 		
-//		background = new Texture(Gdx.files.internal("background.png"));
 		play = new Texture(Gdx.files.internal("play.png"));
 		
 		stage = new Stage();
@@ -76,14 +74,9 @@ public class HitTheBalloonStartScreen implements Screen {
 		playButton = new TextButton("Play!", textButtonStyle);
 		playButton.addListener(new ClickListener(){
 			@Override
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				playButton.setText("Play!");
-			}
-			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				playButton.setText("Touched!");
+				game.setScreen(new HitTheBalloonGameScreen());
 				return true;
 			}
 		});
@@ -98,7 +91,8 @@ public class HitTheBalloonStartScreen implements Screen {
 			}
 		});
 		
-		table.add(label).expand();
+		table.add(label);
+		table.getCell(label).spaceBottom(50);
 		table.row();
 		table.add(playButton);
 		table.row();
@@ -109,7 +103,7 @@ public class HitTheBalloonStartScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		GL20 gl = Gdx.gl;
-		gl.glClearColor(0, 0, 0, 1);
+		gl.glClearColor(1, 1, 1, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		stage.act(delta);
@@ -130,7 +124,6 @@ public class HitTheBalloonStartScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		background.dispose();
 		play.dispose();
 		atlas.dispose();
 		bitmapFont.dispose();

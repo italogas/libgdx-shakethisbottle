@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -31,6 +32,7 @@ public class LanguageOptionsScreen implements Screen {
 	private CheckBox checkBox0;
 	private CheckBox checkBox1;
 	private TextButton textButton;
+	private Texture background;
 
 	@Override
 	public void show() {
@@ -43,6 +45,7 @@ public class LanguageOptionsScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
+		background = new Texture(Gdx.files.internal("menu.png"));
 		atlas = new TextureAtlas(Gdx.files.internal("uiskin.atlas"));
 		
 		skin = new Skin(atlas);
@@ -80,14 +83,17 @@ public class LanguageOptionsScreen implements Screen {
 		table = new Table();
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		table.setFillParent(true);
-		table.setDebug(true);
+//		table.setDebug(true);
 		stage.addActor(table);
 		
 		table.add(label);
+		table.getCell(label).spaceBottom(10);
 		table.row();
 		table.add(checkBox0);
+		table.getCell(checkBox0).spaceBottom(10);
 		table.row();
 		table.add(checkBox1);
+		table.getCell(checkBox1).spaceBottom(10);
 		table.row();
 		table.add(textButton);
 
@@ -97,6 +103,10 @@ public class LanguageOptionsScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		game.batch.begin();
+		game.batch.draw(background, 0, 0);
+		game.batch.end();
 		
 		stage.act(delta);
 		stage.draw();
@@ -119,6 +129,7 @@ public class LanguageOptionsScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		background.dispose();
 		atlas.dispose();
 		skin.dispose();
 		bitmapFont.dispose();

@@ -69,7 +69,7 @@ public class ScoreScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		menuImg = new Texture(Gdx.files.internal("background_profile_screen.png"));
+		menuImg = new Texture(Gdx.files.internal("menu.png"));
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
 		skin = new Skin(atlas);

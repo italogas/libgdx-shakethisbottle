@@ -22,15 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.restinhosoft.game.memorizefast.MemorizeFastGameOverScreen;
-import com.restinhosoft.game.memorizefast.MemorizeFastLevelUpScreen;
-import com.restinhosoft.shakethisbottle.ui.AchievementsScreen;
-import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
-import com.restinhosoft.shakethisbottle.ui.MainMenuScreen;
-import com.restinhosoft.shakethisbottle.ui.ScoreScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 

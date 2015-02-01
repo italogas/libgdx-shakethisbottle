@@ -1,36 +1,33 @@
-package com.restinhosoft.shakethisbottle.hitthecircle;
+package com.restinhosoft.game.hittheballoon;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
-public class HitTheBalloonGameScreen implements ApplicationListener {
+public class HitTheBalloonGameScreen implements Screen {
 
 	private Stage stage;
 
 	@Override
-	public void create() {
-//		stage = new Stage(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+	public void show() {
 		stage = new Stage();
+		stage.getViewport().setScreenSize(Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
+		stage.setDebugAll(true);
 		Gdx.input.setInputProcessor(stage);
 		
 		Balloon balloon = new Balloon();
+		balloon.setVisible(true);
 		balloon.setTouchable(Touchable.enabled);
 		
-//		Group group = new Group();
-//		group.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//		group.setVisible(true);
-//		group.addActor(balloon);
-		
-//		stage.addActor(group);
 		stage.addActor(balloon);
+		
 		
 	}
 
 	@Override
-	public void render() {
+	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
@@ -39,6 +36,9 @@ public class HitTheBalloonGameScreen implements ApplicationListener {
 		
 	}
 
+	@Override
+	public void hide() {}
+	
 	@Override
 	public void resize(int width, int height) {}
 	
@@ -53,5 +53,4 @@ public class HitTheBalloonGameScreen implements ApplicationListener {
 		stage.dispose();
 	}
 
-	
 }

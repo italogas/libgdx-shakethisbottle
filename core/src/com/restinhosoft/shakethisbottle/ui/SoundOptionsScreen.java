@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -26,7 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * @author Ítalo
+ * @author ï¿½talo
  *
  */
 public class SoundOptionsScreen implements Screen {
@@ -48,6 +49,7 @@ public class SoundOptionsScreen implements Screen {
 	private TextButton textButton;
 	private ProgressBar progressBar;
 	private float actualValue;
+	private Texture background;
 
 	public SoundOptionsScreen() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
@@ -58,6 +60,8 @@ public class SoundOptionsScreen implements Screen {
 		stage = new Stage();
 		
 		Gdx.input.setInputProcessor(stage);
+		
+		background = new Texture(Gdx.files.internal("menu.png"));
 		
 		atlas = new TextureAtlas(Gdx.files.internal("uiskin.atlas"));
 		
@@ -112,20 +116,28 @@ public class SoundOptionsScreen implements Screen {
 		table = new Table(skin);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		table.setFillParent(true);
-		table.setDebug(true);
+//		table.setDebug(true);
 		stage.addActor(table);
 		
 		table.add(label0);
+		table.getCell(label0).spaceBottom(10);
 		table.add(checkBox0);
+		table.getCell(checkBox0).spaceBottom(10);
 		table.row();
 		table.add(label1);
+		table.getCell(label1).spaceBottom(10);
 		table.add(checkBox1);
+		table.getCell(checkBox1).spaceBottom(10);
 		table.row();
 		table.add(label2);
+		table.getCell(label2).spaceBottom(10);
 		table.add(checkBox2);
+		table.getCell(checkBox2).spaceBottom(10);
 		table.row();
 		table.add(label3);
+		table.getCell(label3).spaceBottom(10);
 		table.add(progressBar);
+		table.getCell(progressBar).spaceBottom(10);
 		table.row();
 		table.add(textButton);
 		
@@ -145,6 +157,10 @@ public class SoundOptionsScreen implements Screen {
 		GL20 gl = Gdx.gl;
 		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		game.batch.begin();
+		game.batch.draw(background, 0, 0);
+		game.batch.end();
 		
 		stage.act(delta);
 		stage.draw();
@@ -182,6 +198,7 @@ public class SoundOptionsScreen implements Screen {
 	 */
 	@Override
 	public void dispose() {
+		background.dispose();
 		bitmapFont.dispose();
 		skin.dispose();
 		stage.dispose();

@@ -20,13 +20,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.restinhosoft.game.donotshakethisbottle.DoNotShakeThisBottleStartScreen;
+import com.restinhosoft.game.hittheballoon.HitTheBalloonStartScreen;
 import com.restinhosoft.game.hitthecircle.HitTheCircleStartScreen;
 import com.restinhosoft.game.memorizefast.MemorizeFastStartScreen;
 import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
-import com.restinhosoft.shakethisbottle.hitthecircle.HitTheBalloonStartScreen;
 
 /**
- * @author Ítalo
+ * @author ï¿½talo
  *
  */
 public class GameSelectionScreen implements Screen {
