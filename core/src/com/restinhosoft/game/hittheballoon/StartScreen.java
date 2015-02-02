@@ -2,6 +2,7 @@ package com.restinhosoft.game.hittheballoon;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
-public class HitTheBalloonStartScreen implements Screen {
+public class StartScreen implements Screen {
 
 	private ShakeThisBottle game;
 	private OrthographicCamera cam;
@@ -61,11 +62,12 @@ public class HitTheBalloonStartScreen implements Screen {
 		
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
+		labelStyle.fontColor = Color.DARK_GRAY;
 
 		table = new Table(skin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		table.setDebug(true);
+//		table.setDebug(true);
 		
 		stage.addActor(table);
 		
@@ -76,7 +78,7 @@ public class HitTheBalloonStartScreen implements Screen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				game.setScreen(new HitTheBalloonGameScreen());
+				game.setScreen(new GameScreen());
 				return true;
 			}
 		});
@@ -95,8 +97,10 @@ public class HitTheBalloonStartScreen implements Screen {
 		table.getCell(label).spaceBottom(50);
 		table.row();
 		table.add(playButton);
+		table.getCell(playButton).spaceBottom(5);
 		table.row();
 		table.add(backButton);
+		table.getCell(backButton).spaceBottom(5);
 		
 	}
 
