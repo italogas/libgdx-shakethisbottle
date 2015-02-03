@@ -14,7 +14,26 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 public class Balloon extends Actor {
 	
 	enum BallonColor {
-		RED, BLUE, GREEN, ORANGE, PURPLE, YELLOW, PINK
+		
+		RED ("red", 100),
+		BLUE ("blue", 200),
+		GREEN ("green", 300),
+		ORANGE ("orange", 400), 
+		PURPLE ("purple", 500), 
+		YELLOW ("yellow", 600), 
+		PINK ("pink", 700);
+		
+		private final String color;
+		private final int value;
+		
+		BallonColor(String color, int value){
+			this.color  = color;
+			this.value = value;
+		}
+		
+		public  String color() { return color; }
+		public int value() { return value; }
+		
 	}
 	
 	//	balloon texture
@@ -32,9 +51,13 @@ public class Balloon extends Actor {
 	Vector2 position;
 	Vector2 velocity;
 	Vector2 acceleration;
+	
+	BallonColor color;
 
 	public Balloon(BallonColor color) {
-		setColor(color);
+		this.color = color;
+		
+		setTexture();
 		
 		Random random = new Random();
 		int radom_x = random.nextInt(Gdx.graphics.getWidth() - 64);
@@ -82,7 +105,7 @@ public class Balloon extends Actor {
 		return;
 	}
 	
-	public void setColor(BallonColor color){
+	public void setTexture(){
 		if(color.equals(Balloon.BallonColor.BLUE)){
 			texture = new Texture(Gdx.files.internal("hittheballoon/blue_balloon.png"));
 		} else if(color.equals(Balloon.BallonColor.RED)){
@@ -111,6 +134,10 @@ public class Balloon extends Actor {
 			setOut(true);
 		}
 		
+	}
+	
+	public int getBalloonPoints(){
+		return color.value;
 	}
 
 	public boolean isTouched() {

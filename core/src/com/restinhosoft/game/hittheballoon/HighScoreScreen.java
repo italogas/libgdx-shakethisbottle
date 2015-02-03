@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,15 +16,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
-public class GameOverScreen implements Screen {
+public class HighScoreScreen implements Screen {
 
 	private ShakeThisBottle game;
 	private Stage stage;
+	private BitmapFont bitmapFont;
+	private Table table;
+	private com.badlogic.gdx.scenes.scene2d.ui.Label label;
 	private TextureAtlas textureAtlas;
 	private Skin skin;
-	private BitmapFont bitmapFont;
-	private LabelStyle labelStyle;
-	private Table table;
 
 	@Override
 	public void show() {
@@ -39,7 +38,11 @@ public class GameOverScreen implements Screen {
 		
 		skin = new Skin(textureAtlas);
 		
-		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"), false);
+		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
+		
+		LabelStyle labelStyle = new LabelStyle();
+		labelStyle.font = bitmapFont;
+		labelStyle.fontColor = Color.BLUE;
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.up = skin.getDrawable("default-rect");
@@ -49,60 +52,38 @@ public class GameOverScreen implements Screen {
 		textButtonStyle.font = bitmapFont;
 		textButtonStyle.fontColor = Color.WHITE;
 		
-		labelStyle = new Label.LabelStyle();
-		labelStyle.font = bitmapFont;
-		labelStyle.fontColor= Color.RED;
+		String highScore = GameScreen.GameManager.loadScore();
+		label = new com.badlogic.gdx.scenes.scene2d.ui.Label(highScore, labelStyle);
 		
-		TextButton backButton = new TextButton("Back", textButtonStyle);
-		backButton.addListener(new ChangeListener() {
+		TextButton textButton = new TextButton("Back", textButtonStyle);
+		textButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new StartScreen());
 			}
 		});
 		
-		TextButton tryAgainButton = new TextButton("Try Again", textButtonStyle);
-		tryAgainButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new GameScreen());
-				
-			}
-		});
 		
-		Label gameOverLabel = new Label("GAME OVER", labelStyle);
-		gameOverLabel.setFontScale(1);
-		
-		Label scoreLabel = new Label("Final Score: " + GameScreen.GameManager.getScore(), labelStyle);
-		GameScreen.GameManager.resetScore();
-		
-		table = new Table(skin);
+		table = new Table();
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//		table.setDebug(true);
 		
-		table.add(gameOverLabel);
-		table.getCell(gameOverLabel).spaceBottom(50);
+		table.add(label);
 		table.row();
-		table.add(scoreLabel);
-		table.getCell(scoreLabel).spaceBottom(5);
+		table.add(textButton);
 		table.row();
-		table.add(backButton);
-		table.getCell(backButton).spaceBottom(5);
-		table.row();
-		table.add(tryAgainButton);
-		table.getCell(tryAgainButton).spaceBottom(5);
 		
 		stage.addActor(table);
+		
 
 	}
-	
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+		GL20 gl = Gdx.gl;
+		gl.glClearColor(1, 1, 1, 1);
+		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	
 		stage.act(delta);
 		stage.draw();
 
@@ -122,10 +103,8 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		bitmapFont.dispose();
-		skin.dispose();
-		textureAtlas.dispose();
 		stage.dispose();
+		bitmapFont.dispose();
 	}
 
 }

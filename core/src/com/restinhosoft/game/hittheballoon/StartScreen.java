@@ -33,6 +33,7 @@ public class StartScreen implements Screen {
 	private Stage stage;
 	private Label label;
 	private TextButton backButton;
+	private TextButton highScoresButton;
 
 	@Override
 	public void show() {
@@ -83,6 +84,16 @@ public class StartScreen implements Screen {
 			}
 		});
 		
+		highScoresButton  = new TextButton("High Scores", textButtonStyle);
+		highScoresButton.addListener(new ClickListener(){
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				game.setScreen(new HighScoreScreen());
+				return true;
+			}
+		});
+		
 		backButton = new TextButton("Back", textButtonStyle);
 		backButton.addListener(new ClickListener(){
 			@Override
@@ -98,6 +109,9 @@ public class StartScreen implements Screen {
 		table.row();
 		table.add(playButton);
 		table.getCell(playButton).spaceBottom(5);
+		table.row();
+		table.add(highScoresButton);
+		table.getCell(highScoresButton).spaceBottom(5);
 		table.row();
 		table.add(backButton);
 		table.getCell(backButton).spaceBottom(5);
