@@ -35,6 +35,12 @@ public class Balloon extends Actor {
 		public int value() { return value; }
 		
 	}
+
+	//	how fast the balloon moves in the screen
+	public static final float LOW_ACCEL = -0.05f;
+	public static final float NORMAL_ACCEL = -0.1f;
+	public static final float FAST_ACCEL = -0.2f;
+	public static final float VERY_FAST_ACCEL = -0.4f;
 	
 	//	balloon texture
 	Texture texture;
@@ -82,7 +88,7 @@ public class Balloon extends Actor {
 		position.x = balloon_x;
 		position.y = balloon_y;
 		
-		//		gravity
+		//		default gravity
 		acceleration = new Vector2();
 		acceleration.x = 0;
 		acceleration.y = -0.1f;
@@ -154,6 +160,10 @@ public class Balloon extends Actor {
 
 	public void setOut(boolean out) {
 		this.out = out;
+	}
+
+	public void setMotionRate(float accel) {
+		acceleration.y = accel;
 	}
 
 }

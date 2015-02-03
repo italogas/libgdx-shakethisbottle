@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -34,6 +35,9 @@ public class StartScreen implements Screen {
 	private Label label;
 	private TextButton backButton;
 	private TextButton highScoresButton;
+	private TextButton tutorialButton;
+	private Dialog dialog;
+	
 
 	@Override
 	public void show() {
@@ -48,15 +52,15 @@ public class StartScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 
-		atlas = new TextureAtlas(Gdx.files.internal("uiskin.atlas"));
+		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
 		skin = new Skin(atlas);
 		
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"), false);
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		textButtonStyle.up = skin.getDrawable("default-rect");
-		textButtonStyle.down = skin.getDrawable("default-rect-down");
+		textButtonStyle.up = skin.getDrawable("blue_button");
+		textButtonStyle.down = skin.getDrawable("blue_button");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
@@ -68,7 +72,6 @@ public class StartScreen implements Screen {
 		table = new Table(skin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//		table.setDebug(true);
 		
 		stage.addActor(table);
 		
@@ -79,7 +82,17 @@ public class StartScreen implements Screen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				game.setScreen(new GameScreen());
+				game.setScreen(new SelectLevelScreen());
+				return true;
+			}
+		});
+		
+		tutorialButton = new TextButton("Tutorial", textButtonStyle);
+		tutorialButton.addListener(new ClickListener(){
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				game.setScreen(new TutorialScreen());
 				return true;
 			}
 		});
@@ -110,7 +123,10 @@ public class StartScreen implements Screen {
 		table.add(playButton);
 		table.getCell(playButton).spaceBottom(5);
 		table.row();
-		table.add(highScoresButton);
+		table.add(tutorialButton);;
+		table.getCell(tutorialButton).spaceBottom(5);
+		table.row();
+		table.add(highScoresButton);;
 		table.getCell(highScoresButton).spaceBottom(5);
 		table.row();
 		table.add(backButton);

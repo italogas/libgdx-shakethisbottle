@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -16,66 +17,62 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
-public class HighScoreScreen implements Screen {
-
+public class TutorialScreen implements Screen {
+	
+	private String tutorial_description = "Hit the ballons as soon as\n     they appear in the game screen!";
 	private ShakeThisBottle game;
 	private Stage stage;
+	private TextureAtlas atlas;
+	private Skin skin;
 	private BitmapFont bitmapFont;
 	private Table table;
-	private com.badlogic.gdx.scenes.scene2d.ui.Label label;
-	private TextureAtlas textureAtlas;
-	private Skin skin;
 
 	@Override
 	public void show() {
-		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener(); 
 		
 		stage = new Stage();
 		
 		Gdx.input.setInputProcessor(stage);
+
+		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
-		textureAtlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
+		skin = new Skin(atlas);
 		
-		skin = new Skin(textureAtlas);
-		
-		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
-		
-		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.font = bitmapFont;
-		labelStyle.fontColor = Color.BLUE;
+		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"), false);
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.up = skin.getDrawable("blue_button");
-		textButtonStyle.down  = skin.getDrawable("blue_button");
+		textButtonStyle.down = skin.getDrawable("blue_button");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
-		textButtonStyle.fontColor = Color.WHITE;
 		
-		String highScore = GameScreen.GameManager.loadScore();
-		label = new com.badlogic.gdx.scenes.scene2d.ui.Label(highScore, labelStyle);
-		
-		TextButton textButton = new TextButton("Back", textButtonStyle);
-		textButton.addListener(new ChangeListener(){
+		TextButton okButton = new TextButton("Understood!!", textButtonStyle);
+		okButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new StartScreen());
+				game.setScreen(new StartScreen());;
 			}
 		});
 		
+		LabelStyle labelStyle = new Label.LabelStyle();
+		labelStyle.font = bitmapFont;
+		labelStyle.fontColor = Color.MAGENTA;
 		
-		table = new Table();
+		Label label = new Label(tutorial_description, labelStyle);
+
+		table = new Table(skin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		table.add(label);
 		table.getCell(label).spaceBottom(50);
 		table.row();
-		table.add(textButton);
+		table.add(okButton);
 		table.row();
 		
 		stage.addActor(table);
-		
 
 	}
 
@@ -84,10 +81,9 @@ public class HighScoreScreen implements Screen {
 		GL20 gl = Gdx.gl;
 		gl.glClearColor(1, 1, 1, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	
+		
 		stage.act(delta);
 		stage.draw();
-
 	}
 
 	@Override
@@ -104,8 +100,10 @@ public class HighScoreScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		stage.dispose();
+		atlas.dispose();
 		bitmapFont.dispose();
+		skin.dispose();
+		stage.dispose();
 	}
 
 }

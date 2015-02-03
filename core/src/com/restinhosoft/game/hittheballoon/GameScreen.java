@@ -1,5 +1,6 @@
 package com.restinhosoft.game.hittheballoon;
 
+import java.security.InvalidParameterException;
 import java.util.Calendar;
 
 import com.badlogic.gdx.Gdx;
@@ -96,14 +97,23 @@ public class GameScreen implements Screen {
 	 */
 	public static class GameManager{
 		
+		//		game level
+		private static String level;
 		//	 the game score
 		private static int score;
 		//	 the game ballons
-		private static Array<Balloon> balloon_array;
+		private static Array<Balloon> balloon_array = new Array<Balloon>();
+		
 		
 		public static void start(){
 			
-			balloon_array = new Array<Balloon>();
+			setBalloonArray();
+			
+			resetScore();
+			
+		}
+		
+		private static void setBalloonArray() {
 			balloon_array.add(new Balloon(BallonColor.BLUE));
 			balloon_array.add(new Balloon(BallonColor.GREEN));
 			balloon_array.add(new Balloon(BallonColor.ORANGE));
@@ -111,11 +121,8 @@ public class GameScreen implements Screen {
 			balloon_array.add(new Balloon(BallonColor.PURPLE));
 			balloon_array.add(new Balloon(BallonColor.RED));
 			balloon_array.add(new Balloon(BallonColor.YELLOW));
-			
-			resetScore();
-			
 		}
-		
+
 		public static void resetScore() {
 			setScore(0);
 		}
@@ -129,6 +136,8 @@ public class GameScreen implements Screen {
 		}
 		
 		public static Balloon getBalloon() {
+			setBalloonArray();
+			setLevel(level);
 			balloon_array.shuffle();
 			return balloon_array.first();
 		}
@@ -152,6 +161,30 @@ public class GameScreen implements Screen {
 				System.err.println(re.getMessage());
 			}
 			return readString;
+			
+		}
+
+		public static void setLevel(String string) {
+			level = string; 
+			if(string.toUpperCase().equals("EASY")){
+				for(Balloon b : balloon_array){
+					b.setMotionRate(Balloon.LOW_ACCEL);
+				}
+			} else if (string.toUpperCase().equals("NORMAL")){
+				for(Balloon b : balloon_array){
+					b.setMotionRate(Balloon.NORMAL_ACCEL);
+				}
+			} else if (string.toUpperCase().equals("HARD")){
+				for(Balloon b : balloon_array){
+					b.setMotionRate(Balloon.FAST_ACCEL);
+				}
+			} else if (string.toUpperCase().equals("INSANE")){
+				for(Balloon b : balloon_array){
+					b.setMotionRate(Balloon.VERY_FAST_ACCEL);
+				}
+			} else {
+				throw  new InvalidParameterException("Invalid level selected.");
+			}
 			
 		}
 
