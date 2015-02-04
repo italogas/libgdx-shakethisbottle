@@ -51,6 +51,7 @@ public class SelectLevelScreen implements Screen {
 				game.setScreen(new GameScreen());
 			}
 		});
+		easyButton.pad(10);
 		
 		TextButton normalButton = new TextButton("Normal", textButtonStyle);
 		normalButton.addListener(new ChangeListener() {
@@ -60,6 +61,7 @@ public class SelectLevelScreen implements Screen {
 				game.setScreen(new GameScreen());
 			}
 		});
+		normalButton.pad(10);
 		
 		TextButton hardButton = new TextButton("Hard", textButtonStyle);
 		hardButton.addListener(new ChangeListener() {
@@ -69,6 +71,7 @@ public class SelectLevelScreen implements Screen {
 				game.setScreen(new GameScreen());
 			}
 		});
+		hardButton.pad(10);
 		
 		TextButton insaneButton = new TextButton("Insane", textButtonStyle);
 		insaneButton.addListener(new ChangeListener() {
@@ -78,6 +81,7 @@ public class SelectLevelScreen implements Screen {
 				game.setScreen(new GameScreen());
 			}
 		});
+		insaneButton.pad(10);
 		
 		Table table = new Table(skin);
 		table.setFillParent(true);
@@ -103,7 +107,7 @@ public class SelectLevelScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		GL20 gl = Gdx.gl;
-		gl.glClearColor(1, 1, 1, 1);
+		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		stage.act(delta);

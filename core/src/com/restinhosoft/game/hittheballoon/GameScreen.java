@@ -6,9 +6,13 @@ import java.util.Calendar;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
 import com.restinhosoft.game.hittheballoon.Balloon.BallonColor;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
@@ -19,6 +23,9 @@ public class GameScreen implements Screen {
 	private Stage stage;
 	private Balloon balloon;
 	private ShakeThisBottle game;
+	private TimeHelper timeHelper;
+	private BitmapFont bitmapFont;
+	private Label label;
 	
 	@Override
 	public void show() {
@@ -28,15 +35,26 @@ public class GameScreen implements Screen {
 		stage.getViewport().setScreenSize(Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
 		Gdx.input.setInputProcessor(stage);
 		
+		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"), false);
+		
+		LabelStyle labelStyle = new Label.LabelStyle();
+		labelStyle.font = bitmapFont;
+		labelStyle.fontColor= Color.BLACK;
+		
+		label = new Label("Score: " + GameManager.score, labelStyle);
+		label.setPosition(0, Gdx.graphics.getHeight() - label.getHeight());
+		
 		GameManager.start();
+		GameManager.resetScore();
+		
+		timeHelper = new TimeHelper();
 		
 		balloon = GameManager.getBalloon();
 		balloon.setVisible(true);
 		balloon.setTouchable(Touchable.enabled);
 		
 		stage.addActor(balloon);
-		
-		GameManager.resetScore();
+		stage.addActor(label);
 		
 	}
 
@@ -58,6 +76,7 @@ public class GameScreen implements Screen {
 			//		it adds the balloon points to the game score
 			int points = balloon.getBalloonPoints();
 			GameManager.setScore(GameManager.getScore() + points);
+			label.setText("Score: " + Integer.toString(GameManager.getScore() + points));
 			
 			//	 it creates a new balloon and adds it to the game
 			balloon = GameManager.getBalloon();
@@ -69,6 +88,20 @@ public class GameScreen implements Screen {
 			if(balloon.isOut()){
 				GameManager.saveScore();
 				game.setScreen(new GameOverScreen());
+			}
+		}
+		
+		//		it handles the survival game mode
+		if(GameManager.survival && (timeHelper.getElapsedTimeInSeconds()%10==0)){
+			String level = GameManager.getLevel();
+			if(level.toUpperCase().equals("EASY")){
+				GameManager.setLevel("normal");
+			} else if (level.toUpperCase().equals("NORMAL")){
+				GameManager.setLevel("hard");
+			} else if (level.toUpperCase().equals("HARD")){
+				GameManager.setLevel("insanel");
+			} else if (level.toUpperCase().equals("INSANE")){
+				GameManager.setLevel("easy");
 			}
 		}
 	}
@@ -101,8 +134,11 @@ public class GameScreen implements Screen {
 		private static String level;
 		//	 the game score
 		private static int score;
+		//		the game mode
+		private static boolean survival = false;;
 		//	 the game ballons
 		private static Array<Balloon> balloon_array = new Array<Balloon>();
+		
 		
 		
 		public static void start(){
@@ -163,6 +199,10 @@ public class GameScreen implements Screen {
 			return readString;
 			
 		}
+		
+		public static String getLevel() {
+			return level;
+		}
 
 		public static void setLevel(String string) {
 			level = string; 
@@ -185,6 +225,11 @@ public class GameScreen implements Screen {
 			} else {
 				throw  new InvalidParameterException("Invalid level selected.");
 			}
+			
+		}
+
+		public static void setSurvivalMode() {
+			survival = true;
 			
 		}
 

@@ -62,7 +62,7 @@ public class HighScoreScreen implements Screen {
 				game.setScreen(new StartScreen());
 			}
 		});
-		
+		textButton.pad(10);
 		
 		table = new Table();
 		table.setFillParent(true);
@@ -82,7 +82,7 @@ public class HighScoreScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		GL20 gl = Gdx.gl;
-		gl.glClearColor(1, 1, 1, 1);
+		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	
 		stage.act(delta);

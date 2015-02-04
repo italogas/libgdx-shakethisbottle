@@ -60,6 +60,7 @@ public class GameOverScreen implements Screen {
 				game.setScreen(new StartScreen());
 			}
 		});
+		backButton.pad(10);
 		
 		TextButton tryAgainButton = new TextButton("Try Again", textButtonStyle);
 		tryAgainButton.addListener(new ChangeListener() {
@@ -69,6 +70,7 @@ public class GameOverScreen implements Screen {
 				
 			}
 		});
+		tryAgainButton.pad(10);
 		
 		Label gameOverLabel = new Label("GAME OVER", labelStyle);
 		gameOverLabel.setFontScale(1);
@@ -94,13 +96,13 @@ public class GameOverScreen implements Screen {
 		table.getCell(tryAgainButton).spaceBottom(5);
 		
 		stage.addActor(table);
-
+		
 	}
 	
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		stage.act(delta);
