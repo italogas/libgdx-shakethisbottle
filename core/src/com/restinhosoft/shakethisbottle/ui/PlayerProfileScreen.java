@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 
 /**
@@ -56,6 +57,8 @@ public class PlayerProfileScreen implements Screen {
 	//private int height= Gdx.graphics.getHeight();
 	
 	private TextField profileTextArea;
+
+	private FitViewport fitViewport;
 	
 	
 	/* (non-Javadoc)
@@ -65,10 +68,9 @@ public class PlayerProfileScreen implements Screen {
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, width, height);
-		
+		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
+		stage.setViewport(fitViewport);
 		
 		Gdx.input.setInputProcessor(stage);
 		
@@ -88,7 +90,7 @@ public class PlayerProfileScreen implements Screen {
 		
 		table = new Table();
 		table.setFillParent(true);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
 		playerProfileText = new TextButton("NAME: Player Name "+"\n ID: 26EAD857", textButtonEnableStyle);
@@ -106,6 +108,7 @@ public class PlayerProfileScreen implements Screen {
 				
 			}
 		});
+		scoreText.pad(10);
 		
 		achievementText = new TextButton("ACHIEVEMENTS", textButtonEnableStyle);
 		achievementText.addListener(new ChangeListener(){
@@ -114,6 +117,7 @@ public class PlayerProfileScreen implements Screen {
 				game.setScreen(new AchievementsScreen());	
 			}
 		});
+		achievementText.pad(10);
 		
 		friendsText = new TextButton("FRIEND", textButtonEnableStyle);
 		friendsText.setColor(Color.LIGHT_GRAY);
@@ -124,6 +128,7 @@ public class PlayerProfileScreen implements Screen {
 					
 			}
 		});
+		friendsText.pad(10);
 		
 		backText = new TextButton("BACK", textButtonEnableStyle);
 		backText.addListener(new ChangeListener(){
@@ -132,16 +137,22 @@ public class PlayerProfileScreen implements Screen {
 				game.setScreen(new MainMenuScreen());
 			}
 		});
+		backText.pad(10);
 		
 		table.add(playerProfileText);
+		table.getCell(playerProfileText).spaceBottom(25);
 		table.row();
 		table.add(scoreText);
+		table.getCell(scoreText).spaceBottom(10);
 		table.row();
 		table.add(achievementText);
+		table.getCell(achievementText).spaceBottom(10);
 		table.row();
 		table.add(friendsText);
+		table.getCell(friendsText).spaceBottom(10);
 		table.row();
 		table.add(backText);
+		table.getCell(backText).spaceBottom(10);
 	
 	}
 
@@ -168,10 +179,7 @@ public class PlayerProfileScreen implements Screen {
 	 */
 	@Override
 	public void resize(int width, int height) {
-		/*if(width>0&& height>0){
-			this.width = width;
-			this.height=height;
-		}*/
+		fitViewport.update(width, height);
 	}
 
 	/* (non-Javadoc)

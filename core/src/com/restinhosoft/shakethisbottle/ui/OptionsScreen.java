@@ -3,7 +3,6 @@ package com.restinhosoft.shakethisbottle.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,11 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class OptionsScreen implements Screen {
 
 	private ShakeThisBottle game;
-	private OrthographicCamera cam;
 	private Stage stage;
 	private TextureAtlas atlas;
 	private Skin skin;
@@ -28,15 +27,16 @@ public class OptionsScreen implements Screen {
 	private TextButton textButton2;
 	private TextButton textButton3;
 	private Texture background;
+	private FitViewport fitViewport;
 	
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, 320, 480);
+		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		stage = new Stage();
+		stage.setViewport(fitViewport);
 		
 		Gdx.input.setInputProcessor(stage);
 		
@@ -57,8 +57,7 @@ public class OptionsScreen implements Screen {
 		
 		table = new Table();
 		table.setFillParent(true);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//		table.setDebug(true);
+		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
 		textButton1 = new TextButton("Language", textButtonStyle);
@@ -68,6 +67,7 @@ public class OptionsScreen implements Screen {
 				game.setScreen(new LanguageOptionsScreen());
 			}
 		});
+		textButton1.pad(15);
 		
 		textButton2 = new TextButton("Sound Options", textButtonStyle);
 		textButton2.addListener(new ChangeListener(){
@@ -76,6 +76,7 @@ public class OptionsScreen implements Screen {
 				game.setScreen(new SoundOptionsScreen());
 			}
 		});
+		textButton2.pad(15);
 		
 		textButton3 = new TextButton("Exit", textButtonStyle);
 		textButton3.addListener(new ChangeListener(){
@@ -84,6 +85,7 @@ public class OptionsScreen implements Screen {
 				game.setScreen(new MainMenuScreen());
 			}
 		});
+		textButton3.pad(15);
 		
 		table.add(textButton1);
 		table.getCell(textButton1).spaceBottom(10);
@@ -111,7 +113,7 @@ public class OptionsScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		stage.getViewport().update(width, height, true);
+		fitViewport.update(width, height);
 	}
 
 	@Override

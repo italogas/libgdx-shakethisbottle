@@ -3,7 +3,6 @@ package com.restinhosoft.shakethisbottle.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,11 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class LanguageOptionsScreen implements Screen {
 
 	private ShakeThisBottle game;
-	private OrthographicCamera cam;
 	private Stage stage;
 	private TextureAtlas atlas;
 	private Skin skin;
@@ -33,15 +32,16 @@ public class LanguageOptionsScreen implements Screen {
 	private CheckBox checkBox1;
 	private TextButton textButton;
 	private Texture background;
+	private FitViewport fitViewport;
 
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, 320, 480);
+		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		stage = new Stage();
+		stage.setViewport(fitViewport);
 		
 		Gdx.input.setInputProcessor(stage);
 		
@@ -81,13 +81,13 @@ public class LanguageOptionsScreen implements Screen {
 		});
 		
 		table = new Table();
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		table.setFillParent(true);
 //		table.setDebug(true);
 		stage.addActor(table);
 		
 		table.add(label);
-		table.getCell(label).spaceBottom(10);
+		table.getCell(label).spaceBottom(25);
 		table.row();
 		table.add(checkBox0);
 		table.getCell(checkBox0).spaceBottom(10);
@@ -96,6 +96,7 @@ public class LanguageOptionsScreen implements Screen {
 		table.getCell(checkBox1).spaceBottom(10);
 		table.row();
 		table.add(textButton);
+		table.getCell(textButton).spaceBottom(15);
 
 	}
 
@@ -115,7 +116,7 @@ public class LanguageOptionsScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		stage.getViewport().update(width, height, true);
+		fitViewport.update(width, height);
 	}
 
 	@Override

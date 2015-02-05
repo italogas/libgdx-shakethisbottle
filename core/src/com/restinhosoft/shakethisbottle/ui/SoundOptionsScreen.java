@@ -6,7 +6,6 @@ package com.restinhosoft.shakethisbottle.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -25,24 +24,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
- * @author �talo
+ * @author Italo
  *
  */
 public class SoundOptionsScreen implements Screen {
 
 	private ShakeThisBottle game;
-	private OrthographicCamera cam;
 	private Stage stage;
 	private TextureAtlas atlas;
 	private Skin skin;
 	private BitmapFont bitmapFont;
 	private Table table;
-	private Label label0;
-	private Label label1;
-	private Label label2;
-	private Label label3;
+	private Label enableSoundLabel;
+	private Label gameMusicLable;
+	private Label soundEffectsLabel;
+	private Label generalVolumeLabel;
 	private CheckBox checkBox0;
 	private CheckBox checkBox1;
 	private CheckBox checkBox2;
@@ -50,14 +49,14 @@ public class SoundOptionsScreen implements Screen {
 	private ProgressBar progressBar;
 	private float actualValue;
 	private Texture background;
+	private FitViewport fitViewport;
 
 	public SoundOptionsScreen() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, 320, 480);
-		
+		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
+		stage.setViewport(fitViewport);
 		
 		Gdx.input.setInputProcessor(stage);
 		
@@ -71,10 +70,10 @@ public class SoundOptionsScreen implements Screen {
 		
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
-		label0 = new Label("Enable Sound: ", labelStyle);
-		label1 = new Label("Game Music: ", labelStyle);
-		label2 = new Label("Sound Effects: ", labelStyle);
-		label3 = new Label("General Volume: ", labelStyle);
+		enableSoundLabel = new Label("Enable Sound: ", labelStyle);
+		gameMusicLable = new Label("Game Music: ", labelStyle);
+		soundEffectsLabel = new Label("Sound Effects: ", labelStyle);
+		generalVolumeLabel = new Label("General Volume: ", labelStyle);
 		
 		CheckBoxStyle checkBoxStyle = new CheckBox.CheckBoxStyle();
 		checkBoxStyle.checkboxOff = skin.getDrawable("check-off");
@@ -114,28 +113,28 @@ public class SoundOptionsScreen implements Screen {
 		});
 		
 		table = new Table(skin);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		table.setFillParent(true);
 //		table.setDebug(true);
 		stage.addActor(table);
 		
-		table.add(label0);
-		table.getCell(label0).spaceBottom(10);
+		table.add(enableSoundLabel);
+		table.getCell(enableSoundLabel).spaceBottom(10);
 		table.add(checkBox0);
 		table.getCell(checkBox0).spaceBottom(10);
 		table.row();
-		table.add(label1);
-		table.getCell(label1).spaceBottom(10);
+		table.add(gameMusicLable);
+		table.getCell(gameMusicLable).spaceBottom(10);
 		table.add(checkBox1);
 		table.getCell(checkBox1).spaceBottom(10);
 		table.row();
-		table.add(label2);
-		table.getCell(label2).spaceBottom(10);
+		table.add(soundEffectsLabel);
+		table.getCell(soundEffectsLabel).spaceBottom(10);
 		table.add(checkBox2);
 		table.getCell(checkBox2).spaceBottom(10);
 		table.row();
-		table.add(label3);
-		table.getCell(label3).spaceBottom(10);
+		table.add(generalVolumeLabel);
+		table.getCell(generalVolumeLabel).spaceBottom(10);
 		table.add(progressBar);
 		table.getCell(progressBar).spaceBottom(10);
 		table.row();
@@ -172,7 +171,7 @@ public class SoundOptionsScreen implements Screen {
 	 */
 	@Override
 	public void resize(int width, int height) {
-		stage.getViewport().update(width, height, true);
+		fitViewport.update(width, height);
 	}
 
 	/* (non-Javadoc)

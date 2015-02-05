@@ -6,7 +6,6 @@ package com.restinhosoft.shakethisbottle.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -19,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.donotshakethisbottle.DoNotShakeThisBottleStartScreen;
 import com.restinhosoft.game.hittheballoon.StartScreen;
 import com.restinhosoft.game.hitthecircle.HitTheCircleStartScreen;
@@ -26,13 +26,12 @@ import com.restinhosoft.game.memorizefast.MemorizeFastStartScreen;
 import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
 
 /**
- * @author �talo
+ * @author Ítalo
  *
  */
 public class GameSelectionScreen implements Screen {
 
 	private ShakeThisBottle game;
-	private OrthographicCamera cam;
 	private Texture background;
 	private Texture button;
 	private Texture backtomenu;
@@ -51,6 +50,7 @@ public class GameSelectionScreen implements Screen {
 	private TextureAtlas atlas2;
 	private Skin skin2;
 	private TextButton textButton;
+	private FitViewport fitViewport;
 
 		
 	/* (non-Javadoc)
@@ -60,17 +60,16 @@ public class GameSelectionScreen implements Screen {
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, 320, 480);
+		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		stage = new Stage();
+		stage.setViewport(fitViewport);
 		
 		Gdx.input.setInputProcessor(stage);
 		
 		menuImg = new Texture(Gdx.files.internal("menu.png"));
 		atlas1 = new TextureAtlas(Gdx.files.internal("shakeit_button.atlas"));
 		atlas2 = new TextureAtlas(Gdx.files.internal("button.atlas"));
-		
 		
 		skin1 = new Skin(atlas1);
 		skin2 = new Skin(atlas2);
@@ -79,7 +78,7 @@ public class GameSelectionScreen implements Screen {
 		
 		table = new Table();
 		table.setFillParent(true);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //		table.setDebug(true);
 		stage.addActor(table);
 		
@@ -194,7 +193,9 @@ public class GameSelectionScreen implements Screen {
 	 * @see com.badlogic.gdx.Screen#resize(int, int)
 	 */
 	@Override
-	public void resize(int width, int height) {}
+	public void resize(int width, int height) {
+		fitViewport.update(width, height);
+	}
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#pause()

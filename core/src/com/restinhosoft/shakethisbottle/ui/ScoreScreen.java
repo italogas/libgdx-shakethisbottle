@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 
 /**
@@ -53,6 +54,8 @@ public class ScoreScreen implements Screen {
 	//private int height= Gdx.graphics.getHeight();
 	
 	private TextField profileTextArea;
+
+	private FitViewport fitViewport;
 	
 	
 	/* (non-Javadoc)
@@ -62,10 +65,9 @@ public class ScoreScreen implements Screen {
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, width, height);
-		
+		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
+		stage.setViewport(fitViewport);
 		
 		Gdx.input.setInputProcessor(stage);
 		
@@ -85,7 +87,7 @@ public class ScoreScreen implements Screen {
 		
 		table = new Table();
 		table.setFillParent(true);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
 		scoreText = new TextButton("SCORES "+"\n 1000"+"\n 1000"+"\n 1000", textButtonEnableStyle);
@@ -108,12 +110,10 @@ public class ScoreScreen implements Screen {
 			}
 		});
 		
-		
 		table.add(scoreText);
 		table.row();
 		table.add(backText);
 		
-	
 	}
 
 	/* (non-Javadoc)
@@ -139,10 +139,7 @@ public class ScoreScreen implements Screen {
 	 */
 	@Override
 	public void resize(int width, int height) {
-		if(width>0&& height>0){
-			this.width = width;
-			this.height=height;
-		}
+		fitViewport.update(width, height);
 	}
 
 	/* (non-Javadoc)

@@ -20,17 +20,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
 
 /**
- * @author �talo
+ * @author Italo
  *
  */
 public class AchievementsScreen implements Screen {
 
 	private ShakeThisBottle game;
-	
-	private OrthographicCamera cam;
 	
 	private Texture background;
 	private Texture button;
@@ -62,6 +61,8 @@ public class AchievementsScreen implements Screen {
 	
 	private int width = 320;
 	private int height= 480;
+
+	private FitViewport fitViewport;
 	
 	//private int width = Gdx.graphics.getWidth();
 	//private int height= Gdx.graphics.getHeight();
@@ -73,10 +74,9 @@ public class AchievementsScreen implements Screen {
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, width, height);
-		
+		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
+		stage.setViewport(fitViewport);
 		
 		Gdx.input.setInputProcessor(stage);
 		
@@ -94,7 +94,7 @@ public class AchievementsScreen implements Screen {
 		
 		table = new Table();
 		table.setFillParent(true);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -210,10 +210,7 @@ public class AchievementsScreen implements Screen {
 	 */
 	@Override
 	public void resize(int width, int height) {
-		if(width>0&& height>0){
-			this.width = width;
-			this.height=height;
-		}
+		fitViewport.update(width, height);
 	}
 
 	/* (non-Javadoc)
