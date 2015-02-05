@@ -169,7 +169,7 @@ public class ShakeThisBottleLevelUpScreen implements Screen {
 		okBT.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-//				game.setScreen(new ShakeThisBottleGameScreen(score,level,bonus));
+				game.setScreen(new ShakeThisBottleGameScreen(score,level,bonus));
 			}
 		});
 				
