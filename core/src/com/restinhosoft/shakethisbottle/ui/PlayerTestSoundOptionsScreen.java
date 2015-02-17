@@ -111,7 +111,7 @@ public class PlayerTestSoundOptionsScreen implements Screen {
 		ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle();
 		progressBarStyle.background = skin.getDrawable("default-slider");
 		
-		progressBar = new ProgressBar(0, 10, 1, false, progressBarStyle);
+		progressBar = new ProgressBar(0, 100, 1, false, progressBarStyle);
 		actualValue = progressBar.getMinValue();
 		progressBar.addListener(new ClickListener() {
 			@Override
@@ -173,24 +173,28 @@ public class PlayerTestSoundOptionsScreen implements Screen {
 		//checkbox*********************************
 		//read
 		if(pref.getSoundEnable())checkBox0.setChecked(true);
-		else checkBox0.setChecked(false);
-		
-		if(pref.getSoundEnable())checkBox1.setChecked(true);
-		else checkBox1.setChecked(false);
-		
-		if(pref.getSoundEnable())checkBox2.setChecked(true);
-		else checkBox2.setChecked(false);
+		if(pref.getMusicEnable())checkBox1.setChecked(true);
+		if(pref.getBGMEnable())  checkBox2.setChecked(true);
 		
 		//write
-		if(checkBox0.isChecked()) pref.setSoundEnable(true);
-		else pref.setSoundEnable(false);
+		if(   checkBox0.isPressed()   && !checkBox0.isChecked()){
+			  pref.setSoundEnable(true);			
+		}else if(checkBox0.isPressed()&& checkBox0.isChecked()){
+			pref.setSoundEnable(false);
+		}
 		
-		if(checkBox1.isChecked()) pref.setMusicEnable(true);
-		else pref.setMusicEnable(false);
+		if(checkBox1.isPressed() && !checkBox1.isChecked()){
+			  pref.setMusicEnable(true);			
+		}else if(checkBox1.isPressed()&& checkBox1.isChecked()){
+			pref.setMusicEnable(false);
+		}
 		
-		if(checkBox2.isChecked()) pref.setBGMEnable(true);
-		else pref.setBGMEnable(false);
-		
+		if(checkBox2.isPressed() && !checkBox2.isChecked()){
+			  pref.setBGMEnable(true);			
+		}else if(checkBox2.isPressed()&& checkBox2.isChecked()){
+			pref.setBGMEnable(false);
+		}
+				
 		//show
 		if(pref.getSoundEnable())checkBox0.setChecked(true);
 		else checkBox0.setChecked(false);
@@ -201,7 +205,11 @@ public class PlayerTestSoundOptionsScreen implements Screen {
 		if(pref.getBGMEnable())checkBox2.setChecked(true);
 		else checkBox2.setChecked(false);
 		
+		//ok--^
+		
+		if(progressBar.getValue()>=0 && progressBar.getValue()<=100) pref.setVolume((int) progressBar.getValue());
 		if(pref.getVolume() > 0) progressBar.setValue(pref.getVolume());
+		System.out.println(pref.getVolume());
 		
 		//checkbox*********************************		
 		stage.act(delta);

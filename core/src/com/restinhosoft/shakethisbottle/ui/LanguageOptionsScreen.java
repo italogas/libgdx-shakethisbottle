@@ -114,13 +114,19 @@ public class LanguageOptionsScreen implements Screen {
 		game.batch.draw(background, 0, 0);
 		game.batch.end();
 		//*******language
-		if(checkBox0.isChecked())pref.setLanguage("ptbr");
-		if(checkBox1.isChecked())pref.setLanguage("engl");
+		if(pref.getLanguage().equals("ptbr")){ 	checkBox0.setChecked(true);}
 		
-		if(pref.getLanguage().equals("ptbr"))checkBox0.setChecked(true);
-		else checkBox1.setChecked(false);
-		if(pref.getLanguage().equals("engl"))checkBox1.setChecked(true);
-		else checkBox0.setChecked(false);
+		if(pref.getLanguage().equals("engl")){  checkBox1.setChecked(true);}
+		
+		if(checkBox0.isPressed()){
+			pref.setLanguage("ptbr");
+			checkBox1.setChecked(false);
+		}
+		
+		if(checkBox1.isPressed()){
+			pref.setLanguage("engl");
+			checkBox0.setChecked(false);
+		}
 		
 		stage.act(delta);
 		stage.draw();
