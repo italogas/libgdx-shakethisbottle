@@ -31,7 +31,6 @@ import com.restinhosoft.game.memorizefast.MemorizeFastGameOverScreen;
 import com.restinhosoft.game.memorizefast.MemorizeFastLevelUpScreen;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 //
 //
 ///**

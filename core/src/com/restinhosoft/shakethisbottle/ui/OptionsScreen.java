@@ -73,7 +73,8 @@ public class OptionsScreen implements Screen {
 		textButton2.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new SoundOptionsScreen());
+				//game.setScreen(new SoundOptionsScreen());
+				game.setScreen(new PlayerTestSoundOptionsScreen());
 			}
 		});
 		textButton2.pad(15);

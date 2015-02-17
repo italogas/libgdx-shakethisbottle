@@ -4,6 +4,7 @@
 package com.restinhosoft.shakethisbottle.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -60,6 +61,8 @@ public class PlayerProfileScreen implements Screen {
 
 	private FitViewport fitViewport;
 	
+	private Preferences pref;
+	
 	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -80,6 +83,8 @@ public class PlayerProfileScreen implements Screen {
 		skin = new Skin(atlas);
 		
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
+		
+		pref = Gdx.app.getPreferences("My Preferences");
 		
 		TextButtonStyle textButtonEnableStyle = new TextButton.TextButtonStyle();
 		textButtonEnableStyle.up = skin.getDrawable("blue_button");
@@ -138,6 +143,9 @@ public class PlayerProfileScreen implements Screen {
 			}
 		});
 		backText.pad(10);
+		
+		
+		
 		
 		table.add(playerProfileText);
 		table.getCell(playerProfileText).spaceBottom(25);

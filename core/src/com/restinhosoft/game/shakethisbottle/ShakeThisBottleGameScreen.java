@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
+//import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -36,7 +36,7 @@ import com.restinhosoft.game.memorizefast.MemorizeFastGameOverScreen;
 import com.restinhosoft.game.memorizefast.MemorizeFastLevelUpScreen;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+//import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 
 /**

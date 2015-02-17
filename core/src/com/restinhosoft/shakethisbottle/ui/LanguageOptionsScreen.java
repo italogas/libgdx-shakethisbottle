@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.restinhosoft.player.PlayerPreferencesIOBuffer;
 
 public class LanguageOptionsScreen implements Screen {
 
@@ -33,10 +34,14 @@ public class LanguageOptionsScreen implements Screen {
 	private TextButton textButton;
 	private Texture background;
 	private FitViewport fitViewport;
+	
+	private PlayerPreferencesIOBuffer pref;
 
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		pref = new PlayerPreferencesIOBuffer();
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
@@ -108,6 +113,14 @@ public class LanguageOptionsScreen implements Screen {
 		game.batch.begin();
 		game.batch.draw(background, 0, 0);
 		game.batch.end();
+		//*******language
+		if(checkBox0.isChecked())pref.setLanguage("ptbr");
+		if(checkBox1.isChecked())pref.setLanguage("engl");
+		
+		if(pref.getLanguage().equals("ptbr"))checkBox0.setChecked(true);
+		else checkBox1.setChecked(false);
+		if(pref.getLanguage().equals("engl"))checkBox1.setChecked(true);
+		else checkBox0.setChecked(false);
 		
 		stage.act(delta);
 		stage.draw();
