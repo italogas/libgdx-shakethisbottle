@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.player.PlayerScoresIOBuffer;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
@@ -36,7 +37,7 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 	private int score;
 	private int bonus;
 	
-		
+	private PlayerScoresIOBuffer scoreFile;	
 //********************GRAPHICS***************************************
 	ShakeThisBottle game;
 	
@@ -120,6 +121,8 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 		this.level= level;
 		this.bonus= bonus;
 		
+		this.scoreFile = new PlayerScoresIOBuffer();
+		scoreFile.addScore("Shake_this_Bottle", score);
 		//okBT.setVisible(false);
 	}
 	
@@ -132,6 +135,7 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);

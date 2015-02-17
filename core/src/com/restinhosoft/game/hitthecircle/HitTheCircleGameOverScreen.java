@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.player.PlayerScoresIOBuffer;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
@@ -115,10 +116,15 @@ public class HitTheCircleGameOverScreen implements Screen {
 		bonusBT.setText( "BONUS: "+ bonus);
 	}
 
+	private PlayerScoresIOBuffer scoreFile;	
 	public HitTheCircleGameOverScreen(int score, int level,int bonus) {
 		this.score= score;
 		this.level= level;
 		this.bonus= bonus;
+		
+		this.scoreFile = new PlayerScoresIOBuffer();
+		scoreFile.addScore("Hit_the_Circle", score);
+
 		
 		//okBT.setVisible(false);
 	}

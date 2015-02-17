@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.restinhosoft.player.PlayerScoresIOBuffer;
 
 
 /**
@@ -57,6 +58,21 @@ public class ScoreScreen implements Screen {
 
 	private FitViewport fitViewport;
 	
+	private PlayerScoresIOBuffer scoreFile;	
+	private String scoreString;
+	
+	private String getScoreString(){
+		String string = "";
+		
+		for(int i=0; i< scoreFile.getScores().size();i++){
+			string+= scoreFile.getScores().get(i)+"\n";
+		}
+		return string;
+	}
+	public ScoreScreen() {
+		this.scoreFile = new PlayerScoresIOBuffer();
+		this.scoreString = getScoreString();
+	}
 	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -90,7 +106,9 @@ public class ScoreScreen implements Screen {
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
-		scoreText = new TextButton("SCORES "+"\n 1000"+"\n 1000"+"\n 1000", textButtonEnableStyle);
+		
+		
+		scoreText = new TextButton(scoreString, textButtonEnableStyle);
 		scoreText.setColor(Color.LIGHT_GRAY);
 		scoreText.setHeight(height);
 		scoreText.setWidth(width);

@@ -25,6 +25,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.restinhosoft.player.PlayerPreferencesIOBuffer;
+import com.restinhosoft.player.PlayerPreferencesJson;
 
 /**
  * @author Italo
@@ -50,9 +52,13 @@ public class SoundOptionsScreen implements Screen {
 	private float actualValue;
 	private Texture background;
 	private FitViewport fitViewport;
+	
+	private PlayerPreferencesIOBuffer pref;
 
 	public SoundOptionsScreen() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		pref = new PlayerPreferencesIOBuffer();
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
@@ -81,7 +87,9 @@ public class SoundOptionsScreen implements Screen {
 		checkBoxStyle.pressedOffsetX = 1;
 		checkBoxStyle.pressedOffsetY = -1;
 		checkBoxStyle.font = bitmapFont;
+		
 		checkBox0 = new CheckBox("", checkBoxStyle);
+		
 		checkBox1 = new CheckBox("", checkBoxStyle);
 		checkBox2 = new CheckBox("", checkBoxStyle);
 		
@@ -103,12 +111,13 @@ public class SoundOptionsScreen implements Screen {
 		ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle();
 		progressBarStyle.background = skin.getDrawable("default-slider");
 		
-		progressBar = new ProgressBar(0, 10, 1, false, progressBarStyle);
+		progressBar = new ProgressBar(0, 100, 1, false, progressBarStyle);
 		actualValue = progressBar.getMinValue();
 		progressBar.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				progressBar.setValue(++actualValue);
+				pref.setVolume((int)actualValue);
 			}
 		});
 		
@@ -156,11 +165,53 @@ public class SoundOptionsScreen implements Screen {
 		GL20 gl = Gdx.gl;
 		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+				
 		game.batch.begin();
 		game.batch.draw(background, 0, 0);
 		game.batch.end();
 		
+		//checkbox*********************************
+		//read
+		if(pref.getSoundEnable())checkBox0.setChecked(true);
+		if(pref.getMusicEnable())checkBox1.setChecked(true);
+		if(pref.getBGMEnable())  checkBox2.setChecked(true);
+		
+		//write
+		if(   checkBox0.isPressed()   && !checkBox0.isChecked()){
+			  pref.setSoundEnable(true);			
+		}else if(checkBox0.isPressed()&& checkBox0.isChecked()){
+			pref.setSoundEnable(false);
+		}
+		
+		if(checkBox1.isPressed() && !checkBox1.isChecked()){
+			  pref.setMusicEnable(true);			
+		}else if(checkBox1.isPressed()&& checkBox1.isChecked()){
+			pref.setMusicEnable(false);
+		}
+		
+		if(checkBox2.isPressed() && !checkBox2.isChecked()){
+			  pref.setBGMEnable(true);			
+		}else if(checkBox2.isPressed()&& checkBox2.isChecked()){
+			pref.setBGMEnable(false);
+		}
+				
+		//show
+		if(pref.getSoundEnable())checkBox0.setChecked(true);
+		else checkBox0.setChecked(false);
+		
+		if(pref.getMusicEnable())checkBox1.setChecked(true);
+		else checkBox1.setChecked(false);
+		
+		if(pref.getBGMEnable())checkBox2.setChecked(true);
+		else checkBox2.setChecked(false);
+		
+		//ok--^
+		//problemas barra volume==>>>>>>
+		if(progressBar.getValue()>=0 && progressBar.getValue()<=100) pref.setVolume((int) progressBar.getValue());
+		if(pref.getVolume() > 0) progressBar.setValue(pref.getVolume());
+		System.out.println(pref.getVolume());
+		
+		//checkbox*********************************		
 		stage.act(delta);
 		stage.draw();
 		

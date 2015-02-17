@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.player.PlayerScoresIOBuffer;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
@@ -115,11 +116,15 @@ public class DoNotShakeThisBottleGameOverScreen implements Screen {
 		bonusBT.setText( "BONUS: "+ bonus);
 	}
 
+	private PlayerScoresIOBuffer scoreFile;	
 	public DoNotShakeThisBottleGameOverScreen(int score, int level,int bonus) {
 		this.score= score;
 		this.level= level;
 		this.bonus= bonus;
 		
+		this.scoreFile = new PlayerScoresIOBuffer();
+		scoreFile.addScore("Do_Not_Shake_this_Bottle", score);
+
 		//okBT.setVisible(false);
 	}
 	
