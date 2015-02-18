@@ -16,11 +16,16 @@ import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 public class SelectLevelScreen implements Screen {
 
-	private ShakeThisBottle game;
-	private Stage stage;
-	private TextureAtlas atlas;
-	private BitmapFont bitmapFont;
-	private Skin skin;
+	ShakeThisBottle game;
+	Stage stage;
+	TextureAtlas atlas;
+	BitmapFont bitmapFont;
+	Skin skin;
+	TextButton easyButton;
+	TextButton normalButton;
+	TextButton hardButton;
+	TextButton insaneButton;
+	Table table;
 
 	@Override
 	public void show() {
@@ -28,7 +33,7 @@ public class SelectLevelScreen implements Screen {
 		
 		stage = new Stage();
 		
-		Gdx.input.setInputProcessor(stage);
+		Gdx.input.setInputProcessor(stage); 
 
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
@@ -43,7 +48,7 @@ public class SelectLevelScreen implements Screen {
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		TextButton easyButton = new TextButton("Easy", textButtonStyle);
+		easyButton = new TextButton("Easy", textButtonStyle);
 		easyButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -53,7 +58,7 @@ public class SelectLevelScreen implements Screen {
 		});
 		easyButton.pad(10);
 		
-		TextButton normalButton = new TextButton("Normal", textButtonStyle);
+		normalButton = new TextButton("Normal", textButtonStyle);
 		normalButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -63,7 +68,7 @@ public class SelectLevelScreen implements Screen {
 		});
 		normalButton.pad(10);
 		
-		TextButton hardButton = new TextButton("Hard", textButtonStyle);
+		hardButton = new TextButton("Hard", textButtonStyle);
 		hardButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -73,7 +78,7 @@ public class SelectLevelScreen implements Screen {
 		});
 		hardButton.pad(10);
 		
-		TextButton insaneButton = new TextButton("Insane", textButtonStyle);
+		insaneButton = new TextButton("Insane", textButtonStyle);
 		insaneButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -83,7 +88,7 @@ public class SelectLevelScreen implements Screen {
 		});
 		insaneButton.pad(10);
 		
-		Table table = new Table(skin);
+		table = new Table(skin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		

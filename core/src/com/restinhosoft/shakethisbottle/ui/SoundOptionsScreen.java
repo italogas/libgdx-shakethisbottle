@@ -34,28 +34,33 @@ import com.restinhosoft.player.PlayerPreferencesJson;
  */
 public class SoundOptionsScreen implements Screen {
 
-	private ShakeThisBottle game;
-	private Stage stage;
-	private TextureAtlas atlas;
-	private Skin skin;
-	private BitmapFont bitmapFont;
-	private Table table;
-	private Label enableSoundLabel;
-	private Label gameMusicLable;
-	private Label soundEffectsLabel;
-	private Label generalVolumeLabel;
-	private CheckBox checkBox0;
-	private CheckBox checkBox1;
-	private CheckBox checkBox2;
-	private TextButton textButton;
-	private ProgressBar progressBar;
-	private float actualValue;
-	private Texture background;
-	private FitViewport fitViewport;
+	// static variables to enable screen state testing
+	ShakeThisBottle game;
+	Stage stage;
+	TextureAtlas atlas;
+	Skin skin;
+	BitmapFont bitmapFont;
+	Table table;
+	Label enableSoundLabel;
+	Label gameMusicLabel;
+	Label soundEffectsLabel;
+	Label generalVolumeLabel;
+	CheckBox checkBox0;
+	CheckBox checkBox1;
+	CheckBox checkBox2;
+	TextButton backButton;
+	ProgressBar progressBar;
+	float actualValue;
+	Texture background;
+	FitViewport fitViewport;
 	
-	private PlayerPreferencesIOBuffer pref;
+	PlayerPreferencesIOBuffer pref;
 
-	public SoundOptionsScreen() {
+	/* (non-Javadoc)
+	 * @see com.badlogic.gdx.Screen#show()
+	 */
+	@Override
+	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
 		pref = new PlayerPreferencesIOBuffer();
@@ -77,7 +82,7 @@ public class SoundOptionsScreen implements Screen {
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
 		enableSoundLabel = new Label("Enable Sound: ", labelStyle);
-		gameMusicLable = new Label("Game Music: ", labelStyle);
+		gameMusicLabel = new Label("Game Music: ", labelStyle);
 		soundEffectsLabel = new Label("Sound Effects: ", labelStyle);
 		generalVolumeLabel = new Label("General Volume: ", labelStyle);
 		
@@ -100,8 +105,8 @@ public class SoundOptionsScreen implements Screen {
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		textButton = new TextButton("Back", textButtonStyle);
-		textButton.addListener(new ChangeListener() {
+		backButton = new TextButton("Back", textButtonStyle);
+		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new OptionsScreen());
@@ -132,8 +137,8 @@ public class SoundOptionsScreen implements Screen {
 		table.add(checkBox0);
 		table.getCell(checkBox0).spaceBottom(10);
 		table.row();
-		table.add(gameMusicLable);
-		table.getCell(gameMusicLable).spaceBottom(10);
+		table.add(gameMusicLabel);
+		table.getCell(gameMusicLabel).spaceBottom(10);
 		table.add(checkBox1);
 		table.getCell(checkBox1).spaceBottom(10);
 		table.row();
@@ -147,15 +152,9 @@ public class SoundOptionsScreen implements Screen {
 		table.add(progressBar);
 		table.getCell(progressBar).spaceBottom(10);
 		table.row();
-		table.add(textButton);
-		
-	}
+		table.add(backButton);
 
-	/* (non-Javadoc)
-	 * @see com.badlogic.gdx.Screen#show()
-	 */
-	@Override
-	public void show() {}
+	}
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#render(float)

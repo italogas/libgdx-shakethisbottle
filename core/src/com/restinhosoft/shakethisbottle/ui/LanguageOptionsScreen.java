@@ -22,20 +22,20 @@ import com.restinhosoft.player.PlayerPreferencesIOBuffer;
 
 public class LanguageOptionsScreen implements Screen {
 
-	private ShakeThisBottle game;
-	private Stage stage;
-	private TextureAtlas atlas;
-	private Skin skin;
-	private BitmapFont bitmapFont;
-	private Label label;
-	private Table table;
-	private CheckBox checkBox0;
-	private CheckBox checkBox1;
-	private TextButton textButton;
-	private Texture background;
-	private FitViewport fitViewport;
+	ShakeThisBottle game;
+	Stage stage;
+	TextureAtlas atlas;
+	Skin skin;
+	BitmapFont bitmapFont;
+	Label selectLabel;
+	Table table;
+	CheckBox checkBox0;
+	CheckBox checkBox1;
+	TextButton backButton;
+	Texture background;
+	FitViewport fitViewport;
 	
-	private PlayerPreferencesIOBuffer pref;
+	PlayerPreferencesIOBuffer pref;
 
 	@Override
 	public void show() {
@@ -59,7 +59,7 @@ public class LanguageOptionsScreen implements Screen {
 		
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
-		label = new Label("Select Language: ", labelStyle);
+		selectLabel = new Label("Select Language: ", labelStyle);
 		
 		CheckBoxStyle checkBoxStyle = new CheckBox.CheckBoxStyle();
 		checkBoxStyle.checkboxOff = skin.getDrawable("check-off");
@@ -77,8 +77,8 @@ public class LanguageOptionsScreen implements Screen {
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		textButton = new TextButton("Back", textButtonStyle);
-		textButton.addListener(new ChangeListener() {
+		backButton = new TextButton("Back", textButtonStyle);
+		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new OptionsScreen());
@@ -91,8 +91,8 @@ public class LanguageOptionsScreen implements Screen {
 //		table.setDebug(true);
 		stage.addActor(table);
 		
-		table.add(label);
-		table.getCell(label).spaceBottom(25);
+		table.add(selectLabel);
+		table.getCell(selectLabel).spaceBottom(25);
 		table.row();
 		table.add(checkBox0);
 		table.getCell(checkBox0).spaceBottom(10);
@@ -100,8 +100,8 @@ public class LanguageOptionsScreen implements Screen {
 		table.add(checkBox1);
 		table.getCell(checkBox1).spaceBottom(10);
 		table.row();
-		table.add(textButton);
-		table.getCell(textButton).spaceBottom(15);
+		table.add(backButton);
+		table.getCell(backButton).spaceBottom(15);
 
 	}
 
