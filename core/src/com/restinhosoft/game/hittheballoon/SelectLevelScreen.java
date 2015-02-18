@@ -16,16 +16,16 @@ import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 public class SelectLevelScreen implements Screen {
 
-	ShakeThisBottle game;
-	Stage stage;
-	TextureAtlas atlas;
-	BitmapFont bitmapFont;
-	Skin skin;
-	TextButton easyButton;
-	TextButton normalButton;
-	TextButton hardButton;
-	TextButton insaneButton;
-	Table table;
+	public ShakeThisBottle game;
+	public Stage stage;
+	public TextureAtlas atlas;
+	public BitmapFont bitmapFont;
+	public Skin skin;
+	public TextButton easyButton;
+	public TextButton normalButton;
+	public TextButton hardButton;
+	public TextButton insaneButton;
+	public Table table;
 
 	@Override
 	public void show() {

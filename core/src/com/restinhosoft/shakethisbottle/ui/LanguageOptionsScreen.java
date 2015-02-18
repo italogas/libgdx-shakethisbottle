@@ -22,20 +22,20 @@ import com.restinhosoft.player.PlayerPreferencesIOBuffer;
 
 public class LanguageOptionsScreen implements Screen {
 
-	ShakeThisBottle game;
-	Stage stage;
-	TextureAtlas atlas;
-	Skin skin;
-	BitmapFont bitmapFont;
-	Label selectLabel;
-	Table table;
-	CheckBox checkBox0;
-	CheckBox checkBox1;
-	TextButton backButton;
-	Texture background;
-	FitViewport fitViewport;
+	public ShakeThisBottle game;
+	public Stage stage;
+	public TextureAtlas atlas;
+	public Skin skin;
+	public BitmapFont bitmapFont;
+	public Label selectLabel;
+	public Table table;
+	public CheckBox checkBox0;
+	public CheckBox checkBox1;
+	public TextButton backButton;
+	public Texture background;
+	public FitViewport fitViewport;
 	
-	PlayerPreferencesIOBuffer pref;
+	public 	PlayerPreferencesIOBuffer pref;
 
 	@Override
 	public void show() {

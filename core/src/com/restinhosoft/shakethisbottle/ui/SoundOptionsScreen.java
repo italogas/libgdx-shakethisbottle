@@ -35,26 +35,26 @@ import com.restinhosoft.player.PlayerPreferencesJson;
 public class SoundOptionsScreen implements Screen {
 
 	// static variables to enable screen state testing
-	ShakeThisBottle game;
-	Stage stage;
-	TextureAtlas atlas;
-	Skin skin;
-	BitmapFont bitmapFont;
-	Table table;
-	Label enableSoundLabel;
-	Label gameMusicLabel;
-	Label soundEffectsLabel;
-	Label generalVolumeLabel;
-	CheckBox checkBox0;
-	CheckBox checkBox1;
-	CheckBox checkBox2;
-	TextButton backButton;
-	ProgressBar progressBar;
+	public ShakeThisBottle game;
+	public Stage stage;
+	public TextureAtlas atlas;
+	public Skin skin;
+	public BitmapFont bitmapFont;
+	public Table table;
+	public Label enableSoundLabel;
+	public Label gameMusicLabel;
+	public Label soundEffectsLabel;
+	public Label generalVolumeLabel;
+	public CheckBox checkBox0;
+	public CheckBox checkBox1;
+	public CheckBox checkBox2;
+	public TextButton backButton;
+	public ProgressBar progressBar;
 	float actualValue;
-	Texture background;
-	FitViewport fitViewport;
+	public Texture background;
+	public FitViewport fitViewport;
 	
-	PlayerPreferencesIOBuffer pref;
+	public PlayerPreferencesIOBuffer pref;
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()

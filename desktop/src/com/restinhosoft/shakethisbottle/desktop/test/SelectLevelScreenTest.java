@@ -1,28 +1,43 @@
-package com.restinhosoft.game.hittheballoon;
+package com.restinhosoft.shakethisbottle.desktop.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Array;
+import com.restinhosoft.game.hittheballoon.SelectLevelScreen;
+import com.restinhosoft.shakethisbottle.ui.TestGame;
 
 /**
  * 
  * @author Italo
  *
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SelectLevelScreenTest {
 
 	private SelectLevelScreen screen;
 
+	private TestGame testGame;
+
 	@Before
 	public void setUp() throws Exception {
 		screen = new SelectLevelScreen();
+		testGame = new TestGame(screen);
+		
+		new DesktopTestLauncher(testGame);
+		
 		screen.show();
+
 	}
 
 	@Test
