@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
 import com.restinhosoft.game.hittheballoon.Balloon.BallonColor;
+import com.restinhosoft.shakethisbottle.ui.ScoreScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 public class GameScreen implements Screen {
@@ -125,7 +126,7 @@ public class GameScreen implements Screen {
 	
 	/**
 	 * It handles some game functionality
-	 * @author Ítalo
+	 * @author Ã�talo
 	 *
 	 */
 	public static class GameManager{
@@ -181,6 +182,8 @@ public class GameScreen implements Screen {
 		public static void saveScore(){
 			String time = Calendar.getInstance().getTime().toString();
 			try{
+				ScoreScreen scoreScreen = new ScoreScreen();
+				scoreScreen.addScore("HIT THE BALLOON", score);
 				FileHandle local = Gdx.files.local("scoreData.txt");
 				local.writeString("In " + time + ", Score: " + score, false);
 			}  catch (RuntimeException re){

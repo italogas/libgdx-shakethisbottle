@@ -11,7 +11,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
-import com.restinhosoft.game.hittheballoon.CopyOfGameScreen;
 import com.restinhosoft.player.PlayerPreferencesApplicationListener;
 import com.restinhosoft.player.PlayerPreferencesGdx;
 import com.restinhosoft.player.PlayerPreferencesIOBuffer;
@@ -30,7 +29,6 @@ public class PlayerPreferencesJsonTest {
 	
 	private PlayerPreferencesApplicationListener prefApp;
 	private PreferencesTent preftent;
-	private CopyOfGameScreen gameoff;
 	
 	@Test
 	public void defaultPreferences() {
@@ -42,8 +40,6 @@ public class PlayerPreferencesJsonTest {
 		 //prefApp.setSoundEnable(false);
 		//preftent = new PreferencesTent();
 		//preftent.save();
-		gameoff = new CopyOfGameScreen();
-		gameoff.save();
 		
 		
 	}
