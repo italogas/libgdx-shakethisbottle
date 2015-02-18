@@ -3,8 +3,11 @@
  */
 package com.restinhosoft.shakethisbottle.ui;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -58,19 +61,103 @@ public class ScoreScreen implements Screen {
 
 	private FitViewport fitViewport;
 	
-	private PlayerScoresIOBuffer scoreFile;	
 	private String scoreString;
 	
+	//*******************************************SAVE*******************************************
+	
+	private static final String fileName = "scores.txt";
+	private static String scores = "";
+	
+	private static ArrayList<String> gameScores= new ArrayList<String>();
+	private static ArrayList<String> gameNames = new ArrayList<String>();
+		
+	private int gettingPosition(String name){
+		int position = -1;
+		for(int i=0; i < gameNames.size();i++){
+			if(gameNames.get(i).equals(name)){
+				position = i;
+			}
+		}
+		return position;
+	}
+	
+	private static void loadingScores(){
+		String[] gScores = loadPlayersScores().split("\n");
+		gameScores = new ArrayList<String>();
+		for(int i=0; i < gScores.length;i++){
+			gameScores.add(gScores[i]);
+		}
+	}
+	
+	public void addScore(String gameName, int score){
+		FileHandle local = Gdx.files.local(fileName);
+		if(local.exists()){
+			scores  = loadPlayersScores();
+			savingScore();
+		}else{
+			savingScore();	
+		}
+		
+		loadingScores();
+		if(gameName!= null && gameName!=""&& score>=0){
+			int position = (gettingPosition(gameName));
+			if(gettingPosition(gameName)!=-1){
+				String[] temp = gameScores.get(position).split(":");
+				if(Integer.parseInt(temp[1])< score){
+					temp[1] = ""+score;
+				}
+				gameScores.set(position, temp[0]+":"+temp[1]);
+				savePlayersScores();
+			}else{
+				gameScores.add(gameName+":"+score);
+				gameNames.add (gameName);
+				savePlayersScores();
+			}
+		}
+	}
+	private static String savingScore(){
+		String jun = "";
+		for(int i=0;i<gameScores.size();i++ ){
+			jun+= gameScores.get(i)+"\n";
+		}
+		return jun;
+	}
+	
+	private static void savePlayersScores(){
+		scores = savingScore();
+		try{
+			FileHandle local = Gdx.files.local(fileName);
+			local.writeString(scores,false);
+		}  catch (RuntimeException re){
+			System.err.println(re.getMessage());
+		}
+	}
+	
+	private static String loadPlayersScores(){
+		FileHandle call = Gdx.files.local(fileName);
+		if(!call.exists()){
+			call.writeString("",false);
+		}
+		String readString = null;
+		try {
+			FileHandle local = Gdx.files.local(fileName);
+			readString = local.readString();
+		} catch (RuntimeException re){
+			System.err.println(re.getMessage());
+		}
+		return readString;
+		
+	}
+	
+	
+	//**********************************************SAVE*/*****************************************
 	private String getScoreString(){
 		String string = "";
 		
-		for(int i=0; i< scoreFile.getScores().size();i++){
-			string+= scoreFile.getScores().get(i)+"\n";
-		}
+	
 		return string;
 	}
 	public ScoreScreen() {
-		this.scoreFile = new PlayerScoresIOBuffer();
 		this.scoreString = getScoreString();
 	}
 	
@@ -80,6 +167,14 @@ public class ScoreScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		FileHandle local = Gdx.files.local(fileName);
+		if(local.exists()){
+			scores  = loadPlayersScores();
+			savingScore();
+		}else{
+			savingScore();	
+		}
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
@@ -108,7 +203,7 @@ public class ScoreScreen implements Screen {
 		
 		
 		
-		scoreText = new TextButton(scoreString, textButtonEnableStyle);
+		scoreText = new TextButton(scores, textButtonEnableStyle);
 		scoreText.setColor(Color.LIGHT_GRAY);
 		scoreText.setHeight(height);
 		scoreText.setWidth(width);

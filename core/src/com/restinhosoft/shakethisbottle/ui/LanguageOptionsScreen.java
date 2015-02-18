@@ -1,7 +1,10 @@
 package com.restinhosoft.shakethisbottle.ui;
 
+import java.util.Calendar;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -35,13 +38,48 @@ public class LanguageOptionsScreen implements Screen {
 	public Texture background;
 	public FitViewport fitViewport;
 	
+
+	private static final String fileName = "language.txt";
+	private static String language = "engl";
+	
+	private static void saveLanguage(){
+		String time = Calendar.getInstance().getTime().toString();
+		try{
+			FileHandle local = Gdx.files.local(fileName);
+			local.writeString(language,false);
+		}  catch (RuntimeException re){
+			System.err.println(re.getMessage());
+		}
+	}
+	
+	private static String loadLanguage(){
+		String readString = null;
+		try {
+			FileHandle local = Gdx.files.local(fileName);
+			readString = local.readString();
+		} catch (RuntimeException re){
+			System.err.println(re.getMessage());
+		}
+		return readString;
+		
+	}
+	//PlayerPreferencesIOBuffer pref;
+
 	public 	PlayerPreferencesIOBuffer pref;
+
 
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		FileHandle local = Gdx.files.local(fileName);
+		if(local.exists()){
+			language = loadLanguage();
+			saveLanguage();
+		}else{
+			saveLanguage();	
+		}
 		
-		pref = new PlayerPreferencesIOBuffer();
+		//pref = new PlayerPreferencesIOBuffer();
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
@@ -114,7 +152,7 @@ public class LanguageOptionsScreen implements Screen {
 		game.batch.draw(background, 0, 0);
 		game.batch.end();
 		//*******language
-		if(pref.getLanguage().equals("ptbr")){ 	checkBox0.setChecked(true);}
+		/*if(pref.getLanguage().equals("ptbr")){ 	checkBox0.setChecked(true);}
 		
 		if(pref.getLanguage().equals("engl")){  checkBox1.setChecked(true);}
 		
@@ -125,6 +163,21 @@ public class LanguageOptionsScreen implements Screen {
 		
 		if(checkBox1.isPressed()){
 			pref.setLanguage("engl");
+			checkBox0.setChecked(false);
+		}*/
+		language = loadLanguage();
+		if(language.equals("ptbr")) checkBox0.setChecked(true);
+		if(language.equals("engl")) checkBox1.setChecked(true);
+		
+		if(checkBox0.isPressed()){
+			language = "ptbr";
+			saveLanguage();
+			checkBox1.setChecked(false);
+		}
+		
+		if(checkBox1.isPressed()){
+			language = "engl";
+			saveLanguage();
 			checkBox0.setChecked(false);
 		}
 		
@@ -149,6 +202,7 @@ public class LanguageOptionsScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		
 		background.dispose();
 		atlas.dispose();
 		skin.dispose();

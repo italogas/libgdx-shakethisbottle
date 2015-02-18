@@ -3,8 +3,11 @@
  */
 package com.restinhosoft.shakethisbottle.ui;
 
+import java.util.Calendar;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -54,8 +57,44 @@ public class SoundOptionsScreen implements Screen {
 	public Texture background;
 	public FitViewport fitViewport;
 	
+	//PlayerPreferencesIOBuffer pref;
+
 	public PlayerPreferencesIOBuffer pref;
 
+	private static final String fileName = "options.txt";
+	private static String options = "true true true 25";
+	private static String[] optionArray = options.split(" ");
+	
+	private static String buildingSave(){
+		String jun = "";
+		for(int i=0;i<optionArray.length;i++ ){
+			jun+=optionArray[i]+" ";
+		}
+		return jun;
+	}
+	
+	private static void saveOptions(){
+		options = buildingSave();
+		try{
+			FileHandle local = Gdx.files.local(fileName);
+			local.writeString(options,false);
+		}  catch (RuntimeException re){
+			System.err.println(re.getMessage());
+		}
+	}
+	
+	private static String loadOptions(){
+		String readString = null;
+		try {
+			FileHandle local = Gdx.files.local(fileName);
+			readString = local.readString();
+		} catch (RuntimeException re){
+			System.err.println(re.getMessage());
+		}
+		return readString;
+		
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
@@ -63,7 +102,15 @@ public class SoundOptionsScreen implements Screen {
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
-		pref = new PlayerPreferencesIOBuffer();
+		FileHandle local = Gdx.files.local(fileName);
+		if(local.exists()){
+			options  = loadOptions();
+			optionArray = options.split(" ");
+			saveOptions();
+		}else{
+			saveOptions();	
+		}
+		//pref = new PlayerPreferencesIOBuffer();
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
@@ -122,7 +169,7 @@ public class SoundOptionsScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				progressBar.setValue(++actualValue);
-				pref.setVolume((int)actualValue);
+				//pref.setVolume((int)actualValue);
 			}
 		});
 		
@@ -170,7 +217,52 @@ public class SoundOptionsScreen implements Screen {
 		game.batch.end();
 		
 		//checkbox*********************************
-		//read
+		/*options = loadOptions();
+		optionArray = options.split(" ");
+		*/
+		//System.out.println("options "+ options);
+		if(optionArray[0].equals("true"))checkBox0.setChecked(true);
+		if(optionArray[1].equals("true"))checkBox1.setChecked(true);
+		if(optionArray[2].equals("true"))checkBox2.setChecked(true);
+		
+		if(   checkBox0.isPressed()   && !checkBox0.isChecked()){
+			  optionArray[0] = "true";	
+			  saveOptions();
+			  System.out.println(loadOptions());
+		}else if(checkBox0.isPressed()&& checkBox0.isChecked()){
+			  optionArray[0] = "false";
+			  saveOptions();
+			  System.out.println(loadOptions());
+			  //System.out.println(loadOptions());
+		}
+		
+		if(   checkBox1.isPressed()   && !checkBox1.isChecked()){
+			  optionArray[1] = "true";
+			  saveOptions();
+		}else if(checkBox1.isPressed()&& checkBox1.isChecked()){
+			  optionArray[1] = "false";
+			  saveOptions();
+		}
+		
+		if(   checkBox2.isPressed()   && !checkBox2.isChecked()){
+			  optionArray[2] = "true";
+			  saveOptions();
+		}else if(checkBox2.isPressed()&& checkBox2.isChecked()){
+			  optionArray[2] = "false";
+			  saveOptions();
+		}
+		
+		if(optionArray[0].equals("true"))checkBox0.setChecked(true);
+		else checkBox0.setChecked(false);
+		
+		if(optionArray[1].equals("true"))checkBox1.setChecked(true);
+		else checkBox1.setChecked(false);
+		
+		if(optionArray[2].equals("true"))checkBox2.setChecked(true);
+		else checkBox2.setChecked(false);
+		
+		//saveOptions();
+		/*//read
 		if(pref.getSoundEnable())checkBox0.setChecked(true);
 		if(pref.getMusicEnable())checkBox1.setChecked(true);
 		if(pref.getBGMEnable())  checkBox2.setChecked(true);
@@ -209,7 +301,7 @@ public class SoundOptionsScreen implements Screen {
 		if(progressBar.getValue()>=0 && progressBar.getValue()<=100) pref.setVolume((int) progressBar.getValue());
 		if(pref.getVolume() > 0) progressBar.setValue(pref.getVolume());
 		System.out.println(pref.getVolume());
-		
+		*/
 		//checkbox*********************************		
 		stage.act(delta);
 		stage.draw();
