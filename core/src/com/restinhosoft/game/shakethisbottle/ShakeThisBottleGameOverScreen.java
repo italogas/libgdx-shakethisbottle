@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.restinhosoft.player.PlayerScoresIOBuffer;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
+import com.restinhosoft.shakethisbottle.ui.ScoreScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 
@@ -37,7 +38,6 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 	private int score;
 	private int bonus;
 	
-	private PlayerScoresIOBuffer scoreFile;	
 //********************GRAPHICS***************************************
 	ShakeThisBottle game;
 	
@@ -116,13 +116,16 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 		bonusBT.setText( "BONUS: "+ bonus);
 	}
 
+	//*************************************Saving Score *******************************************
+		private ScoreScreen scoreScreen = new ScoreScreen();
+	
+	//*************************************Saving Score *******************************************
+	
 	public ShakeThisBottleGameOverScreen(int score, int level,int bonus) {
 		this.score= score;
 		this.level= level;
 		this.bonus= bonus;
-		
-		this.scoreFile = new PlayerScoresIOBuffer();
-		scoreFile.addScore("Shake_this_Bottle", score);
+		scoreScreen.addScore("SHAKE THIS BOTTLE", score);	
 		//okBT.setVisible(false);
 	}
 	

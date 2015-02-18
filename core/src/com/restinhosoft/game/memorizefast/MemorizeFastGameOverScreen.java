@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.restinhosoft.player.PlayerScoresIOBuffer;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
+import com.restinhosoft.shakethisbottle.ui.ScoreScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 
@@ -116,21 +117,24 @@ public class MemorizeFastGameOverScreen implements Screen {
 		bonusBT.setText( "BONUS: "+ bonus);
 	}
 
-	private PlayerScoresIOBuffer scoreFile;	
 	
 	public MemorizeFastGameOverScreen(int score, int level,int bonus) {
 		this.score= score;
 		this.level= level;
 		this.bonus= bonus;
 		
-		this.scoreFile = new PlayerScoresIOBuffer();
-		scoreFile.addScore("Memorize_Fast", score);
+		scoreScreen.addScore("MEMORIZE FAST", score);
 		//okBT.setVisible(false);
 	}
 	
 	public int getScore(){return score;}
 	public int getLevel(){return level;}
 	public int getBonus(){return bonus;}
+	
+	//*************************************Saving Score *******************************************
+	private ScoreScreen scoreScreen = new ScoreScreen();
+	//scoreScreen.addScore("MEMORIZE FAST", score);
+	//*************************************Saving Score *******************************************
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
