@@ -13,6 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * 
+ * @author Italo
+ *
+ */
 public class LanguageOptionsScreenTest {
 
 	LanguageOptionsScreen screen;
