@@ -1,1 +1,1 @@
-false true true 25 
+true true false 25 

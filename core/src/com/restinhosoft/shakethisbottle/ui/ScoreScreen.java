@@ -76,8 +76,10 @@ public class ScoreScreen implements Screen {
 		
 	private int gettingPosition(String name){
 		int position = -1;
-		for(int i=0; i < gameNames.size();i++){
-			if(gameNames.get(i).equals(name)){
+		for(int i=0; i < gameScores.size();i++){
+			System.out.println(gameScores.get(i).split(":")[0]);
+			if(gameScores.get(i).split(":")[0].equals(name)){
+				
 				position = i;
 			}
 		}
@@ -106,10 +108,11 @@ public class ScoreScreen implements Screen {
 			int position = (gettingPosition(gameName));
 			if(gettingPosition(gameName)!=-1){
 				String[] temp = gameScores.get(position).split(":");
+				//temp[1] = ""+score;
 				if(Integer.parseInt(temp[1])< score){
 					temp[1] = ""+score;
 				}
-				gameScores.set(position, temp[0]+":"+temp[1]);
+				gameScores.set(position, gameName+":"+temp[1]);
 				savePlayersScores();
 			}else{
 				gameScores.add(gameName+":"+score);
@@ -117,6 +120,7 @@ public class ScoreScreen implements Screen {
 				savePlayersScores();
 			}
 		}
+		savePlayersScores();
 	}
 	private static String savingScore(){
 		String jun = "";
