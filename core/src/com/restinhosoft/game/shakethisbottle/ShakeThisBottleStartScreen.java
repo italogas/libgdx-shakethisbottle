@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
@@ -59,6 +60,31 @@ public class ShakeThisBottleStartScreen implements Screen {
 	
 	private TextField profileTextArea;
 	
+	private LanguageManager languageManager;
+	public String language;
+	
+	private String descriptionEN =   "In this minigame you have to shake"+
+			"\n the bottle to celebrate the new"+
+			"\n year if the bottle not burst will"+
+			"\n be the end  of the world,"+
+			"\n you have until the end of "+
+			"\n the count to save the world,"+
+			"\n GOOD LUCK.";
+	
+	private String descriptionPT =   "Nesse minigame voce tem que balancar"+
+			"\n a garrafa para celebrar o ano novo"+
+			"\n se a garrafa nao estourar"+
+			"\n sera o fim do mundo, voce tem ate"+
+			"\n o fim da contagem para salvar o mundo."+
+			"\n BOA SORTE.";
+	
+	private String tutorialEN = 	"Shake your smartphone in any direction"+
+			 "\n to count a shake in the bottle."+
+			 "\n Each shake counts points in game score.";
+	
+	private String tutorialPT = 	"Balance o seu smartphone em qualquer"+
+			 "\n direcao para agitar a garrafa." +
+			 "\n Agitar a garrafa conta pontos para voce.";
 	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -66,6 +92,13 @@ public class ShakeThisBottleStartScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		cam = new OrthographicCamera();
 		//cam.setToOrtho(false, width, height);
@@ -108,34 +141,24 @@ public class ShakeThisBottleStartScreen implements Screen {
 		gameImageBTFake.setDisabled(true);
 		
 		
-		descriptionButton = new TextButton("DESCRIPTION", textButtonEnableStyle);
+		//descriptionButton = new TextButton("DESCRIPTION", textButtonEnableStyle);
+		descriptionButton = new TextButton((language.equals(languageManager.languageEN)?"Description":"Descricao"), textButtonEnableStyle);
 		descriptionButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				gameImageBTFake.setText(
-						   "In this minigame you have to shake"+
-						"\n the bottle to celebrate the new"+
-						"\n year if the bottle not burst will"+
-						"\n be the end  of the world,"+
-						"\n you have until the end of "+
-						"\n the count to save the world,"+
-						"\n GOOD LUCK.");
-				
+				gameImageBTFake.setText(language.equals(languageManager.languageEN)? descriptionEN: descriptionPT);
 			}
 		});
 		
-		tutorialButton = new TextButton("TUTORIAL", textButtonEnableStyle);
+		tutorialButton = new TextButton("Tutorial", textButtonEnableStyle);
 		tutorialButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				gameImageBTFake.setText(
-						"Shake your smartphone in any direction"+
-					 "\n to count a shake in the bottle."+
-					 "\n Each shake counts points in game score.");
+				gameImageBTFake.setText(language.equals(languageManager.languageEN)? tutorialEN: tutorialPT);
 			}
 		});
 		
-		playButton = new TextButton("PLAY", textButtonEnableStyle);
+		playButton = new TextButton((language.equals(languageManager.languageEN)?"Play":"Jogar"), textButtonEnableStyle);
 		playButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -143,7 +166,7 @@ public class ShakeThisBottleStartScreen implements Screen {
 			}
 		});
 		
-		backButton = new TextButton("BACK", textButtonEnableStyle);
+		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back":"Voltar"), textButtonEnableStyle);
 		backButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

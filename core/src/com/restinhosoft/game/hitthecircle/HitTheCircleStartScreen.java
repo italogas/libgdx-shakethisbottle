@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
@@ -59,6 +60,32 @@ public class HitTheCircleStartScreen implements Screen {
 	
 	private TextField profileTextArea;
 	
+	private LanguageManager languageManager;
+	public String language;
+	
+
+	public String descriptionEN = "A bomb was armed and"
+			+"\n to save the world you"
+			+"\n have to disarm it."
+			+"\n This is quite simple,"
+			+"\n you have to"
+			+"\n hit the circles with"
+			+"\n the correct color"
+			+"\n before time runs out.";
+	
+	public String descriptionPT = "Uma bomba foi armada"
+			+"\n para salvar o mundo"
+			+"\n voce tem que desarma-la"
+			+"\n Isto eh bastate simples,"
+			+"\n Voce tem que acertar os"
+			+"\n circulos com a cor correta"
+			+"\n antes que o tempo acabe.";
+	
+	 public String tutorialEN = "Touch the circles with the requested"
+		+"\n color to get points in the game";
+	 
+	 public String tutorialPT = "Toque os circulos com a cor"
+				+"\n requisitada para ganhar pontos. ";
 	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -66,6 +93,13 @@ public class HitTheCircleStartScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		cam = new OrthographicCamera();
 		//cam.setToOrtho(false, width, height);
@@ -108,34 +142,24 @@ public class HitTheCircleStartScreen implements Screen {
 		gameImageBTFake.setDisabled(true);
 		
 		
-		descriptionButton = new TextButton("DESCRIPTION", textButtonEnableStyle);
+		descriptionButton = new TextButton((language.equals(languageManager.languageEN)?"Description":"Descricao"), textButtonEnableStyle);
 		descriptionButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				gameImageBTFake.setText(
-				    "A bomb was armed and"
-				+"\n to save the world you"
-				+"\n have to disarm it."
-				+"\n This is quite simple,"
-				+"\n you have to"
-				+"\n hit the circles with"
-				+"\n the correct color"
-				+"\n before time runs out."	);
+				gameImageBTFake.setText(language.equals(languageManager.languageEN)? descriptionEN: descriptionPT);
 				
 			}
 		});
 		
-		tutorialButton = new TextButton("TUTORIAL", textButtonEnableStyle);
+		tutorialButton = new TextButton("Tutorial", textButtonEnableStyle);
 		tutorialButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				gameImageBTFake.setText(
-					     "Touch the circles with the requested"
-						+"\n color to get points in the game" );
+				gameImageBTFake.setText(language.equals(languageManager.languageEN)? tutorialEN: tutorialPT);
 			}
 		});
 		
-		playButton = new TextButton("PLAY", textButtonEnableStyle);
+		playButton = new TextButton((language.equals(languageManager.languageEN)?"Play":"Jogar"), textButtonEnableStyle);
 		playButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -143,7 +167,7 @@ public class HitTheCircleStartScreen implements Screen {
 			}
 		});
 		
-		backButton = new TextButton("BACK", textButtonEnableStyle);
+		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back":"Voltar"), textButtonEnableStyle);
 		backButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

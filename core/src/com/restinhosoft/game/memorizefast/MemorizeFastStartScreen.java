@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
@@ -59,6 +60,42 @@ public class MemorizeFastStartScreen implements Screen {
 	
 	private TextField profileTextArea;
 	
+	private LanguageManager languageManager;
+	public String language;
+	
+	private String descriptionEn = "News !? the world is in "
+	+"\ndanger and you once again"
+	+"\n have to save it."
+	+"\n This time a very aryful villain"
+	+"\n prepared a trap with missiles."
+	+"\n To stop him you have to record "
+	+"\n the color sequence given by him."
+	+"\n You have 10 seconds to set the color"
+	+"\n  sequence if err it's game over.";
+	
+
+	private String descriptionPt = "Urgente !! O mundo está em perigo "
+	+"\ne mais uma vez voce deve salva-lo."
+	+"\n Dessa vez um vilão muito ardiloso"
+	+"\n preparou uma armadilha com misseis."
+	+"\n Para dete-lo voce precisa memorizar"
+	+"\n a sequencia de cores que ele oferece."
+	+"\n Voce tem 10 segundos para acertar"
+	+"\n a sequencia. Um pequeno erro pode ser fatal.";
+	
+	private String tutorialEn = "Note the sequence of given"
+		    +"\n color and then put the"
+			+"\n correct sequence.Each square"
+			+"\n tight represent the corresponding"
+			+"\n color in the order that"
+			+"\n it was tight,"
+			+"\n watch the time.";
+	
+	private String tutorialPt = "Perceba a sequencia dada"
+		    +"\n de cores e as coloque na ordem correta."
+			+"\n Cada quadrado estreito representa"
+			+"\n a cor correspondente na ordem em"
+			+"\n que foi apertado. Cuidado com o tempo.";
 	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -66,6 +103,13 @@ public class MemorizeFastStartScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		cam = new OrthographicCamera();
 		//cam.setToOrtho(false, width, height);
@@ -107,41 +151,25 @@ public class MemorizeFastStartScreen implements Screen {
 		gameImageBTFake = new TextButton("", gameImageButtonStyle);
 		gameImageBTFake.setDisabled(true);
 		
-		
-		descriptionButton = new TextButton("DESCRIPTION", textButtonEnableStyle);
+		//descriptionButton = new TextButton("DESCRIPTION", textButtonEnableStyle);
+		descriptionButton = new TextButton((language.equals(languageManager.languageEN)?"Description":"Descricao"), textButtonEnableStyle);
 		descriptionButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				gameImageBTFake.setText(
-						 "News !? the world is in "
-						+"\ndanger and you once again"
-						+"\n have to save it."
-						+"\n This time a very aryful villain"
-						+"\n prepared a trap with missiles."
-						+"\n To stop him you have to record "
-						+"\n the color sequence given by him."
-						+"\n You have 10 seconds to set the color"
-						+"\n  sequence if err it's game over.");
-				
+				gameImageBTFake.setText(language.equals(languageManager.languageEN)? descriptionEn: descriptionPt);
 			}
 		});
 		
-		tutorialButton = new TextButton("TUTORIAL", textButtonEnableStyle);
+		tutorialButton = new TextButton("Tutorial", textButtonEnableStyle);
 		tutorialButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				gameImageBTFake.setText(
-						"Note the sequence of given"
-				    +"\n color and then put the"
-					+"\n correct sequence.Each square"
-					+"\n tight represent the corresponding"
-					+"\n color in the order that"
-					+"\n it was tight,"
-					+"\n watch the time.");
+				gameImageBTFake.setText(language.equals(languageManager.languageEN)? tutorialEn: tutorialPt);
 			}
 		});
 		
-		playButton = new TextButton("PLAY", textButtonEnableStyle);
+		//playButton = new TextButton("PLAY", textButtonEnableStyle);
+		playButton = new TextButton((language.equals(languageManager.languageEN)?"Play":"Jogar"), textButtonEnableStyle);
 		playButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -149,7 +177,8 @@ public class MemorizeFastStartScreen implements Screen {
 			}
 		});
 		
-		backButton = new TextButton("BACK", textButtonEnableStyle);
+		//backButton = new TextButton("BACK", textButtonEnableStyle);
+		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back":"Voltar"), textButtonEnableStyle);
 		backButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

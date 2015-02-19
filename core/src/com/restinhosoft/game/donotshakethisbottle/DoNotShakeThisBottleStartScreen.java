@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
@@ -59,6 +60,31 @@ public class DoNotShakeThisBottleStartScreen implements Screen {
 	
 	private TextField profileTextArea;
 	
+	private LanguageManager languageManager;
+	public String language;
+	
+	private String descriptionEN =  "In this mini game you can"
+	         +"\n not move the bottle,"
+			 +"\n because it contains an"
+	         +"\n unstable liquid that can explode."
+			 +"\n To save the world, you should let"
+	         +"\n your smartphone stable during the"+""
+	         +"\n countdown,and if the move "
+	         +"\n recklessly device, it's game over.";
+	
+	private String descriptionPT =   "Nesse minigame voce nao pode"+
+			"\n mover a garrafa porque ela contem"+
+			"\n liquido estavel que pode explodir."+
+			"\n Para salvar o mundo, voce deve "+
+			"\n manter o smartphone imovel durante"+
+			"\n a contagem, caso contrario voce perdera. ";
+	
+	private String tutorialEN =  "If your smartphone moves in any direction"+
+			 "\n it will to count a shake."+
+			 "\n And is GAMEOVER.";
+	
+	private String tutorialPT = "Se o seu smartphone mover em qualquer"+
+			 "\n direcao voce perdera.";
 	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -66,6 +92,13 @@ public class DoNotShakeThisBottleStartScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		cam = new OrthographicCamera();
 		//cam.setToOrtho(false, width, height);
@@ -107,36 +140,25 @@ public class DoNotShakeThisBottleStartScreen implements Screen {
 		gameImageBTFake = new TextButton("", gameImageButtonStyle);
 		gameImageBTFake.setDisabled(true);
 		
-		
-		descriptionButton = new TextButton("DESCRIPTION", textButtonEnableStyle);
+		//descriptionButton = new TextButton("DESCRIPTION", textButtonEnableStyle);
+		descriptionButton = new TextButton((language.equals(languageManager.languageEN)?"Description":"Descricao"), textButtonEnableStyle);
 		descriptionButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				gameImageBTFake.setText(
-						"In this mini game you can"
-				         +"\n not move the bottle,"
-						 + "\n because it contains an"
-				         +"\n unstable liquid that can explode."
-						 + "\n To save the world, you should deicar"
-				         +"\n your smartphone stable during the"+""
-				         + "\n countdown,and if the move "
-				         +"\nrecklessly device, it's game over.");
+				gameImageBTFake.setText(language.equals(languageManager.languageEN)? descriptionEN: descriptionPT);
 				
 			}
 		});
 		
-		tutorialButton = new TextButton("TUTORIAL", textButtonEnableStyle);
+		tutorialButton = new TextButton("Tutorial", textButtonEnableStyle);
 		tutorialButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				gameImageBTFake.setText(
-						"If your smartphone moves in any direction"+
-					 "\n it will to count a shake."+
-					 "\n And is GAMEOVER.");
+				gameImageBTFake.setText(language.equals(languageManager.languageEN)? tutorialEN: tutorialPT);
 			}
 		});
 		
-		playButton = new TextButton("PLAY", textButtonEnableStyle);
+		playButton = new TextButton((language.equals(languageManager.languageEN)?"Play":"Jogar"), textButtonEnableStyle);
 		playButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -144,7 +166,7 @@ public class DoNotShakeThisBottleStartScreen implements Screen {
 			}
 		});
 		
-		backButton = new TextButton("BACK", textButtonEnableStyle);
+		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back":"Voltar"), textButtonEnableStyle);
 		backButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
