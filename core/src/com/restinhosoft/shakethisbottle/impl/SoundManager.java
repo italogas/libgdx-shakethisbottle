@@ -2,7 +2,7 @@ package com.restinhosoft.shakethisbottle.impl;
 
 /**
  * This class is responsible for managing the game sound effects and music. 
- * @author Ítalo
+ * @author ï¿½talo
  *
  */
 public class SoundManager {
@@ -23,7 +23,7 @@ public class SoundManager {
 	 */
 	public static synchronized SoundManager getInstance() {
 		if(instance == null){
-			return new SoundManager();
+			instance = new SoundManager();
 		}
 		return instance;
 	}

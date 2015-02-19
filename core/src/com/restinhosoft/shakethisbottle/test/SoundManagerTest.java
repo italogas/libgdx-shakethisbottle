@@ -18,7 +18,7 @@ import com.restinhosoft.shakethisbottle.exception.SoundNotEnabledException;
 import com.restinhosoft.shakethisbottle.impl.SoundManager;
 
 /**
- * @author Ítalo
+ * @author ï¿½talo
  *
  */
 public class SoundManagerTest {
@@ -59,16 +59,9 @@ public class SoundManagerTest {
 	public void testCreation4() throws SoundManagerNotStartedException{
 		thrown.expect(SoundManagerNotStartedException.class);
 		thrown.expectMessage("SoundManager was not started properly. " +
-					"Call load() method to enable SoundManager to load his content. ");
+					"Call load() method to enable SoundManager to load the Player sound preferences. ");
 		
 		manager.turnOn(); // it should not pass here
-//		try {
-//			manager.turnOn();
-//			fail("Expected an SoundManagerNotStartedException to be trown");
-//		} catch (SoundManagerNotStartedException smnes) {
-//			assertThat(smnes.getMessage(), is("SoundManager was not started properly. " +
-//					"Call load() method to enable SoundManager to load his content. "));
-//		}
 	}
 	
 	@Test
