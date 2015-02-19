@@ -24,9 +24,10 @@ import com.restinhosoft.game.hittheballoon.StartScreen;
 import com.restinhosoft.game.hitthecircle.HitTheCircleStartScreen;
 import com.restinhosoft.game.memorizefast.MemorizeFastStartScreen;
 import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 
 /**
- * @author Ítalo
+ * @author Italo
  *
  */
 public class GameSelectionScreen implements Screen {
@@ -51,6 +52,9 @@ public class GameSelectionScreen implements Screen {
 	private Skin skin2;
 	private TextButton textButton;
 	private FitViewport fitViewport;
+	
+	private LanguageManager languageManager;
+	public String language;
 
 		
 	/* (non-Javadoc)
@@ -59,6 +63,13 @@ public class GameSelectionScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
@@ -89,7 +100,8 @@ public class GameSelectionScreen implements Screen {
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		textButton = new TextButton("Back to MAIN MENU", textButtonStyle);
+		//textButton = new TextButton("Back to MAIN MENU", textButtonStyle);
+		textButton = new TextButton((language.equals(languageManager.languageEN)?"Back to Menu":"Voltar para Menu"), textButtonStyle);
 		textButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

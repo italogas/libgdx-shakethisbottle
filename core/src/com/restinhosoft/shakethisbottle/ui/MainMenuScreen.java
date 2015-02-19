@@ -22,9 +22,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.hittheballoon.ActorAccessor;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 
 /**
- * @author Ítalo
+ * @author Italo
  *
  */
 public class MainMenuScreen implements Screen {
@@ -42,6 +43,9 @@ public class MainMenuScreen implements Screen {
 	private TextButton textButton4;
 	private TweenManager tweenManager;
 	private FitViewport fitViewport;
+	
+	private LanguageManager languageManager;
+	public String language;
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -49,6 +53,13 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
@@ -77,7 +88,8 @@ public class MainMenuScreen implements Screen {
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
-		textButton1 = new TextButton("Play Game", textButtonStyle);
+		//textButton1 = new TextButton("Play Game", textButtonStyle);
+		textButton1 = new TextButton((language.equals(languageManager.languageEN)?"Play Game ":"Jogar "), textButtonStyle);
 		textButton1.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -86,7 +98,8 @@ public class MainMenuScreen implements Screen {
 		});
 		textButton1.pad(15);
 		
-		textButton2 = new TextButton("Options", textButtonStyle);
+		//textButton2 = new TextButton("Options", textButtonStyle);
+		textButton2 = new TextButton((language.equals(languageManager.languageEN)?"Options ":"Opcoes "), textButtonStyle);
 		textButton2.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -95,7 +108,8 @@ public class MainMenuScreen implements Screen {
 		});
 		textButton2.pad(15);
 		
-		textButton3 = new TextButton("Player Profile", textButtonStyle);
+		//textButton3 = new TextButton("Player Profile", textButtonStyle);
+		textButton3 = new TextButton((language.equals(languageManager.languageEN)?"Player Profile ":"Perfil do Jogador "), textButtonStyle);
 		textButton3.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -106,7 +120,8 @@ public class MainMenuScreen implements Screen {
 		});
 		textButton3.pad(15);
 		
-		textButton4 = new TextButton("Exit", textButtonStyle);
+		//textButton4 = new TextButton("Exit", textButtonStyle);
+		textButton4 = new TextButton((language.equals(languageManager.languageEN)?"Exit ":"Sair "), textButtonStyle);
 		textButton4.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

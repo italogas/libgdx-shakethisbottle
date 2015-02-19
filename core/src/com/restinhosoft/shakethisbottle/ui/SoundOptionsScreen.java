@@ -3,8 +3,6 @@
  */
 package com.restinhosoft.shakethisbottle.ui;
 
-import java.util.Calendar;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
@@ -29,7 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.player.PlayerPreferencesIOBuffer;
-import com.restinhosoft.player.PlayerPreferencesJson;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 
 /**
  * @author Italo
@@ -58,6 +56,9 @@ public class SoundOptionsScreen implements Screen {
 	public FitViewport fitViewport;
 	
 	//PlayerPreferencesIOBuffer pref;
+	
+	private LanguageManager languageManager;
+	public String language;
 
 	public PlayerPreferencesIOBuffer pref;
 
@@ -112,6 +113,13 @@ public class SoundOptionsScreen implements Screen {
 		}
 		//pref = new PlayerPreferencesIOBuffer();
 		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
 		stage.setViewport(fitViewport);
@@ -128,10 +136,10 @@ public class SoundOptionsScreen implements Screen {
 		
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
-		enableSoundLabel = new Label("Enable Sound: ", labelStyle);
-		gameMusicLabel = new Label("Game Music: ", labelStyle);
-		soundEffectsLabel = new Label("Sound Effects: ", labelStyle);
-		generalVolumeLabel = new Label("General Volume: ", labelStyle);
+		enableSoundLabel = new Label((language.equals(languageManager.languageEN)?"Enable Sound: ":"Habilitar Som: "), labelStyle);
+		gameMusicLabel = new Label((language.equals(languageManager.languageEN)?"Game Music: ":"Musica: "), labelStyle);
+		soundEffectsLabel = new Label((language.equals(languageManager.languageEN)?"Sound Effects: ":"Efeitos Sonoros: "), labelStyle);
+		generalVolumeLabel = new Label((language.equals(languageManager.languageEN)?"General Volume: ":"Volume: "), labelStyle);
 		
 		CheckBoxStyle checkBoxStyle = new CheckBox.CheckBoxStyle();
 		checkBoxStyle.checkboxOff = skin.getDrawable("check-off");
@@ -152,7 +160,8 @@ public class SoundOptionsScreen implements Screen {
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		backButton = new TextButton("Back", textButtonStyle);
+		//backButton = new TextButton("Back", textButtonStyle);
+		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back: ":"Voltar "), textButtonStyle);
 		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

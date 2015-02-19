@@ -36,7 +36,6 @@ public class LanguageOptionsScreenTest {
 		new DesktopTestLauncher(testGame);
 		
 		screen.show();
-
 	}
 
 	@Test
@@ -79,13 +78,13 @@ public class LanguageOptionsScreenTest {
 	@Test
 	public void checkBoxStateTest()  throws Exception{
 		assertTrue(screen.checkBox0.isVisible());
-		if(screen.pref.getLanguage().equalsIgnoreCase("ptbr")){
+		if(screen.language.equalsIgnoreCase("ptbr")){
 			assertTrue(screen.checkBox0.isChecked());
 		}
 		assertFalse(screen.checkBox0.isChecked());
 		
 		assertTrue(screen.checkBox1.isVisible());
-		if(screen.pref.getLanguage().equalsIgnoreCase("engl")){
+		if(screen.language.equalsIgnoreCase("engl")){
 			assertTrue(screen.checkBox1.isChecked());
 		}
 		assertFalse(screen.checkBox1.isChecked());

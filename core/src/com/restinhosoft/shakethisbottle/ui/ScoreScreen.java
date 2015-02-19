@@ -23,7 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.restinhosoft.player.PlayerScoresIOBuffer;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 
 
 /**
@@ -62,6 +62,9 @@ public class ScoreScreen implements Screen {
 	private FitViewport fitViewport;
 	
 	private String scoreString;
+	
+	private LanguageManager languageManager;
+	public String language;
 	
 	//*******************************************SAVE*******************************************
 	
@@ -168,6 +171,13 @@ public class ScoreScreen implements Screen {
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		FileHandle local = Gdx.files.local(fileName);
 		if(local.exists()){
 			scores  = loadPlayersScores();
@@ -216,6 +226,7 @@ public class ScoreScreen implements Screen {
 		});
 		
 		backText = new TextButton("BACK", textButtonEnableStyle);
+		backText = new TextButton((language.equals(languageManager.languageEN)?"Back ":"Voltar "), textButtonEnableStyle);
 		backText.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

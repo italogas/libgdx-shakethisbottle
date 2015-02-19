@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 public class SelectLevelScreen implements Screen {
@@ -26,10 +27,20 @@ public class SelectLevelScreen implements Screen {
 	public TextButton hardButton;
 	public TextButton insaneButton;
 	public Table table;
+	
+	private LanguageManager languageManager;
+	public String language;
 
 	@Override
 	public void show() {
-		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener(); 
+		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		stage = new Stage();
 		
@@ -48,7 +59,8 @@ public class SelectLevelScreen implements Screen {
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		easyButton = new TextButton("Easy", textButtonStyle);
+		//easyButton = new TextButton("Easy", textButtonStyle);
+		easyButton = new TextButton((language.equals(languageManager.languageEN)?"Easy":"Facil"), textButtonStyle);
 		easyButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -68,7 +80,8 @@ public class SelectLevelScreen implements Screen {
 		});
 		normalButton.pad(10);
 		
-		hardButton = new TextButton("Hard", textButtonStyle);
+		//hardButton = new TextButton("Hard", textButtonStyle);
+		hardButton = new TextButton((language.equals(languageManager.languageEN)?"Hard":"Dificil"), textButtonStyle);
 		hardButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -78,7 +91,8 @@ public class SelectLevelScreen implements Screen {
 		});
 		hardButton.pad(10);
 		
-		insaneButton = new TextButton("Insane", textButtonStyle);
+		//insaneButton = new TextButton("Insane", textButtonStyle);
+		insaneButton = new TextButton((language.equals(languageManager.languageEN)?"Insane":"Insano"), textButtonStyle);
 		insaneButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

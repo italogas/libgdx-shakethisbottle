@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 public class GameOverScreen implements Screen {
@@ -26,10 +27,20 @@ public class GameOverScreen implements Screen {
 	private BitmapFont bitmapFont;
 	private LabelStyle labelStyle;
 	private Table table;
+	
+	private LanguageManager languageManager;
+	public String language;
 
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		stage = new Stage();
 		
@@ -53,7 +64,8 @@ public class GameOverScreen implements Screen {
 		labelStyle.font = bitmapFont;
 		labelStyle.fontColor= Color.RED;
 		
-		TextButton backButton = new TextButton("Back", textButtonStyle);
+		//TextButton backButton = new TextButton("Back", textButtonStyle);
+		TextButton backButton = new TextButton((language.equals(languageManager.languageEN)?"Back":"Voltar"), textButtonStyle);
 		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -62,7 +74,8 @@ public class GameOverScreen implements Screen {
 		});
 		backButton.pad(10);
 		
-		TextButton tryAgainButton = new TextButton("Try Again", textButtonStyle);
+		//TextButton tryAgainButton = new TextButton("Try Again", textButtonStyle);
+		TextButton tryAgainButton = new TextButton((language.equals(languageManager.languageEN)?"Try Again":"Tentar de novo"), textButtonStyle);
 		tryAgainButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -75,7 +88,11 @@ public class GameOverScreen implements Screen {
 		Label gameOverLabel = new Label("GAME OVER", labelStyle);
 		gameOverLabel.setFontScale(1);
 		
-		Label scoreLabel = new Label("Final Score: " + GameScreen.GameManager.getScore(), labelStyle);
+		//Label scoreLabel = new Label("Final Score: " + GameScreen.GameManager.getScore(), labelStyle);
+		Label scoreLabel = new Label(language.equals(languageManager.languageEN) ? 
+					("Final Score: " + GameScreen.GameManager.getScore()) : 
+					("Placar Final: " + GameScreen.GameManager.getScore()), labelStyle);
+		
 		GameScreen.GameManager.resetScore();
 		
 		table = new Table(skin);

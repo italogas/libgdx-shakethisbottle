@@ -1,17 +1,33 @@
 package com.restinhosoft.shakethisbottle.impl;
 
-import com.restinhosoft.player.PlayerPreferencesIOBuffer;
+import java.security.InvalidParameterException;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.restinhosoft.shakethisbottle.exception.LanguageManagerNotStartedException;
 
 public class LanguageManager {
 	
 	public boolean started = false;
 	
-	private PlayerPreferencesIOBuffer userSettings;
+	public final String languageFile = "language.txt";
+	public final String languageEN = "engl";
+	public final String languagePT = "ptbr";
 	
 	private static LanguageManager instance = null;
+
+	private String language;
+
+	private String defaultLanguage = languageEN;
 	
-	private LanguageManager() {}
+	private LanguageManager() {
+		if(Gdx.files.local(languageFile).exists()){
+			language = loadLanguage();
+		}else {
+			language = defaultLanguage;	
+		}
+		started = true;
+	}
 
 	/**
 	 * It returns the single instance of the LanguageManager.
@@ -23,28 +39,11 @@ public class LanguageManager {
 		}
 		return instance;
 	}
-
-	public void load() {
-		try{
-			userSettings = new PlayerPreferencesIOBuffer();
-		} catch (Exception e){
-			System.err.println(e.getMessage());
-		}
-		started = true;
-	}
 	
 	public String getLanguage() throws Exception{
 		if(!started){
 			throw new LanguageManagerNotStartedException();
 		}
-		
-		String language = null;
-		try{
-			language = userSettings.getLanguage();
-		}catch (Exception e) {
-			System.err.println(e.getMessage());
-		}
-		
 		return language;
 	}
 	
@@ -52,14 +51,40 @@ public class LanguageManager {
 		if(!started){
 			throw new LanguageManagerNotStartedException();
 		}
-		
-		try{
-			userSettings.setLanguage(language);;
-		}catch (Exception e) {
-			System.err.println(e.getMessage());
+		if(language == null || language.equals("")){
+			throw new InvalidParameterException("Language selected not suported ");
+		} else if(!language.equalsIgnoreCase(languageEN) && !language.equalsIgnoreCase(languagePT)){
+			throw new InvalidParameterException("Language selected not suported ");
+		} else {
+			this.language = language;
+			saveLanguage();
 		}
-		
 		return;
 	}
+	
+	public void saveLanguage(){
+		try{
+			FileHandle local = Gdx.files.local(languageFile);
+			local.writeString(language,false);
+		}  catch (RuntimeException re){
+			System.err.println(re.getMessage());
+		}
+	}
+	
+	public String loadLanguage(){
+		String readString = null;
+		try {
+			FileHandle local = Gdx.files.local(languageFile);
+			readString = local.readString();
+		} catch (RuntimeException re){
+			System.err.println(re.getMessage());
+		}
+		return readString;
+		
+	}
 
+	public String getDefaultLanguage() {
+		return defaultLanguage;
+	}
+	
 }

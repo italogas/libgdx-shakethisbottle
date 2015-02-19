@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 
 public class OptionsScreen implements Screen {
 
@@ -29,11 +30,21 @@ public class OptionsScreen implements Screen {
 	private Texture background;
 	private FitViewport fitViewport;
 	
+	private LanguageManager languageManager;
+	public String language;
+	
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		stage = new Stage();
 		stage.setViewport(fitViewport);
@@ -60,7 +71,7 @@ public class OptionsScreen implements Screen {
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
-		textButton1 = new TextButton("Language", textButtonStyle);
+		textButton1 = new TextButton((language.equals(languageManager.languageEN)?"Language ":"Linguagem "), textButtonStyle);
 		textButton1.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -69,7 +80,7 @@ public class OptionsScreen implements Screen {
 		});
 		textButton1.pad(15);
 		
-		textButton2 = new TextButton("Sound Options", textButtonStyle);
+		textButton2 = new TextButton((language.equals(languageManager.languageEN)?"Sound Options ":"Opcoes de Som "), textButtonStyle);
 		textButton2.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -78,7 +89,7 @@ public class OptionsScreen implements Screen {
 		});
 		textButton2.pad(15);
 		
-		textButton3 = new TextButton("Exit", textButtonStyle);
+		textButton3 = new TextButton((language.equals(languageManager.languageEN)?"Exit ":"Sair "), textButtonStyle);
 		textButton3.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

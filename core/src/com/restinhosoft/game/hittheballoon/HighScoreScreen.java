@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 public class HighScoreScreen implements Screen {
@@ -25,10 +26,20 @@ public class HighScoreScreen implements Screen {
 	private com.badlogic.gdx.scenes.scene2d.ui.Label label;
 	private TextureAtlas textureAtlas;
 	private Skin skin;
+	
+	private LanguageManager languageManager;
+	public String language;
 
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		stage = new Stage();
 		
@@ -55,7 +66,8 @@ public class HighScoreScreen implements Screen {
 		String highScore = GameScreen.GameManager.loadScore();
 		label = new com.badlogic.gdx.scenes.scene2d.ui.Label(highScore, labelStyle);
 		
-		TextButton textButton = new TextButton("Back", textButtonStyle);
+		//TextButton textButton = new TextButton("Back", textButtonStyle);
+		TextButton textButton = new TextButton((language.equals(languageManager.languageEN)?"Back":"Voltar"), textButtonStyle);
 		textButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

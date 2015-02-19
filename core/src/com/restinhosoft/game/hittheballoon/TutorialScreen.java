@@ -15,21 +15,34 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 public class TutorialScreen implements Screen {
 	
-	private String tutorial_description = "Hit the ballons as soon as\n     they appear in the game screen!";
+	private String tutorial_description_en = "Hit the ballons as soon as\n     they appear in the game screen!";
+	private String tutorial_description_pt = "Acerte os baloes \n     assim que eles aparecerem \n          na tela do jogo!";
 	private ShakeThisBottle game;
 	private Stage stage;
 	private TextureAtlas atlas;
 	private Skin skin;
 	private BitmapFont bitmapFont;
 	private Table table;
+	private TextButton okButton;
+	
+	private LanguageManager languageManager;
+	public String language;
 
 	@Override
 	public void show() {
-		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener(); 
+		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		stage = new Stage();
 		
@@ -48,7 +61,8 @@ public class TutorialScreen implements Screen {
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		TextButton okButton = new TextButton("Understood!!", textButtonStyle);
+		//TextButton okButton = new TextButton("Understood!!", textButtonStyle);
+		okButton = new TextButton((language.equals(languageManager.languageEN)?"Understood!!":"Entendido!!"), textButtonStyle);
 		okButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -61,7 +75,8 @@ public class TutorialScreen implements Screen {
 		labelStyle.font = bitmapFont;
 		labelStyle.fontColor = Color.MAGENTA;
 		
-		Label label = new Label(tutorial_description, labelStyle);
+		//Label label = new Label(tutorial_description, labelStyle);
+		Label label = new Label((language.equals(languageManager.languageEN)? tutorial_description_en : tutorial_description_pt), labelStyle);
 
 		table = new Table(skin);
 		table.setFillParent(true);

@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -22,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.shakethisbottle.ShakeThisBottleStartScreen;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 
 /**
  * @author Italo
@@ -66,6 +66,9 @@ public class AchievementsScreen implements Screen {
 	
 	//private int width = Gdx.graphics.getWidth();
 	//private int height= Gdx.graphics.getHeight();
+	
+	private LanguageManager languageManager;
+	public String language;
 		
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -73,6 +76,13 @@ public class AchievementsScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
@@ -104,7 +114,8 @@ public class AchievementsScreen implements Screen {
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		backtxBT = new TextButton("BACK", textButtonStyle);
+		//backtxBT = new TextButton("BACK", textButtonStyle);
+		backtxBT = new TextButton((language.equals(languageManager.languageEN)?"Back ":"Voltar "), textButtonStyle);
 		backtxBT.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

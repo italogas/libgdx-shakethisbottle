@@ -1,10 +1,7 @@
 package com.restinhosoft.shakethisbottle.ui;
 
-import java.util.Calendar;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -21,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.restinhosoft.player.PlayerPreferencesIOBuffer;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 
 public class LanguageOptionsScreen implements Screen {
 
@@ -37,49 +34,21 @@ public class LanguageOptionsScreen implements Screen {
 	public TextButton backButton;
 	public Texture background;
 	public FitViewport fitViewport;
-	
 
-	private static final String fileName = "language.txt";
-	private static String language = "engl";
-	
-	private static void saveLanguage(){
-		String time = Calendar.getInstance().getTime().toString();
-		try{
-			FileHandle local = Gdx.files.local(fileName);
-			local.writeString(language,false);
-		}  catch (RuntimeException re){
-			System.err.println(re.getMessage());
-		}
-	}
-	
-	private static String loadLanguage(){
-		String readString = null;
-		try {
-			FileHandle local = Gdx.files.local(fileName);
-			readString = local.readString();
-		} catch (RuntimeException re){
-			System.err.println(re.getMessage());
-		}
-		return readString;
-		
-	}
-	//PlayerPreferencesIOBuffer pref;
-
-	public 	PlayerPreferencesIOBuffer pref;
-
+	private LanguageManager languageManager;
+	public String language;
 
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
-		FileHandle local = Gdx.files.local(fileName);
-		if(local.exists()){
-			language = loadLanguage();
-			saveLanguage();
-		}else{
-			saveLanguage();	
-		}
 		
-		//pref = new PlayerPreferencesIOBuffer();
+		languageManager = LanguageManager.getInstance();
+		
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
@@ -97,7 +66,7 @@ public class LanguageOptionsScreen implements Screen {
 		
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
-		selectLabel = new Label("Select Language: ", labelStyle);
+		selectLabel = new Label((language.equals(languageManager.languageEN)?"Select Language: ":"Selecionar Linguagem: "), labelStyle);
 		
 		CheckBoxStyle checkBoxStyle = new CheckBox.CheckBoxStyle();
 		checkBoxStyle.checkboxOff = skin.getDrawable("check-off");
@@ -115,7 +84,7 @@ public class LanguageOptionsScreen implements Screen {
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		backButton = new TextButton("Back", textButtonStyle);
+		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back ":"Voltar "), textButtonStyle);
 		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -126,7 +95,6 @@ public class LanguageOptionsScreen implements Screen {
 		table = new Table();
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		table.setFillParent(true);
-//		table.setDebug(true);
 		stage.addActor(table);
 		
 		table.add(selectLabel);
@@ -151,34 +119,32 @@ public class LanguageOptionsScreen implements Screen {
 		game.batch.begin();
 		game.batch.draw(background, 0, 0);
 		game.batch.end();
-		//*******language
-		/*if(pref.getLanguage().equals("ptbr")){ 	checkBox0.setChecked(true);}
 		
-		if(pref.getLanguage().equals("engl")){  checkBox1.setChecked(true);}
+		if(language.equals(languageManager.languagePT)) checkBox0.setChecked(true);
+		if(language.equals(languageManager.languageEN)) checkBox1.setChecked(true);
 		
 		if(checkBox0.isPressed()){
-			pref.setLanguage("ptbr");
+			language = languageManager.languagePT;
+			try {
+				languageManager.setLanguage(language);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			checkBox1.setChecked(false);
+			selectLabel.setText("Selecionar Linguagem:");
+			backButton.setText("Voltar");
 		}
 		
 		if(checkBox1.isPressed()){
-			pref.setLanguage("engl");
+			language = languageManager.languageEN;
+			try {
+				languageManager.setLanguage(language);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			checkBox0.setChecked(false);
-		}*/
-		language = loadLanguage();
-		if(language.equals("ptbr")) checkBox0.setChecked(true);
-		if(language.equals("engl")) checkBox1.setChecked(true);
-		
-		if(checkBox0.isPressed()){
-			language = "ptbr";
-			saveLanguage();
-			checkBox1.setChecked(false);
-		}
-		
-		if(checkBox1.isPressed()){
-			language = "engl";
-			saveLanguage();
-			checkBox0.setChecked(false);
+			selectLabel.setText("Select Language:");
+			backButton.setText("Back");
 		}
 		
 		stage.act(delta);
@@ -202,7 +168,6 @@ public class LanguageOptionsScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		
 		background.dispose();
 		atlas.dispose();
 		skin.dispose();

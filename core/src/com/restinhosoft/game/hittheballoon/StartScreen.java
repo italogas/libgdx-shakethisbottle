@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.restinhosoft.shakethisbottle.impl.LanguageManager;
 import com.restinhosoft.shakethisbottle.ui.GameSelectionScreen;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
@@ -41,10 +42,19 @@ public class StartScreen implements Screen {
 	private TextButton survivalButton;
 	private TweenManager tweenManager;
 	
+	private LanguageManager languageManager;
+	public String language;
 
 	@Override
 	public void show() {
-		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener(); 
+		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		stage = new Stage();
 		
@@ -75,7 +85,8 @@ public class StartScreen implements Screen {
 		
 		label = new Label("Hit The Balloon!", labelStyle);
 		
-		playButton = new TextButton("Play!", textButtonStyle);
+		//playButton = new TextButton("Play!", textButtonStyle);
+		playButton = new TextButton((language.equals(languageManager.languageEN)?"Play!":"Jogar!"), textButtonStyle);
 		playButton.addListener(new ClickListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -87,6 +98,7 @@ public class StartScreen implements Screen {
 		playButton.pad(15);
 		
 		survivalButton = new TextButton("Play Survival!",  textButtonStyle);
+		survivalButton = new TextButton((language.equals(languageManager.languageEN)?"Play Survival!":"Jogar Survival!"), textButtonStyle);
 		survivalButton.addListener(new ClickListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -110,7 +122,8 @@ public class StartScreen implements Screen {
 		});
 		tutorialButton.pad(15);
 		
-		highScoresButton  = new TextButton("High Scores", textButtonStyle);
+		//highScoresButton  = new TextButton("High Scores", textButtonStyle);
+		highScoresButton = new TextButton((language.equals(languageManager.languageEN)?"High Scores":"Pontuacoes"), textButtonStyle);
 		highScoresButton.addListener(new ClickListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -121,7 +134,8 @@ public class StartScreen implements Screen {
 		});
 		highScoresButton.pad(15);
 		
-		backButton = new TextButton("Back", textButtonStyle);
+		//backButton = new TextButton("Back", textButtonStyle);
+		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back":"Voltar"), textButtonStyle);
 		backButton.addListener(new ClickListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
