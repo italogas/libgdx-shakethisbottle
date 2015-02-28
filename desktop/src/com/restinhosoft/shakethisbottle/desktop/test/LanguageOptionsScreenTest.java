@@ -14,8 +14,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Array;
-import com.restinhosoft.shakethisbottle.ui.LanguageOptionsScreen;
 import com.restinhosoft.shakethisbottle.ui.TestGame;
+import com.restinhosoft.ui.menus.LanguageOptionsScreen;
 
 /**
  * 

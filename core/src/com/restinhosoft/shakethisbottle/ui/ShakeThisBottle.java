@@ -3,6 +3,7 @@ package com.restinhosoft.shakethisbottle.ui;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.restinhosoft.ui.menus.MainMenuScreen;
 
 public class ShakeThisBottle extends Game {
 	public SpriteBatch batch;
