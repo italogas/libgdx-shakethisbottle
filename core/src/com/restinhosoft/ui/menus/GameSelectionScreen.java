@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.games.hittheballoon.StartScreen;
 import com.restinhosoft.games.hitthecolor.HitTheCircleStartScreen;
+import com.restinhosoft.games.hitthecolor.HitTheColor;
 import com.restinhosoft.games.memorizefast.MemorizeFastStartScreen;
 import com.restinhosoft.games.shakethebottle.ShakeThisBottleStartScreen;
 import com.restinhosoft.options.LanguageManager;
@@ -35,6 +36,12 @@ public class GameSelectionScreen implements Screen {
 	private ShakeThisBottle game;
 	private Texture background;
 	private Texture button;
+	
+	private Texture buttonMEMO;
+	private Texture buttonSHAKE;
+	private Texture buttonBALL;
+	private Texture buttonCOLOR;
+	
 	private Texture backtomenu;
 	private Stage stage;
 	private Texture menuImg;
@@ -147,7 +154,8 @@ public class GameSelectionScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
-				game.setScreen(new HitTheCircleStartScreen());
+				//game.setScreen(new HitTheCircleStartScreen());
+				game.setScreen(new HitTheColor());
 			}
 		});
 		

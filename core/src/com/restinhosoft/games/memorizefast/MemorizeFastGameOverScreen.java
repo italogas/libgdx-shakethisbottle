@@ -23,6 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.restinhosoft.ui.menus.GameSelectionScreen;
 import com.restinhosoft.ui.menus.ScoreScreen;
+import com.restinhosoft.options.LanguageManager;
+import com.restinhosoft.player.ScoresManager;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 
@@ -116,14 +118,38 @@ public class MemorizeFastGameOverScreen implements Screen {
 		bonusBT.setText( "BONUS: "+ bonus);
 	}
 
+	private static LanguageManager languageManager;
+	private static String language;
+	
+	
+	private static void saveScore(int score){
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String temp = language;
+
+		try {
+			languageManager.setLanguage("engl");
+			new ScoresManager("scores_eng.txt").saveDefaultMultipleScore("MEMORIZE FAST", score);
+			languageManager.setLanguage("ptbr");
+			new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("MEMORIZE RAPIDO", score);
+			languageManager.setLanguage(temp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public MemorizeFastGameOverScreen(int score, int level,int bonus) {
 		this.score= score;
 		this.level= level;
 		this.bonus= bonus;
 		
-		scoreScreen.addScore("MEMORIZE FAST", score);
-		//okBT.setVisible(false);
+		//new ScoreScreen().saveDefaultMultipleScore("MEMORIZE FAST", score); 
+		saveScore(score);
+		
 	}
 	
 	public int getScore(){return score;}

@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.options.LanguageManager;
 import com.restinhosoft.player.ScoresManager;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 import com.restinhosoft.ui.menus.GameSelectionScreen;
@@ -116,26 +117,42 @@ public class HitTheCircleGameOverScreen implements Screen {
 		bonusBT.setText( "BONUS: "+ bonus);
 	}
 
+	private static LanguageManager languageManager;
+	private static String language;
+	
+	
+	private static void saveScore(int score){
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String temp = language;
+
+		try {
+			languageManager.setLanguage("engl");
+			new ScoresManager("scores_eng.txt").saveDefaultMultipleScore("HIT THE CIRCLE", score);
+			languageManager.setLanguage("ptbr");
+			new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("ACERTE NO CIRCULO", score);
+			languageManager.setLanguage(temp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public HitTheCircleGameOverScreen(int score, int level,int bonus) {
 		this.score= score;
 		this.level= level;
 		this.bonus= bonus;
 		
-		scoreScreen.addScore("HIT THE CIRCLE", score);
-		
-		//okBT.setVisible(false);
+		saveScore(score);
 	}
 	
 	public int getScore(){return score;}
 	public int getLevel(){return level;}
 	public int getBonus(){return bonus;}
 	
-	//*************************************Saving Score *******************************************
-	//private ScoreScreen scoreScreen = new ScoreScreen();
-	//private PersistenceGDX scoreScreen = new PersistenceGDX();
-	private ScoresManager scoreScreen = new ScoresManager();
-	
-	//*************************************Saving Score *******************************************
 		
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()

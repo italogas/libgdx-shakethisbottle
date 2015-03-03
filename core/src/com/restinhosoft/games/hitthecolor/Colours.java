@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Colours extends Actor{
 	enum Colour {
@@ -43,16 +44,26 @@ public class Colours extends Actor{
 	private boolean touched = false;
 	private boolean out = false;
 	
+	private boolean pause;
 	Colour color;
 
-	public Colours(Colour color,float position_x,float position_y) {
-		this.color = color;
+	public Colours(float position_x,float position_y) {
+		setColorRan();
 		
 		setTexture();
 				
 		this.position_x = position_x;
 		this.position_y = position_y;
 		
+		this.pause = false;
+		
+		//bounds();
+		
+		timer();
+		
+	}
+	
+	private void bounds(){
 		this.setBounds(position_x, position_y, texture.getWidth(), texture.getHeight());
 		
 		addListener(new InputListener(){
@@ -60,13 +71,21 @@ public class Colours extends Actor{
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				((Colours) event.getTarget()).setVisible(false);
-				((Colours) event.getTarget()).setTouched(true);;
+				if(touched)((Colours) event.getTarget()).setTouched(false);
+				else ((Colours) event.getTarget()).setTouched(true);
+				//((Colours) event.getTarget()).setTouched(true);
+				//System.out.println("epa colour.java");
 				return true;
 			}
 		});
 		
-		timer();
-		
+		/*addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				System.out.println("clucou");
+			}
+		});*/
 	}
 	
 	@Override
@@ -101,14 +120,18 @@ public class Colours extends Actor{
 	}
 
 	private void update() {
-		if(timer%2==0)	this.setVisible(false);
+		if(timer%2==0 && this.isVisible()){
+			//this.setVisible(false);
+			setColorRan();
+		}
+		//else if(timer%2==0 && !this.isVisible()) this.setVisible(true);	
 		else {
-			this.setVisible(true);
+			//this.setVisible(true);
 			setColorRan();
 		}
 	}
 	
-	private void setColorRan(){
+	public void setColorRan(){
 		Random rn = new Random();
 		int cor = rn.nextInt(6);
 		
@@ -121,7 +144,7 @@ public class Colours extends Actor{
 		else if(cor == 6) this.color = Colour.PINK;
 	}
 	
-	public int getBalloonPoints(){
+	public int getPoints(){
 		return color.value;
 	}
 
@@ -143,7 +166,7 @@ public class Colours extends Actor{
 	
 	private Timer counterTimer;
 	private TimerTask task;
-	private final long second = 1000;
+	private final long twoSeconds = 2000;
 	
 	private int timer = 0; 
 	
@@ -158,9 +181,19 @@ public class Colours extends Actor{
                 } catch (Exception e) {e.printStackTrace();}  
            }  
 		};
-		
-		counterTimer.scheduleAtFixedRate(task, second, second);
+		if(!pause)	counterTimer.scheduleAtFixedRate(task, twoSeconds, twoSeconds);
 	}
 	
-	public void interTimer(){counterTimer.scheduleAtFixedRate(task, second, second);}
+	public void interTimer(){if(!pause)	counterTimer.scheduleAtFixedRate(task, twoSeconds, twoSeconds);}
+	
+	public void pause(Boolean pause){this.pause = pause;}
+	
+	public void setPosition(float y,float x){
+		position_x = x;
+		position_y = y;
+		bounds();
+	}
+	
+	public float getPositionX(){return position_x;}
+	public float getPositionY(){return position_y;}
 }

@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.options.LanguageManager;
+import com.restinhosoft.player.ScoresManager;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 
 
@@ -64,109 +65,19 @@ public class ScoreScreen implements Screen {
 	
 	private String scoreString;
 	
-	private LanguageManager languageManager;
-	public String language;
+	private static LanguageManager languageManager;
+	public static String language;
+	private static String fileName;
 	
-	//*******************************************SAVE*******************************************
-	
-	private static final String fileName = "scores.txt";
-	private static String scores = "";
-	
-	private static ArrayList<String> gameScores= new ArrayList<String>();
-	private static ArrayList<String> gameNames = new ArrayList<String>();
-		
-	private int gettingPosition(String name){
-		int position = -1;
-		for(int i=0; i < gameScores.size();i++){
-			System.out.println(gameScores.get(i).split(":")[0]);
-			if(gameScores.get(i).split(":")[0].equals(name)){
-				
-				position = i;
-			}
-		}
-		return position;
-	}
-	
-	private static void loadingScores(){
-		String[] gScores = loadPlayersScores().split("\n");
-		gameScores = new ArrayList<String>();
-		for(int i=0; i < gScores.length;i++){
-			gameScores.add(gScores[i]);
-		}
-	}
-	
-	public void addScore(String gameName, int score){
-		FileHandle local = Gdx.files.local(fileName);
-		if(local.exists()){
-			scores  = loadPlayersScores();
-			savingScore();
-		}else{
-			savingScore();	
-		}
-		
-		loadingScores();
-		if(gameName!= null && gameName!=""&& score>=0){
-			int position = (gettingPosition(gameName));
-			if(gettingPosition(gameName)!=-1){
-				String[] temp = gameScores.get(position).split(":");
-				//temp[1] = ""+score;
-				if(Integer.parseInt(temp[1])< score){
-					temp[1] = ""+score;
-				}
-				gameScores.set(position, gameName+":"+temp[1]);
-				savePlayersScores();
-			}else{
-				gameScores.add(gameName+":"+score);
-				gameNames.add (gameName);
-				savePlayersScores();
-			}
-		}
-		savePlayersScores();
-	}
-	private static String savingScore(){
-		String jun = "";
-		for(int i=0;i<gameScores.size();i++ ){
-			jun+= gameScores.get(i)+"\n";
-		}
-		return jun;
-	}
-	
-	private static void savePlayersScores(){
-		scores = savingScore();
-		try{
-			FileHandle local = Gdx.files.local(fileName);
-			local.writeString(scores,false);
-		}  catch (RuntimeException re){
-			System.err.println(re.getMessage());
-		}
-	}
-	
-	private static String loadPlayersScores(){
-		FileHandle call = Gdx.files.local(fileName);
-		if(!call.exists()){
-			call.writeString("",false);
-		}
-		String readString = null;
+	private static void scoreLanguageManager(){
+		languageManager = LanguageManager.getInstance();
 		try {
-			FileHandle local = Gdx.files.local(fileName);
-			readString = local.readString();
-		} catch (RuntimeException re){
-			System.err.println(re.getMessage());
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return readString;
-		
-	}
-	
-	
-	//**********************************************SAVE*/*****************************************
-	private String getScoreString(){
-		String string = "";
-		
-	
-		return string;
-	}
-	public ScoreScreen() {
-		this.scoreString = getScoreString();
+		if(language.equals(languageManager.languageEN))	fileName = "scores_eng.txt";
+		else fileName = "scores_pt.txt";
 	}
 	
 	/* (non-Javadoc)
@@ -177,19 +88,9 @@ public class ScoreScreen implements Screen {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
 		languageManager = LanguageManager.getInstance();
-		try {
-			language = languageManager.getLanguage();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
-		FileHandle local = Gdx.files.local(fileName);
-		if(local.exists()){
-			scores  = loadPlayersScores();
-			savingScore();
-		}else{
-			savingScore();	
-		}
+		scoreLanguageManager();
+		scoreString = new ScoresManager(fileName).loadScoresList(fileName);
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
@@ -218,7 +119,7 @@ public class ScoreScreen implements Screen {
 		
 		
 		
-		scoreText = new TextButton(scores, textButtonEnableStyle);
+		scoreText = new TextButton(scoreString, textButtonEnableStyle);
 		scoreText.setColor(Color.LIGHT_GRAY);
 		scoreText.setHeight(height);
 		scoreText.setWidth(width);

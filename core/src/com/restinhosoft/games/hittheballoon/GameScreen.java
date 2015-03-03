@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
 import com.restinhosoft.games.hittheballoon.Balloon.BallonColor;
+import com.restinhosoft.options.LanguageManager;
+import com.restinhosoft.player.ScoresManager;
 import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
 import com.restinhosoft.ui.menus.ScoreScreen;
 
@@ -179,11 +181,34 @@ public class GameScreen implements Screen {
 			return balloon_array.first();
 		}
 		
+		private static LanguageManager languageManager;
+		private static String language;
+		
+		
+		private static void saveScore(int score){
+			languageManager = LanguageManager.getInstance();
+			try {
+				language = languageManager.getLanguage();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			String temp = language;
+
+			try {
+				languageManager.setLanguage("engl");
+				new ScoresManager("scores_eng.txt").saveDefaultMultipleScore("HIT THE BALLOON", score);
+				languageManager.setLanguage("ptbr");
+				new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("ESTOURE O BALAO", score);
+				languageManager.setLanguage(temp);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		public static void saveScore(){
 			String time = Calendar.getInstance().getTime().toString();
 			try{
-				ScoreScreen scoreScreen = new ScoreScreen();
-				scoreScreen.addScore("HIT THE BALLOON", score);
+				saveScore(score);
 				FileHandle local = Gdx.files.local("scoreData.txt");
 				local.writeString("In " + time + ", Score: " + score, false);
 			}  catch (RuntimeException re){
