@@ -3,8 +3,12 @@
  */
 package com.restinhosoft.ui.menus;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,7 +21,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.games.hittheballoon.StartScreen;
 import com.restinhosoft.games.hitthecolor.HitTheCircleStartScreen;
@@ -37,11 +43,34 @@ public class GameSelectionScreen implements Screen {
 	private Texture background;
 	private Texture button;
 	
-	private Texture buttonMEMO;
-	private Texture buttonSHAKE;
-	private Texture buttonBALL;
-	private Texture buttonCOLOR;
+	//*****************************MUDANCAS***********
 	
+	private Texture textureMEMO;
+	private Texture textureSHAKE;
+	private Texture textureBALL;
+	private Texture textureCOLOR;
+	
+	private TextureAtlas textureAtlasMEMO;
+	private TextureAtlas textureAtlasSHAKE;
+	private TextureAtlas textureAtlasBALL;
+	private TextureAtlas textureAtlasCOLOR;
+	
+	private Skin skinMEMO;
+	private Skin skinSHAKE;
+	private Skin skinBALL;
+	private Skin skinCOLOR;
+	
+	private TextButtonStyle memoBTStyle;
+	private TextButtonStyle shakeBTStyle;
+	private TextButtonStyle ballBTStyle;
+	private TextButtonStyle colorBTStyle;
+	
+	private TextButton memoButton;
+	private TextButton shakeButton;
+	private TextButton ballButton;
+	private TextButton colorButton;
+	
+	//*****************************MUDANCAS***********
 	private Texture backtomenu;
 	private Stage stage;
 	private Texture menuImg;
@@ -64,6 +93,38 @@ public class GameSelectionScreen implements Screen {
 	public String language;
 
 		
+	private TextureAtlas creatingAtlas(String file){ 
+		return new TextureAtlas(Gdx.files.internal(file));
+	}
+	
+	private Skin creatingSkin(TextureAtlas atlas){ 
+		return new Skin(atlas);
+	}
+	
+	private TextButton creatingTextButton(String text,TextButtonStyle style, boolean disable){
+		TextButton button = new TextButton(text, style);
+		button.setDisabled(disable);
+		return button;
+	}
+	
+	private TextButtonStyle creatingTextButtonStyles(Skin skin, String file, BitmapFont font){
+		TextButtonStyle style = new TextButton.TextButtonStyle();
+		style.up   = skin.getDrawable(file);
+		style.down = skin.getDrawable(file);
+		style.pressedOffsetX = 1;
+		style.pressedOffsetY =-1;
+		style.font = font;
+		
+		return style;
+	}
+	
+	private Table creatingTable(int beginningX,int beginningY, int width, int height){
+		Table table = new Table();
+		table.setBounds(beginningX, beginningY, width, height);
+		
+		return table;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
@@ -94,11 +155,66 @@ public class GameSelectionScreen implements Screen {
 		
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
+		//******************************MUDANCAS**************************************************
+
+		textureMEMO = new Texture(Gdx.files.internal("menugame/menu_memoria.png"));
+		textureSHAKE= new Texture(Gdx.files.internal("menugame/menu_garrafa.png"));
+		textureCOLOR= new Texture(Gdx.files.internal("menugame/menu_color.png"));
+		textureBALL = new Texture(Gdx.files.internal("menugame/menu_balloon.png"));
+
+		textureAtlasMEMO = creatingAtlas("menugame/menu_memoria.atlas");
+		textureAtlasSHAKE= creatingAtlas("menugame/menu_garrafa.atlas");
+		textureAtlasCOLOR= creatingAtlas("menugame/menu_color.atlas");
+		textureAtlasBALL = creatingAtlas("menugame/menu_balloon.atlas");
+		
+		skinMEMO = creatingSkin(textureAtlasMEMO);
+		skinSHAKE = creatingSkin(textureAtlasSHAKE);
+		skinCOLOR = creatingSkin(textureAtlasCOLOR);
+		skinBALL = creatingSkin(textureAtlasBALL);
+
+		memoBTStyle = creatingTextButtonStyles(skinMEMO, "memoriabt", bitmapFont);
+		shakeBTStyle= creatingTextButtonStyles(skinSHAKE,"garrafabt", bitmapFont);
+		colorBTStyle= creatingTextButtonStyles(skinCOLOR,"colorbt", bitmapFont);
+		ballBTStyle = creatingTextButtonStyles(skinBALL, "balloonbt", bitmapFont);
+		
+		memoButton = new TextButton("", memoBTStyle);
+		memoButton.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new MemorizeFastStartScreen());	
+			}
+		});
+		
+		shakeButton = new TextButton("", shakeBTStyle);
+		shakeButton.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new ShakeThisBottleStartScreen());	
+			}
+		});
+		colorButton = new TextButton("", colorBTStyle);
+		colorButton.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new HitTheColor());	
+			}
+		});
+		ballButton = new TextButton("", ballBTStyle);
+		ballButton.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new StartScreen());	
+			}
+		});
+		
+		Table table2 = creatingTable(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), 100);
+		//******************************MUDANCAS**************************************************
 		table = new Table();
 		table.setFillParent(true);
-		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()-100);
 //		table.setDebug(true);
 		stage.addActor(table);
+		stage.addActor(table2);
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.up = skin2.getDrawable("blue_button");
@@ -176,8 +292,17 @@ public class GameSelectionScreen implements Screen {
 				
 			}
 		});
-		
-		table.add(imageButton1);
+		table.add(ballButton);
+		//table.columnDefaults(3);
+		table.add(memoButton);
+		table.row();
+		table.add(shakeButton);
+		table.add(colorButton);
+		table.row();
+		table.row();
+		table.row();
+		table.align(Align.center);
+		/*table.add(imageButton1);
 		table.add(imageButton2);
 		table.add(imageButton3);
 		table.row();
@@ -185,8 +310,9 @@ public class GameSelectionScreen implements Screen {
 		table.add(imageButton5);
 		table.add(imageButton6);
 		table.row();
-		table.add();
-		table.add(textButton);
+		table.add();*/
+		table2.add(textButton);
+		table2.align(Align.bottom);
 
 	}
 
@@ -244,5 +370,5 @@ public class GameSelectionScreen implements Screen {
 		button.dispose();
 		backtomenu.dispose();
 	}
-
+	
 }
