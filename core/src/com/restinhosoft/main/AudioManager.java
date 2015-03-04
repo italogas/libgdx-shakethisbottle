@@ -47,6 +47,7 @@ public class AudioManager{
 	}
 	
 	public void close(){
+		music.stop();
 		music.dispose();
 		for(int i=0;i<soundTrack.size();i++){
 			soundTrack.get(i).dispose();

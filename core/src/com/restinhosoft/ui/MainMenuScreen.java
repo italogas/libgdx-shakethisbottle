@@ -234,6 +234,8 @@ public class MainMenuScreen implements Screen {
 		stage.dispose();
 		
 		audioManager.stopMusic();
+		audioManager.getMusic().stop();
+		audioManager.getMusic().dispose();
 		audioManager.close();
 	}
 
