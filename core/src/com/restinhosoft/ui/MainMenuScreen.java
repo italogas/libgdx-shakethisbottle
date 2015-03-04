@@ -9,6 +9,9 @@ import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Music.OnCompletionListener;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -22,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.hittheballoon.ActorAccessor;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
 
@@ -47,6 +51,8 @@ public class MainMenuScreen implements Screen {
 	
 	private LanguageManager languageManager;
 	public String language;
+	
+	private AudioManager audioManager;
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -56,6 +62,10 @@ public class MainMenuScreen implements Screen {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
 		languageManager = LanguageManager.getInstance();
+		
+		audioManager = new AudioManager("audio/mainmenu/7inn.ogg");
+		audioManager.playMusic();
+		
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
@@ -158,8 +168,7 @@ public class MainMenuScreen implements Screen {
 			.push(Tween.to(textButton3, ActorAccessor.ALPHA, .5f).target(1))
 			.push(Tween.to(textButton4, ActorAccessor.ALPHA, .5f).target(1))
 			.end().start(tweenManager);
-	
-	}
+		}
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#render(float)
@@ -223,7 +232,11 @@ public class MainMenuScreen implements Screen {
 		bitmapFont.dispose();
 		menuImg.dispose();
 		stage.dispose();
-
+		
+		audioManager.stopMusic();
+		audioManager.close();
 	}
 
+	
+	
 }

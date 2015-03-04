@@ -112,7 +112,7 @@ public class HitTheCircleStartScreen implements Screen {
 		menuImg = new Texture(Gdx.files.internal("background_profile_screen.png"));
 		
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
-		gameImageAtlas = new TextureAtlas(Gdx.files.internal("hitthecircle_img/hitthecircle_intro.atlas"));
+		gameImageAtlas = new TextureAtlas(Gdx.files.internal("hitthecircle/hitthecircle_intro.atlas"));
 		
 		skin = new Skin(atlas);
 		gameImageSkin = new Skin(gameImageAtlas);

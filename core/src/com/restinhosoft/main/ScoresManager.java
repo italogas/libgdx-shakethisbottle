@@ -135,22 +135,23 @@ public class ScoresManager{
 	}
 	
 	public static String loadUniqueScore(String localfileName){
-		if(localfileName== null && localfileName ==""){	return "";}
-		FileHandle call = Gdx.files.local(localfileName);
-		
-		if(!call.exists()){
-			call.writeString("",false);
-		}
-		
-		String readString = null;
-		
-		try {
-			FileHandle local = Gdx.files.local(localfileName);
-			readString = local.readString();
-		} catch (RuntimeException re){
-			System.err.println(re.getMessage());
-		}
-		return readString;
+		if(localfileName!= null && localfileName !=""){	
+			FileHandle call = Gdx.files.local(localfileName);
+			
+			if(!call.exists()){
+				call.writeString("",false);
+			}
+			
+			String readString = null;
+			
+			try {
+				FileHandle local = Gdx.files.local(localfileName);
+				readString = local.readString();
+			} catch (RuntimeException re){
+				System.err.println(re.getMessage());
+			}
+			return readString;	
+		}return "";
 	}
 
 }

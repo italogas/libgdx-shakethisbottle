@@ -142,9 +142,9 @@ public class HitTheCircleLevelUpScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 
 		hitTheCircleGameLevelUpYellow = new Texture(Gdx.files.internal(
-				 								 "hitthecircle_img/hitthecircle_levelup_yellow.png"));
+				 								 "hitthecircle/hitthecircle_levelup_yellow.png"));
 		hitTheCircleGameLevelUpRed   = new Texture(Gdx.files.internal(
-												 "hitthecircle_img/hitthecircle_levelup_red.png"));
+												 "hitthecircle/hitthecircle_levelup_red.png"));
 		
 		hitTheCircleGameBackGroundScreen = hitTheCircleGameLevelUpYellow;
 		

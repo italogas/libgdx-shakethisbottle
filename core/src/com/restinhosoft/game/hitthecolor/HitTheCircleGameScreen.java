@@ -402,7 +402,7 @@ public class HitTheCircleGameScreen implements Screen {
 			Gdx.input.setInputProcessor(stage);
 			
 			memorizefastGameBackground = new Texture(Gdx.files.internal(
-													 "hitthecircle_img/hitthecircle_background.png"));
+													 "hitthecircle/hitthecircle_background.png"));
 			//timer
 			counterTimer = new Timer();
 			
@@ -424,9 +424,9 @@ public class HitTheCircleGameScreen implements Screen {
 	        counterTimer.scheduleAtFixedRate(task, second, second);
 	    	
 			//creating graphics
-			this.atlasLeft     =creatingAtlas( "hitthecircle_img/hitthecircle_left.atlas");
-			this.atlasMiddle   =creatingAtlas("hitthecircle_img/hitthecircle_middle.atlas");
-			this.atlasRight    =creatingAtlas( "hitthecircle_img/hitthecircle_right.atlas");
+			this.atlasLeft     =creatingAtlas( "hitthecircle/hitthecircle_left.atlas");
+			this.atlasMiddle   =creatingAtlas("hitthecircle/hitthecircle_middle.atlas");
+			this.atlasRight    =creatingAtlas( "hitthecircle/hitthecircle_right.atlas");
 			this.atlasGameTexts=creatingAtlas( "imageghostsqr.atlas");
 			
 			this.leftSkin    =creatingSkin( this.atlasLeft);

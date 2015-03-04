@@ -169,7 +169,7 @@ public class HitTheCircleGameOverScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 
 		hitTheCircleGameOverBKG = new Texture(Gdx.files.internal(
-				 								 "hitthecircle_img/hitthecircle_gameover.png"));
+				 								 "hitthecircle/hitthecircle_gameover.png"));
 	
 		
 		this.atlasGameTexts    =creatingAtlas( "imageghostsqr.atlas");

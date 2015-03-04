@@ -196,7 +196,8 @@ public class GameSelectionScreen implements Screen {
 		colorButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new HitTheColor());	
+				//game.setScreen(new HitTheColor());
+				game.setScreen(new HitTheCircleStartScreen());
 			}
 		});
 		ballButton = new TextButton("", ballBTStyle);
