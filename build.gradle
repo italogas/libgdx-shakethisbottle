@@ -95,22 +95,39 @@ project(":html") {
 project(":core") {
     apply plugin: "java"
 	apply plugin: "sonar-runner"
-
-    dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        compile fileTree(dir: 'libs', include: '*.jar')
-    }
+	
+	sourceSets.test.java.srcDirs = ["src/com/restinhosoft/test/"]
     
 	sonarRunner {
 	    sonarProperties {
-	      property "sonar.host.url", "http://localhost:9000/sonar"
-	      property "sonar.jdbc.url", "jdbc:mysql://localhost:9092/sonar"
+	      property "sonar.host.url", "http://localhost:9000/sonar/"
+	      property "sonar.jdbc.url", "jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8"
 	      property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
+	      property "sonar.sourceEncoding", "UTF-8"
 	      property "sonar.jdbc.username", "sonar"
 	      property "sonar.jdbc.password", "sonar"
 	    }
 	}
+	
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        compile fileTree(dir: 'libs', include: '*.jar')
+        
+        compile 'junit:junit:4.+'
+        compile "org.mockito:mockito-all:1.9.5"
+
+        compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+
+        testCompile 'junit:junit:4.+'
+        testCompile "org.mockito:mockito-all:1.9.5"
+
+        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testCompile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+    }
 }
 
 tasks.eclipse.doLast {

@@ -21,7 +21,19 @@ public class LanguageManager {
 	private String defaultLanguage = languageEN;
 	
 	private LanguageManager() {
-		if(Gdx.files.local(languageFile).exists()){
+//		if(Gdx.files.isLocalStorageAvailable()){
+//			if(Gdx.files.local(languageFile).exists()){
+//				language = loadLanguage();
+//			} else {
+//				language = defaultLanguage;
+//			}
+//			started = true;
+//		} else {
+//			throw new Exception("local storage is not available");
+//		}
+		System.out.println(Gdx.files.isLocalStorageAvailable());
+		System.out.println(Gdx.files.local(languageFile).readString());
+		if(Gdx.files.isLocalStorageAvailable() && Gdx.files.local(languageFile) != null){
 			language = loadLanguage();
 		}else {
 			language = defaultLanguage;	
@@ -36,6 +48,11 @@ public class LanguageManager {
 	public static synchronized LanguageManager getInstance() {
 		if(instance == null){
 			instance = new LanguageManager();
+//			try {
+//				instance = new LanguageManager();
+//			} catch (Exception e) {
+//				System.err.println(e.getMessage());
+//			}
 		}
 		return instance;
 	}
