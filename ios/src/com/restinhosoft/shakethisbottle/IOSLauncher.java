@@ -5,7 +5,7 @@ import org.robovm.apple.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
+import com.restinhosoft.main.ShakeThisBottle;
 
 public class IOSLauncher extends IOSApplication.Delegate {
     @Override

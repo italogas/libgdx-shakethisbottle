@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.restinhosoft.shakethisbottle.ui.ShakeThisBottle;
+import com.restinhosoft.main.ShakeThisBottle;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override

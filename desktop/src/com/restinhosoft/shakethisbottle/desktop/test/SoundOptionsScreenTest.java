@@ -14,8 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Array;
-import com.restinhosoft.shakethisbottle.ui.TestGame;
-import com.restinhosoft.ui.menus.SoundOptionsScreen;
+import com.restinhosoft.ui.SoundOptionsScreen;
 
 /**
  * 
@@ -27,14 +26,14 @@ public class SoundOptionsScreenTest {
 
 	private SoundOptionsScreen screen;
 
-	private TestGame testGame;
+//	private TestGame testGame;
 
 	@Before
 	public void setUp() throws Exception {
 		screen = new SoundOptionsScreen();
-		testGame = new TestGame(screen);
-		
-		new DesktopTestLauncher(testGame);
+//		testGame = new TestGame(screen);
+//		
+//		new DesktopTestLauncher(testGame);
 		
 		screen.show();
 

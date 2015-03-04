@@ -14,8 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Array;
-import com.restinhosoft.shakethisbottle.ui.TestGame;
-import com.restinhosoft.ui.menus.LanguageOptionsScreen;
+import com.restinhosoft.ui.LanguageOptionsScreen;
 
 /**
  * 
@@ -26,14 +25,14 @@ import com.restinhosoft.ui.menus.LanguageOptionsScreen;
 public class LanguageOptionsScreenTest {
 
 	LanguageOptionsScreen screen;
-	private TestGame testGame;
+//	private TestGame testGame;
 
 	@Before
 	public void setUp() throws Exception {
 		screen = new LanguageOptionsScreen();
-		testGame = new TestGame(screen);
-		
-		new DesktopTestLauncher(testGame);
+//		testGame = new TestGame(screen);
+//		
+//		new DesktopTestLauncher(testGame);
 		
 		screen.show();
 	}

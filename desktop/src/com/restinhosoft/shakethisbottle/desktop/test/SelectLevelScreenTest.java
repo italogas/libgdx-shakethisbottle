@@ -14,8 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Array;
-import com.restinhosoft.games.hittheballoon.SelectLevelScreen;
-import com.restinhosoft.shakethisbottle.ui.TestGame;
+import com.restinhosoft.game.hittheballoon.SelectLevelScreen;
 
 /**
  * 
@@ -27,14 +26,14 @@ public class SelectLevelScreenTest {
 
 	private SelectLevelScreen screen;
 
-	private TestGame testGame;
+//	private TestGame testGame;
 
 	@Before
 	public void setUp() throws Exception {
 		screen = new SelectLevelScreen();
-		testGame = new TestGame(screen);
-		
-		new DesktopTestLauncher(testGame);
+//		testGame = new TestGame(screen);
+//		
+//		new DesktopTestLauncher(testGame);
 		
 		screen.show();
 

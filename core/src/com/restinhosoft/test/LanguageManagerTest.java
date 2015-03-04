@@ -11,13 +11,14 @@ import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.restinhosoft.options.LanguageManager;
+import com.restinhosoft.main.LanguageManager;
 
+@RunWith (GdxTestRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LanguageManagerTest {
 	
@@ -33,7 +34,7 @@ public class LanguageManagerTest {
 	
 	@Test
 	public void creationTest() {
-		assertNotNull(manager.loadLanguage());
+		assertTrue(Gdx.files.local(manager.languageFile).exists());
 		assertTrue(manager.started);
 	}
 	
