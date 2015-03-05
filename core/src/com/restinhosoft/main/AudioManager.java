@@ -53,10 +53,17 @@ public class AudioManager{
 	public ArrayList<String> getSoundtrackFileNames(){return soundTrackFileNames;}
 	
 	public void addToSoundTrack(String sound){
-		if(sound!=null && sound!= "" && enableSoundtrack && enableSound){
+		if(sound!=null && sound!= "" ){
 			soundTrackFileNames.add(sound);
-			soundTrack.add(Gdx.audio.newSound(Gdx.files.internal(sound)));
+			Sound s = Gdx.audio.newSound(Gdx.files.internal(sound));
+			if(enableSoundtrack && enableSound){
+				soundTrack.add(s);
+			}else{
+				soundTrack.add(Gdx.audio.newSound(Gdx.files.internal("mudo.ogg")));	
+			}
+			
 		}
+		
 	}
 	
 	public void playMusic(){
