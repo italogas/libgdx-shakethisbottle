@@ -64,7 +64,8 @@ public class MainMenuScreen implements Screen {
 		languageManager = LanguageManager.getInstance();
 		
 		audioManager = new AudioManager("audio/mainmenu/7inn.ogg");
-		audioManager.playMusic();
+		if(!audioManager.getMusic().isPlaying()) audioManager.playMusic();
+		
 		
 		try {
 			language = languageManager.getLanguage();
@@ -105,6 +106,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new GameSelectionScreen());
+				dispose();
 			}
 		});
 		textButton1.pad(15);
@@ -115,6 +117,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new OptionsScreen());
+				dispose();
 			}
 		});
 		textButton2.pad(15);
@@ -126,7 +129,8 @@ public class MainMenuScreen implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				//TO DO
 				
-				game.setScreen(new PlayerProfileScreen());//TEST		
+				game.setScreen(new PlayerProfileScreen());//TEST
+				dispose();
 			}
 		});
 		textButton3.pad(15);
@@ -234,8 +238,6 @@ public class MainMenuScreen implements Screen {
 		stage.dispose();
 		
 		audioManager.stopMusic();
-		audioManager.getMusic().stop();
-		audioManager.getMusic().dispose();
 		audioManager.close();
 	}
 
