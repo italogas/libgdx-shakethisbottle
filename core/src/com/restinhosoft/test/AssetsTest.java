@@ -32,5 +32,25 @@ public class AssetsTest {
 		assertTrue(Gdx.files.internal("..\\android\\assets\\hitthecircle\\hitthecircle_middle.png").exists());
 		assertTrue(Gdx.files.internal("..\\android\\assets\\hitthecircle\\hitthecircle_right.png").exists());
 	}
+	
+	@Test
+	public void memorizeFastTest() throws Exception {
+		assertTrue(Gdx.files.internal("..\\android\\assets\\memorizefast\\memorizefast_background.png").exists());
+		assertTrue(Gdx.files.internal("..\\android\\assets\\memorizefast\\memorizefast_gameover.png").exists());
+		assertTrue(Gdx.files.internal("..\\android\\assets\\memorizefast\\memorizefast_intro.png").exists());
+		assertTrue(Gdx.files.internal("..\\android\\assets\\memorizefast\\memorizefast_square.png").exists());
+		assertTrue(Gdx.files.internal("..\\android\\assets\\memorizefast\\memorizefast_levelup_red.png").exists());
+		assertTrue(Gdx.files.internal("..\\android\\assets\\memorizefast\\memorizefast_levelup_yellow.png").exists());
+		assertTrue(Gdx.files.internal("..\\android\\assets\\memorizefast\\memorizefast_circle.png").exists());
+	}
+	
+	@Test
+	public void shakeThisBottleTest() throws Exception {
+		assertTrue(Gdx.files.internal("..\\android\\assets\\shakethisbottle\\shakethisbottle_background.png").exists());
+		assertTrue(Gdx.files.internal("..\\android\\assets\\shakethisbottle\\shakethisbottle_gameover.png").exists());
+		assertTrue(Gdx.files.internal("..\\android\\assets\\shakethisbottle\\shakethisbottle_levelup_red.png").exists());
+		assertTrue(Gdx.files.internal("..\\android\\assets\\shakethisbottle\\shakethisbottle_levelup_yellow.png").exists());
+		assertTrue(Gdx.files.internal("..\\android\\assets\\shakethisbottle\\garrafa.png").exists());
+	}
 
 }

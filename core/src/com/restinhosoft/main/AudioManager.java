@@ -1,5 +1,6 @@
 package com.restinhosoft.main;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -23,17 +24,12 @@ public class AudioManager{
 	private boolean enableMusic;
 	private boolean enableSoundtrack;
 	
-	private void loadOptions(){
-		enableSound = Boolean.parseBoolean(options[0]);
-		enableMusic = Boolean.parseBoolean(options[1]);
-		enableSoundtrack = Boolean.parseBoolean(options[2]);
-		volume = Float.parseFloat(options[3]);
-	}
-	
-	public AudioManager(String gameMusic){
+	public AudioManager(String gameMusic) throws InvalidParameterException {
 		if(gameMusic!=null && gameMusic!=""){
 			this.musicFileName = gameMusic;
 			this.music = Gdx.audio.newMusic(Gdx.files.internal(gameMusic));	
+		} else {
+			throw new InvalidParameterException();
 		}
 
 		this.soundTrack = new ArrayList<Sound>();
@@ -42,6 +38,13 @@ public class AudioManager{
 		options = new SoundOptionsScreen().loadOptions().split(" ");
 		loadOptions();
 		
+	}
+	
+	private void loadOptions(){
+		enableSound = Boolean.parseBoolean(options[0]);
+		enableMusic = Boolean.parseBoolean(options[1]);
+		enableSoundtrack = Boolean.parseBoolean(options[2]);
+		volume = Float.parseFloat(options[3]);
 	}
 		
 	public Music getMusic(){ return music;}
