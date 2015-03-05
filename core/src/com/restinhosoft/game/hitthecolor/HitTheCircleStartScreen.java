@@ -89,7 +89,7 @@ public class HitTheCircleStartScreen implements Screen {
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		
 		cam = new OrthographicCamera();

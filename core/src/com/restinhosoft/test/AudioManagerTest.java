@@ -35,23 +35,23 @@ public class AudioManagerTest {
 
 	@Test (expected = InvalidParameterException.class)
 	public void creationTest0() {
-		new AudioManager(null);
+		AudioManager audioManager2 = new AudioManager(null);
 	}
 	
 	@Test (expected = InvalidParameterException.class)
 	public void creationTest1() {
-		new AudioManager("");
+		AudioManager audioManager2 = new AudioManager("");
 	}
 	
 	@Test (expected = InvalidParameterException.class)
 	public void creationTest2() {
-		new AudioManager("garrafa.png");
+		AudioManager audioManager2 = new AudioManager("garrafa.png");
 	}
 	
 	@Test 
 	public void creationTest3() {
 		try {
-			new AudioManager("garrafa.png");
+			AudioManager audioManager2 = new AudioManager("garrafa.png");
 		} catch (InvalidParameterException ie) {
 			assertEquals("Invalid audio file format. ", ie.getMessage());
 		}

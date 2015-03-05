@@ -28,23 +28,23 @@ public class ScoresTest {
 	
 	@Test (expected = InvalidParameterException.class)
 	public void creationTest0() {
-		new ScoresManager(null);
+		ScoresManager scoresManager = new ScoresManager(null);
 	}
 	
 	@Test (expected = InvalidParameterException.class)
 	public void creationTest1() {
-		new ScoresManager("");
+		ScoresManager scoresManager = new ScoresManager("");
 	}
 	
 	@Test (expected = InvalidParameterException.class)
 	public void creationTest2() {
-		new ScoresManager("garrafa.png");
+		ScoresManager scoresManager = new ScoresManager("garrafa.png");
 	}
 	
 	@Test 
 	public void creationTest3() {
 		try {
-			new ScoresManager("garrafa.png");
+			ScoresManager scoresManager = new ScoresManager("garrafa.png");
 		} catch (InvalidParameterException ie) {
 			assertEquals("Invalid audio file format. ", ie.getMessage());
 		}

@@ -125,7 +125,7 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		String temp = language;
 
@@ -136,7 +136,7 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 			new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("AGITE A GARRAFA", score);
 			languageManager.setLanguage(temp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 	
@@ -219,7 +219,7 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 		                		showTimer--;
 		                	}else okBT.setVisible(true);	
 		                 } catch (Exception e) {  
-		                      e.printStackTrace();  
+		                	 System.err.println(e.getMessage());  
 		                 }  
 		            }  
 		        }; 

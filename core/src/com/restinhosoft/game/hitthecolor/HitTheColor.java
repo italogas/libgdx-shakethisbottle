@@ -53,7 +53,7 @@ public class HitTheColor implements Screen {
 			try {
 				language = languageManager.getLanguage();
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.err.println(e.getMessage());
 			}
 		}
 				
@@ -274,7 +274,7 @@ public class HitTheColor implements Screen {
                 try { 
                 	if(timer>100){	timer = 0; 	}
                 	timer++;
-                } catch (Exception e) {e.printStackTrace();}  
+                } catch (Exception e) {System.err.println(e.getMessage());}  
            }  
 		};
 		counterTimer.scheduleAtFixedRate(task, twoSeconds, twoSeconds);

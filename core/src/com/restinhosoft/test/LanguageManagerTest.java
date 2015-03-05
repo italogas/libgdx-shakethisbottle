@@ -47,7 +47,7 @@ public class LanguageManagerTest {
 		try {
 			manager.setLanguage(manager.languageEN);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		
 		assertNotNull(local.readString());
@@ -56,7 +56,7 @@ public class LanguageManagerTest {
 		try {
 			manager.setLanguage(manager.languagePT);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		
 		assertNotNull(local.readString());
@@ -68,7 +68,7 @@ public class LanguageManagerTest {
 		try {
 			assertNotNull(manager.getLanguage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 	

@@ -177,7 +177,7 @@ public class Colours extends Actor{
                 try { 
                 	if(timer>100){	timer = 0; 	}
                 	timer++;
-                } catch (Exception e) {e.printStackTrace();}  
+                } catch (Exception e) {System.err.println(e.getMessage());;}  
            }  
 		};
 		if(!pause)	counterTimer.scheduleAtFixedRate(task, twoSeconds, twoSeconds);

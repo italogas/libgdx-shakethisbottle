@@ -102,15 +102,15 @@ public class GameScreen implements Screen {
 		}
 		
 		//		it handles the survival game mode
-		if(GameManager.survival && (timeHelper.getElapsedTimeInSeconds()%10==0)){
+		if(GameManager.survival && ((int)timeHelper.getElapsedTimeInSeconds()%10==0)){
 			String level = GameManager.getLevel();
-			if(level.toUpperCase().equals("EASY")){
+			if(("EASY").equals(level.toUpperCase())){
 				GameManager.setLevel("normal");
-			} else if (level.toUpperCase().equals("NORMAL")){
+			} else if (("NORMAL").equals(level.toUpperCase())){
 				GameManager.setLevel("hard");
-			} else if (level.toUpperCase().equals("HARD")){
+			} else if (("HARD").equals(level.toUpperCase())){
 				GameManager.setLevel("insanel");
-			} else if (level.toUpperCase().equals("INSANE")){
+			} else if (("INSANE").equals(level.toUpperCase())){
 				GameManager.setLevel("easy");
 			}
 		}
@@ -198,7 +198,7 @@ public class GameScreen implements Screen {
 			try {
 				language = languageManager.getLanguage();
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.err.println(e.getMessage());
 			}
 			String temp = language;
 
@@ -209,7 +209,7 @@ public class GameScreen implements Screen {
 				new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("ESTOURE O BALAO", score);
 				languageManager.setLanguage(temp);
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.err.println(e.getMessage());
 			}
 		}
 		

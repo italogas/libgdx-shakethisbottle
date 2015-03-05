@@ -193,7 +193,7 @@ public class ShakeThisBottleGameScreen implements Screen{
                 		timer--;
                 	}
                  } catch (Exception e) {  
-                      e.printStackTrace();  
+                	 System.err.println(e.getMessage());  
                  }  
             }  
         }; 

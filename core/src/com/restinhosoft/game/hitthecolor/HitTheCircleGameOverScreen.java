@@ -127,7 +127,7 @@ public class HitTheCircleGameOverScreen implements Screen {
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		String temp = language;
 
@@ -138,7 +138,7 @@ public class HitTheCircleGameOverScreen implements Screen {
 			new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("ACERTE NO CIRCULO", score);
 			languageManager.setLanguage(temp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 	
@@ -221,7 +221,7 @@ public class HitTheCircleGameOverScreen implements Screen {
 		                		showTimer--;
 		                	}else okBT.setVisible(true);	
 		                 } catch (Exception e) {  
-		                      e.printStackTrace();  
+		                	 System.err.println(e.getMessage());  
 		                 }  
 		            }  
 		        }; 

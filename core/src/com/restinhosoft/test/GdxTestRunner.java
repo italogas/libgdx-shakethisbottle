@@ -78,7 +78,7 @@ public class GdxTestRunner extends BlockJUnit4ClassRunner implements Application
 	            }
 	         }
 	      } catch (InterruptedException e) {
-	         e.printStackTrace();
+	    	  System.err.println(e.getMessage());
 	      }
 	   }
 

@@ -198,7 +198,7 @@ public class HitTheCircleLevelUpScreen implements Screen {
 		                		showTimer--;
 		                	}else okBT.setVisible(true);	
 		                 } catch (Exception e) {  
-		                      e.printStackTrace();  
+		                	 System.err.println(e.getMessage());  
 		                 }  
 		            }  
 		        }; 

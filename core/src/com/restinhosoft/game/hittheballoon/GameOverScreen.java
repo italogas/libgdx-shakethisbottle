@@ -46,7 +46,7 @@ public class GameOverScreen implements Screen {
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());;
 		}
 		
 		stage = new Stage();
@@ -72,7 +72,7 @@ public class GameOverScreen implements Screen {
 		labelStyle.fontColor= Color.RED;
 		
 		//TextButton backButton = new TextButton("Back", textButtonStyle);
-		TextButton backButton = new TextButton((language.equals(languageManager.languageEN)?"Back":"Voltar"), textButtonStyle);
+		TextButton backButton = new TextButton(language.equals(languageManager.languageEN)?"Back":"Voltar", textButtonStyle);
 		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -83,7 +83,7 @@ public class GameOverScreen implements Screen {
 		backButton.pad(10);
 		
 		//TextButton tryAgainButton = new TextButton("Try Again", textButtonStyle);
-		TextButton tryAgainButton = new TextButton((language.equals(languageManager.languageEN)?"Try Again":"Tentar de novo"), textButtonStyle);
+		TextButton tryAgainButton = new TextButton(language.equals(languageManager.languageEN)?"Try Again":"Tentar de novo", textButtonStyle);
 		tryAgainButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -136,16 +136,23 @@ public class GameOverScreen implements Screen {
 	}
 
 	@Override
-	public void resize(int width, int height) {}
+	public void resize(int width, int height) {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
-	public void pause() {}
+	public void pause() {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
-	public void resume() {}
+	public void resume() {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
-	public void hide() {}
+	public void hide() {
+	}
 
 	@Override
 	public void dispose() {

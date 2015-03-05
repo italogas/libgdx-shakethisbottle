@@ -79,7 +79,7 @@ public class AchievementsScreen implements Screen {
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -113,7 +113,7 @@ public class AchievementsScreen implements Screen {
 		textButtonStyle.font = bitmapFont;
 		
 		//backtxBT = new TextButton("BACK", textButtonStyle);
-		backtxBT = new TextButton((language.equals(languageManager.languageEN)?"Back ":"Voltar "), textButtonStyle);
+		backtxBT = new TextButton(language.equals(languageManager.languageEN)?"Back ":"Voltar ", textButtonStyle);
 		backtxBT.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -177,8 +177,6 @@ public class AchievementsScreen implements Screen {
 		imageButton6.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 		
@@ -226,19 +224,22 @@ public class AchievementsScreen implements Screen {
 	 * @see com.badlogic.gdx.Screen#pause()
 	 */
 	@Override
-	public void pause() {}
+	public void pause() {
+	}
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#resume()
 	 */
 	@Override
-	public void resume() {}
+	public void resume() {
+	}
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#hide()
 	 */
 	@Override
-	public void hide() {}
+	public void hide() {
+	}
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#dispose()

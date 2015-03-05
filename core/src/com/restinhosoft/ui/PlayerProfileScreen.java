@@ -68,7 +68,7 @@ public class PlayerProfileScreen implements Screen {
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

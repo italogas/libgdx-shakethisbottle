@@ -458,7 +458,7 @@ public class HitTheCircleGameScreen implements Screen {
 	                		timer--;
 	                	}
 	                 } catch (Exception e) {  
-	                      e.printStackTrace();  
+	                	 System.err.println(e.getMessage());  
 	                 }  
 	            }  
 	        }; 

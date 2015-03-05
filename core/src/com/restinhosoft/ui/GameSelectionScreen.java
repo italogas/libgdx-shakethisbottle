@@ -135,7 +135,7 @@ public class GameSelectionScreen implements Screen {
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		
 		audioManager = new AudioManager("audio/mainmenu/gameselection.ogg");

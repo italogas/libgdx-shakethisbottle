@@ -67,7 +67,7 @@ public class ScoreScreen implements Screen {
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		if(language.equals(languageManager.languageEN))	fileName = "scores_eng.txt";
 		else fileName = "scores_pt.txt";

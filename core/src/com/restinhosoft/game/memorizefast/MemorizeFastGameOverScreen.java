@@ -128,7 +128,7 @@ public class MemorizeFastGameOverScreen implements Screen {
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		String temp = language;
 
@@ -139,7 +139,7 @@ public class MemorizeFastGameOverScreen implements Screen {
 			new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("MEMORIZE RAPIDO", score);
 			languageManager.setLanguage(temp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 	
@@ -227,7 +227,7 @@ public class MemorizeFastGameOverScreen implements Screen {
 		                		showTimer--;
 		                	}else okBT.setVisible(true);	
 		                 } catch (Exception e) {  
-		                      e.printStackTrace();  
+		                	 System.err.println(e.getMessage());  
 		                 }  
 		            }  
 		        }; 

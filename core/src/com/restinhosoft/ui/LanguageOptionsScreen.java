@@ -48,7 +48,7 @@ public class LanguageOptionsScreen implements Screen {
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -129,7 +129,7 @@ public class LanguageOptionsScreen implements Screen {
 			try {
 				languageManager.setLanguage(language);
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.err.println(e.getMessage());
 			}
 			checkBox1.setChecked(false);
 			selectLabel.setText("Selecionar Linguagem:");
@@ -141,7 +141,7 @@ public class LanguageOptionsScreen implements Screen {
 			try {
 				languageManager.setLanguage(language);
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.err.println(e.getMessage());
 			}
 			checkBox0.setChecked(false);
 			selectLabel.setText("Select Language:");
