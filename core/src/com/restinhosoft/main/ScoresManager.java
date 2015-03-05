@@ -89,7 +89,7 @@ public class ScoresManager{
 		saveMultipleScore(fileName,gameName, score);
 	}
 	
-	public void saveMultipleScore(String fileName,String gameName, int score){
+	public boolean saveMultipleScore(String fileName,String gameName, int score){
 		FileHandle local = Gdx.files.local(fileName);
 		
 		if(local.exists()){
@@ -115,11 +115,13 @@ public class ScoresManager{
 				gameScores.add(gameName+":"+score);
 				savePlayersScores();
 			}
+			return true;
 		}
 		savePlayersScores();
+		return false;
 	}
 	
-	public static void saveUniqueScore(String fileName,int score){
+	public static boolean saveUniqueScore(String fileName,int score){
 		FileHandle local = Gdx.files.local(fileName);
 		String previousScore ="";
 		if(local.exists()){
@@ -127,11 +129,13 @@ public class ScoresManager{
 		}
 		try{
 			if(fileName!= null && fileName!="" && Integer.parseInt(previousScore)<score){
-				local.writeString(""+score,false);	
+				local.writeString(""+score,false);
+				return true;
 			}
 		}  catch (RuntimeException re){
 			System.err.println(re.getMessage());
 		}
+		return false;
 	}
 	
 	public static String loadUniqueScore(String localfileName){
