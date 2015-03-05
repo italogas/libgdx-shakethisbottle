@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.restinhosoft.ui.SoundOptionsScreen;
 
 public class AudioManager{
 	private Music music;
@@ -14,7 +15,20 @@ public class AudioManager{
 	private String musicFileName;
 	private ArrayList<String> soundTrackFileNames;
 	
+	private static String[] options;
+	
 	private float volume;
+	
+	private boolean enableSound;
+	private boolean enableMusic;
+	private boolean enableSoundtrack;
+	
+	private void loadOptions(){
+		enableSound = Boolean.parseBoolean(options[0]);
+		enableMusic = Boolean.parseBoolean(options[1]);
+		enableSoundtrack = Boolean.parseBoolean(options[2]);
+		volume = Float.parseFloat(options[3]);
+	}
 	
 	public AudioManager(String gameMusic){
 		if(gameMusic!=null && gameMusic!=""){
@@ -25,8 +39,11 @@ public class AudioManager{
 		this.soundTrack = new ArrayList<Sound>();
 		this.soundTrackFileNames = new ArrayList<String>();
 		
-		getVolume();
+		options = new SoundOptionsScreen().loadOptions().split(" ");
+		loadOptions();
+		
 	}
+		
 	public Music getMusic(){ return music;}
 	
 	public ArrayList<Sound> getSoundtrack(){return soundTrack;}
@@ -36,17 +53,20 @@ public class AudioManager{
 	public ArrayList<String> getSoundtrackFileNames(){return soundTrackFileNames;}
 	
 	public void addToSoundTrack(String sound){
-		if(sound!=null && sound!= ""){
+		if(sound!=null && sound!= "" && enableSoundtrack && enableSound){
 			soundTrackFileNames.add(sound);
 			soundTrack.add(Gdx.audio.newSound(Gdx.files.internal(sound)));
 		}
 	}
 	
 	public void playMusic(){
-		music.setLooping(true);
-		music.play();
-		getVolume();
-		music.setVolume(volume);
+		if(enableSound && enableMusic){
+			music.setLooping(true);
+			music.play();
+			getVolume();
+			music.setVolume(volume);	
+		}
+		
 	}
 	
 	public void stopMusic(){
@@ -61,7 +81,7 @@ public class AudioManager{
 		}
 	}
 	
-	public void setVolume(float volume){
+	/*public void setVolume(float volume){
 		FileHandle local = Gdx.files.local(vol);
 		try{
 			if(volume>=0 && volume<=1){
@@ -88,5 +108,9 @@ public class AudioManager{
 			System.err.println(re.getMessage());
 		}
 		volume = Float.parseFloat(readString);
+	}*/
+	
+	public void getVolume(){
+		loadOptions();
 	}
 }

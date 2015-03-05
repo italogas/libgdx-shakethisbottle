@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ScoresManager;
 import com.restinhosoft.main.ShakeThisBottle;
@@ -62,6 +63,8 @@ public class ScoreScreen implements Screen {
 	
 	private String scoreString;
 	
+	private AudioManager audioManager;
+	
 	private static LanguageManager languageManager;
 	public static String language;
 	private static String fileName;
@@ -83,6 +86,10 @@ public class ScoreScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		audioManager = new AudioManager("audio/mainmenu/scores.mp3");
+		audioManager.playMusic();
+		audioManager.getMusic().setLooping(false);
 		
 		languageManager = LanguageManager.getInstance();
 		
@@ -134,6 +141,7 @@ public class ScoreScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new PlayerProfileScreen());
+				dispose();
 			}
 		});
 		
@@ -199,6 +207,8 @@ public class ScoreScreen implements Screen {
 		bitmapFont.dispose();
 		menuImg.dispose();
 		stage.dispose();
+		
+		audioManager.close();
 
 	}
 

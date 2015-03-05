@@ -21,11 +21,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.restinhosoft.ui.GameSelectionScreen;
-import com.restinhosoft.ui.ScoreScreen;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ScoresManager;
 import com.restinhosoft.main.ShakeThisBottle;
+import com.restinhosoft.ui.GameSelectionScreen;
+import com.restinhosoft.ui.ScoreScreen;
 
 
 /**
@@ -156,16 +157,19 @@ public class MemorizeFastGameOverScreen implements Screen {
 	public int getLevel(){return level;}
 	public int getBonus(){return bonus;}
 	
-	//*************************************Saving Score *******************************************
+	
 	private ScoreScreen scoreScreen = new ScoreScreen();
-	//scoreScreen.addScore("MEMORIZE FAST", score);
-	//*************************************Saving Score *******************************************
+	private AudioManager audioManager;
+	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		audioManager = new AudioManager("audio/mainmenu/gameover.ogg");
+		audioManager.playMusic();
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
@@ -200,6 +204,7 @@ public class MemorizeFastGameOverScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new GameSelectionScreen());
+				dispose();
 			}
 		});
 				
@@ -303,7 +308,8 @@ public class MemorizeFastGameOverScreen implements Screen {
 		memorizefastGameOverBKG.dispose();
 		
 		stage.dispose();
-
+		
+		audioManager.close();
 	}
 
 }

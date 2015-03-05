@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.ShakeThisBottle;
 
 
@@ -201,8 +202,10 @@ public class MemorizeFastGameScreen implements Screen {
 					villainSequence.remove(0);
 					circleList.get(next).setColor(Color.RED);
 					nextIncrement();
-				}else{gameOver=true;}
-				
+					audioManager.getSoundtrack().get(1).play();
+				}else{
+					gameOver=true;
+				}				
 			}
 		});
 		
@@ -213,8 +216,10 @@ public class MemorizeFastGameScreen implements Screen {
 					villainSequence.remove(0);
 					circleList.get(next).setColor(Color.GREEN);
 					nextIncrement();
-				}else{gameOver=true;}
-			}
+					audioManager.getSoundtrack().get(1).play();
+				}else{
+					gameOver=true;
+				}			}
 		});
 		
 		
@@ -225,8 +230,10 @@ public class MemorizeFastGameScreen implements Screen {
 					villainSequence.remove(0);
 					circleList.get(next).setColor(Color.YELLOW);
 					nextIncrement();
-				}else{gameOver=true;}
-			}
+					audioManager.getSoundtrack().get(1).play();
+				}else{
+					gameOver=true;
+				}			}
 		});
 		
 		
@@ -237,8 +244,10 @@ public class MemorizeFastGameScreen implements Screen {
 					villainSequence.remove(0);
 					circleList.get(next).setColor(Color.BLUE);
 					nextIncrement();
-				}else{gameOver=true;}		
-			}
+					audioManager.getSoundtrack().get(1).play();
+				}else{
+					gameOver=true;
+				}			}
 		});
 		
 		
@@ -279,12 +288,17 @@ public class MemorizeFastGameScreen implements Screen {
 		this.level = level;
 	}
 	
+	private AudioManager audioManager;
+	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		audioManager = new AudioManager("audio/mainmenu/gameselection.ogg");
+		audioManager.addToSoundTrack("audio/mainmenu/failbt.mp3");
+		audioManager.addToSoundTrack("audio/mainmenu/botoes_first.mp3");
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
@@ -392,12 +406,13 @@ public class MemorizeFastGameScreen implements Screen {
 		
 		if(timer<0){
 			gameOver = true;
+			dispose();
 		}
 		if(villainSequence.size()==0){
 			score = timer*level;
 			if(timer>difficultyTimer/2){
 				bonus = timer*level;
-				score = score+bonus;
+				
 			
 			}
 			level++;
@@ -483,7 +498,7 @@ public class MemorizeFastGameScreen implements Screen {
 		memorizefastGameBackground.dispose();
 		
 		stage.dispose();
-
+		audioManager.close();
 	}
 
 }

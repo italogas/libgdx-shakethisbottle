@@ -30,6 +30,7 @@ import com.restinhosoft.game.hitthecolor.HitTheCircleStartScreen;
 import com.restinhosoft.game.hitthecolor.HitTheColor;
 import com.restinhosoft.game.memorizefast.MemorizeFastStartScreen;
 import com.restinhosoft.game.shakethebottle.ShakeThisBottleStartScreen;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
 
@@ -92,7 +93,8 @@ public class GameSelectionScreen implements Screen {
 	private LanguageManager languageManager;
 	public String language;
 
-		
+	private AudioManager audioManager;
+	
 	private TextureAtlas creatingAtlas(String file){ 
 		return new TextureAtlas(Gdx.files.internal(file));
 	}
@@ -139,6 +141,9 @@ public class GameSelectionScreen implements Screen {
 			e.printStackTrace();
 		}
 		
+		audioManager = new AudioManager("audio/mainmenu/gameselection.ogg");
+		audioManager.playMusic();
+		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		stage = new Stage();
@@ -182,6 +187,7 @@ public class GameSelectionScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new MemorizeFastStartScreen());	
+				dispose();
 			}
 		});
 		
@@ -189,7 +195,8 @@ public class GameSelectionScreen implements Screen {
 		shakeButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ShakeThisBottleStartScreen());	
+				game.setScreen(new ShakeThisBottleStartScreen());
+				dispose();
 			}
 		});
 		colorButton = new TextButton("", colorBTStyle);
@@ -198,13 +205,15 @@ public class GameSelectionScreen implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				//game.setScreen(new HitTheColor());
 				game.setScreen(new HitTheCircleStartScreen());
+				dispose();
 			}
 		});
 		ballButton = new TextButton("", ballBTStyle);
 		ballButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new StartScreen());	
+				game.setScreen(new StartScreen());
+				dispose();
 			}
 		});
 		
@@ -230,6 +239,7 @@ public class GameSelectionScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new MainMenuScreen());
+				dispose();
 			}
 		});
 		
@@ -367,9 +377,10 @@ public class GameSelectionScreen implements Screen {
 	 */
 	@Override
 	public void dispose() {
-		background.dispose();
-		button.dispose();
-		backtomenu.dispose();
+		//background.dispose();
+		//button.dispose();
+		//backtomenu.dispose();
+		audioManager.close();
 	}
 	
 }

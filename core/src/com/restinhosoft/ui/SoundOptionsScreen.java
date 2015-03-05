@@ -83,7 +83,7 @@ public class SoundOptionsScreen implements Screen {
 		}
 	}
 	
-	private static String loadOptions(){
+	public static String loadOptions(){
 		String readString = null;
 		try {
 			FileHandle local = Gdx.files.local(fileName);
@@ -236,11 +236,9 @@ public class SoundOptionsScreen implements Screen {
 		if(   checkBox0.isPressed()   && !checkBox0.isChecked()){
 			  optionArray[0] = "true";	
 			  saveOptions();
-			  System.out.println(loadOptions());
 		}else if(checkBox0.isPressed()&& checkBox0.isChecked()){
 			  optionArray[0] = "false";
 			  saveOptions();
-			  System.out.println(loadOptions());
 			  //System.out.println(loadOptions());
 		}
 		

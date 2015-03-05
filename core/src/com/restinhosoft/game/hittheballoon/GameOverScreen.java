@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
 
@@ -31,11 +32,17 @@ public class GameOverScreen implements Screen {
 	private LanguageManager languageManager;
 	public String language;
 
+	private AudioManager audioManager;
+	
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
 		languageManager = LanguageManager.getInstance();
+		
+		audioManager = new AudioManager("audio/mainmenu/gameover.ogg");
+		audioManager.playMusic();
+		
 		try {
 			language = languageManager.getLanguage();
 		} catch (Exception e) {
@@ -70,6 +77,7 @@ public class GameOverScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new StartScreen());
+				dispose();
 			}
 		});
 		backButton.pad(10);
@@ -80,7 +88,7 @@ public class GameOverScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new GameScreen());
-				
+				dispose();
 			}
 		});
 		tryAgainButton.pad(10);
@@ -145,6 +153,8 @@ public class GameOverScreen implements Screen {
 		skin.dispose();
 		textureAtlas.dispose();
 		stage.dispose();
+		
+		audioManager.close();
 	}
 
 }

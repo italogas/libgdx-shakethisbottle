@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ScoresManager;
 import com.restinhosoft.main.ShakeThisBottle;
@@ -153,6 +154,7 @@ public class HitTheCircleGameOverScreen implements Screen {
 	public int getLevel(){return level;}
 	public int getBonus(){return bonus;}
 	
+	private AudioManager audioManager;
 		
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
@@ -160,6 +162,9 @@ public class HitTheCircleGameOverScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		audioManager = new AudioManager("audio/mainmenu/gameover.ogg");
+		audioManager.playMusic();
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
@@ -194,6 +199,7 @@ public class HitTheCircleGameOverScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new GameSelectionScreen());
+				dispose();
 			}
 		});
 				
@@ -298,6 +304,7 @@ public class HitTheCircleGameOverScreen implements Screen {
 		
 		stage.dispose();
 
+		audioManager.close(); 
 	}
 
 }

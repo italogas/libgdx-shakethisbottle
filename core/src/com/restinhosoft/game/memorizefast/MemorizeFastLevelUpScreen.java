@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.ShakeThisBottle;
 
 
@@ -127,6 +128,8 @@ public class MemorizeFastLevelUpScreen implements Screen {
 	public int getScore(){return score;}
 	public int getLevel(){return level;}
 	public int getBonus(){return bonus;}
+	
+	private AudioManager audioManager;
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
@@ -136,6 +139,9 @@ public class MemorizeFastLevelUpScreen implements Screen {
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
+		
+		audioManager = new AudioManager("audio/mainmenu/clear.ogg");
+		audioManager.playMusic();
 		
 		stage = new Stage();
 		
@@ -170,6 +176,7 @@ public class MemorizeFastLevelUpScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new MemorizeFastGameScreen(score,level,bonus));
+				dispose();
 			}
 		});
 				
@@ -275,7 +282,7 @@ public class MemorizeFastLevelUpScreen implements Screen {
 		memorizefastGameLevelUpRed.dispose();
 		
 		stage.dispose();
-
+		audioManager.close();
 	}
 
 }

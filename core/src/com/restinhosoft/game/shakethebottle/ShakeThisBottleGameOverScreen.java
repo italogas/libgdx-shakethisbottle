@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.restinhosoft.ui.GameSelectionScreen;
 import com.restinhosoft.ui.ScoreScreen;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ScoresManager;
 import com.restinhosoft.main.ShakeThisBottle;
@@ -151,6 +152,8 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 	public int getScore(){return score;}
 	public int getLevel(){return level;}
 	public int getBonus(){return bonus;}
+	
+	private AudioManager audioManager;
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
@@ -161,6 +164,9 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
+		
+		audioManager = new AudioManager("audio/mainmenu/gameover.ogg");
+		audioManager.playMusic();
 		
 		stage = new Stage();
 		
@@ -192,6 +198,7 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new GameSelectionScreen());
+				dispose();
 			}
 		});
 				
@@ -295,7 +302,8 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 		shakethisbottleGameOverBKG.dispose();
 		
 		stage.dispose();
-
+		
+		audioManager.close();
 	}
 
 }

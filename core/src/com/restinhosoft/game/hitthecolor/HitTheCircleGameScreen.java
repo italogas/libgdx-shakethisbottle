@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.ShakeThisBottle;
 
 
@@ -228,8 +229,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle01.getColor().equals(hitBT.getColor())){
 						buttonList.get(0).setText("OK");
 						hit--;
-						System.out.println("hit"+hit);
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -239,7 +242,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle02.getColor().equals(hitBT.getColor())){
 						buttonList.get(1).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -249,7 +255,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle03.getColor().equals(hitBT.getColor())){
 						buttonList.get(2).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -259,7 +268,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle04.getColor().equals(hitBT.getColor())){
 						buttonList.get(3).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -269,7 +281,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle05.getColor().equals(hitBT.getColor())){
 						buttonList.get(4).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -279,7 +294,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle06.getColor().equals(hitBT.getColor())){
 						buttonList.get(5).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -289,7 +307,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle07.getColor().equals(hitBT.getColor())){
 						buttonList.get(6).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -299,7 +320,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle08.getColor().equals(hitBT.getColor())){
 						buttonList.get(7).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -309,7 +333,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle09.getColor().equals(hitBT.getColor())){
 						buttonList.get(8).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -319,7 +346,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle10.getColor().equals(hitBT.getColor())){
 						buttonList.get(9).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -329,7 +359,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle11.getColor().equals(hitBT.getColor())){
 						buttonList.get(10).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -339,7 +372,10 @@ public class HitTheCircleGameScreen implements Screen {
 					if(circle12.getColor().equals(hitBT.getColor())){
 						buttonList.get(11).setText("OK");
 						hit--;
-					}else{gameOver=true;}
+						audioManager.getSoundtrack().get(1).play();
+					}else{
+						gameOver=true;
+					}
 				}
 			});
 			
@@ -387,12 +423,18 @@ public class HitTheCircleGameScreen implements Screen {
 			this.level = level;
 		}
 		
+		private AudioManager audioManager;
+		
 		/* (non-Javadoc)
 		 * @see com.badlogic.gdx.Screen#show()
 		 */
 		@Override
 		public void show() {
 			this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+			
+			audioManager = new AudioManager("audio/mainmenu/gameselection.ogg");
+			audioManager.addToSoundTrack("audio/mainmenu/failbt.mp3");
+			audioManager.addToSoundTrack("audio/mainmenu/botoes_first.mp3");
 			
 			camera = new OrthographicCamera();
 			camera.setToOrtho(false, width, height);
@@ -507,6 +549,7 @@ public class HitTheCircleGameScreen implements Screen {
 			
 			if(timer<0){
 				gameOver = true;
+				dispose();
 			}
 			if(hit==0){
 				score = timer*level;
