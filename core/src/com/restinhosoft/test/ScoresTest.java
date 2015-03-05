@@ -2,20 +2,58 @@ package com.restinhosoft.test;
 
 import static org.junit.Assert.*;
 
+import java.security.InvalidParameterException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.badlogic.gdx.Gdx;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.ScoresManager;
 
 @RunWith (GdxTestRunner.class)
 public class ScoresTest {
 
+	String fileName;
+
 	@Test
-	public void scoreFilesExistsTest() {
+	public void setUp() {
+		
+		fileName = "scores.txt";
+		
 		assertTrue(Gdx.files.local("scores_eng.txt").exists());
 		assertTrue(Gdx.files.local("scores_pt.txt").exists());
+	}
+	
+	@Test (expected = InvalidParameterException.class)
+	public void creationTest0() {
+		new ScoresManager(null);
+	}
+	
+	@Test (expected = InvalidParameterException.class)
+	public void creationTest1() {
+		new ScoresManager("");
+	}
+	
+	@Test (expected = InvalidParameterException.class)
+	public void creationTest2() {
+		new ScoresManager("garrafa.png");
+	}
+	
+	@Test 
+	public void creationTest3() {
+		try {
+			new ScoresManager("garrafa.png");
+		} catch (InvalidParameterException ie) {
+			assertEquals("Invalid audio file format. ", ie.getMessage());
+		}
 		
+	}
+	
+	@Test 
+	public void loadScoresTest() {
+		ScoresManager.loadScoresList(fileName);
+		//		to do
 	}
 	
 	@Test

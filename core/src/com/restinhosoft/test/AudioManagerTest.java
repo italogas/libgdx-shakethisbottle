@@ -34,22 +34,22 @@ public class AudioManagerTest {
 	}
 
 	@Test (expected = InvalidParameterException.class)
-	public void crationTest0() {
+	public void creationTest0() {
 		new AudioManager(null);
 	}
 	
 	@Test (expected = InvalidParameterException.class)
-	public void crationTest1() {
+	public void creationTest1() {
 		new AudioManager("");
 	}
 	
 	@Test (expected = InvalidParameterException.class)
-	public void crationTest2() {
+	public void creationTest2() {
 		new AudioManager("garrafa.png");
 	}
 	
 	@Test 
-	public void crationTest3() {
+	public void creationTest3() {
 		try {
 			new AudioManager("garrafa.png");
 		} catch (InvalidParameterException ie) {
