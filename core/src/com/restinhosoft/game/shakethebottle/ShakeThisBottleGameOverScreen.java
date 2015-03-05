@@ -21,12 +21,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.restinhosoft.ui.GameSelectionScreen;
-import com.restinhosoft.ui.ScoreScreen;
 import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ScoresManager;
 import com.restinhosoft.main.ShakeThisBottle;
+import com.restinhosoft.ui.GameSelectionScreen;
 
 
 /**

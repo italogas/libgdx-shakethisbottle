@@ -4,11 +4,9 @@
 package com.restinhosoft.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.main.LanguageManager;
@@ -33,8 +30,6 @@ import com.restinhosoft.main.ShakeThisBottle;
 public class PlayerProfileScreen implements Screen {
 	ShakeThisBottle game;
 	
-	private OrthographicCamera cam;
-	
 	private Texture menuImg;
 	
 	private Stage stage;
@@ -42,7 +37,6 @@ public class PlayerProfileScreen implements Screen {
 	private TextureAtlas atlas;
 	
 	private Skin skin;
-	private Skin textSkin;
 	
 	private BitmapFont bitmapFont;
 	
@@ -57,14 +51,8 @@ public class PlayerProfileScreen implements Screen {
 	private int width = 320;
 	private int height= 480;
 	
-	//private int width = Gdx.graphics.getWidth();
-	//private int height= Gdx.graphics.getHeight();
-	
-	private TextField profileTextArea;
-
 	private FitViewport fitViewport;
 	
-	private Preferences pref;
 	
 	private LanguageManager languageManager;
 	public String language;
@@ -95,8 +83,6 @@ public class PlayerProfileScreen implements Screen {
 		skin = new Skin(atlas);
 		
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
-		
-		pref = Gdx.app.getPreferences("My Preferences");
 		
 		TextButtonStyle textButtonEnableStyle = new TextButton.TextButtonStyle();
 		textButtonEnableStyle.up = skin.getDrawable("blue_button");

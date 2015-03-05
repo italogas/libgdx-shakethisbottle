@@ -158,6 +158,7 @@ public class MemorizeFastGameOverScreen implements Screen {
 	public int getBonus(){return bonus;}
 	
 	
+	@SuppressWarnings("unused")
 	private ScoreScreen scoreScreen = new ScoreScreen();
 	private AudioManager audioManager;
 	

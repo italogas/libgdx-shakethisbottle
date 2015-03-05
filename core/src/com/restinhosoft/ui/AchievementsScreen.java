@@ -60,9 +60,6 @@ public class AchievementsScreen implements Screen {
 	
 	private TextButton backtxBT;
 	
-	private int width = 320;
-	private int height= 480;
-
 	private FitViewport fitViewport;
 	
 	//private int width = Gdx.graphics.getWidth();

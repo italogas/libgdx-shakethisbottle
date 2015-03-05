@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.restinhosoft.ui.SoundOptionsScreen;
 
 public class AudioManager{
@@ -24,6 +23,7 @@ public class AudioManager{
 	private boolean enableMusic;
 	private boolean enableSoundtrack;
 	
+	@SuppressWarnings("static-access")
 	public AudioManager(String gameMusic) throws InvalidParameterException {
 		if(gameMusic!=null && gameMusic!=""){
 			this.musicFileName = gameMusic;

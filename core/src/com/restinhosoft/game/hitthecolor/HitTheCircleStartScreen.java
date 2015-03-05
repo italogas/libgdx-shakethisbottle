@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
@@ -52,14 +51,6 @@ public class HitTheCircleStartScreen implements Screen {
 	private TextButton playButton;
 	private TextButton backButton;
 
-	private int width = 320;
-	private int height= 480;
-	
-	//private int width = Gdx.graphics.getWidth();
-	//private int height= Gdx.graphics.getHeight();
-	
-	private TextField profileTextArea;
-	
 	private LanguageManager languageManager;
 	public String language;
 	

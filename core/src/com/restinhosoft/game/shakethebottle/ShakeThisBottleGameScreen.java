@@ -3,42 +3,27 @@
  */
 package com.restinhosoft.game.shakethebottle;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//import jdk.nashorn.internal.runtime.regexp.joni.Config;
-//import android.hardware.Sensor;
-//import android.hardware.SensorEvent;
-//import android.hardware.SensorEventListener;
-//import android.hardware.SensorManager;
-
-
-
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.restinhosoft.game.memorizefast.MemorizeFastGameOverScreen;
-import com.restinhosoft.game.memorizefast.MemorizeFastLevelUpScreen;
 import com.restinhosoft.main.ShakeThisBottle;
-import com.restinhosoft.ui.GameSelectionScreen;
+//import jdk.nashorn.internal.runtime.regexp.joni.Config;
+//import android.hardware.Sensor;
+//import android.hardware.SensorEvent;
+//import android.hardware.SensorEventListener;
+//import android.hardware.SensorManager;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.Gdx;
 
 
 /**
@@ -92,6 +77,7 @@ public class ShakeThisBottleGameScreen implements Screen{
 	
 	private TextButton levelBT;
 	private TextButton scoreBT;
+	@SuppressWarnings("unused")
 	private TextButton spaceBT;
 	private TextButton timerBT;
 	
@@ -104,9 +90,8 @@ public class ShakeThisBottleGameScreen implements Screen{
 	private int width = 320;
 	private int height= 480;
 	
+	@SuppressWarnings("unused")
 	private float move;
-	//private int width = Gdx.graphics.getWidth();
-	//private int height= Gdx.graphics.getHeight();
 	
 	private TextureAtlas creatingAtlas(String file){ 
 		return new TextureAtlas(Gdx.files.internal(file));
@@ -250,6 +235,7 @@ public class ShakeThisBottleGameScreen implements Screen{
 //	/* (non-Javadoc)
 //	 * @see com.badlogic.gdx.Screen#render(float)
 //	 */
+	@SuppressWarnings("static-access")
 	@Override
 	public void render(float delta) {
 		GL20 gl = Gdx.gl;

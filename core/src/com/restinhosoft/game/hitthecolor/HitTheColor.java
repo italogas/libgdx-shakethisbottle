@@ -17,24 +17,28 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.restinhosoft.game.hittheballoon.GameScreen.GameManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ScoresManager;
 import com.restinhosoft.main.ShakeThisBottle;
 
+@SuppressWarnings("static-access")
 public class HitTheColor implements Screen {
 	
 	private Stage stage;
+	@SuppressWarnings("unused")
 	private Table table;
+	@SuppressWarnings("unused")
 	private ShakeThisBottle game;
 	private BitmapFont bitmapFont;
 	private Label label;
 	
 	private static class GameManager{
 		public static int score;
+		@SuppressWarnings("unused")
 		public int level;
+		@SuppressWarnings("unused")
 		public int difficulty;
+		@SuppressWarnings("unused")
 		public boolean survival;
 		
 		public static ArrayList<Colours> colors = new ArrayList<Colours>();
@@ -68,8 +72,6 @@ public class HitTheColor implements Screen {
 			setColoursPositions();
 		}
 		
-		private boolean pause;
-		private int scoreNow;
 		private final int ncolors = 14;
 		private static ScoresManager scoreFile = new ScoresManager("");
 		
@@ -96,6 +98,7 @@ public class HitTheColor implements Screen {
 		}
 	
 			
+		@SuppressWarnings("unused")
 		private void saveScore(){
 			scoreFile.saveUniqueScore(name, score);
 		}
