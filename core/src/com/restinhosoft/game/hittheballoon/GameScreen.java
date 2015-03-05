@@ -15,10 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
 import com.restinhosoft.game.hittheballoon.Balloon.BallonColor;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ScoresManager;
 import com.restinhosoft.main.ShakeThisBottle;
-import com.restinhosoft.ui.ScoreScreen;
 
 public class GameScreen implements Screen {
 
@@ -30,9 +30,14 @@ public class GameScreen implements Screen {
 	private BitmapFont bitmapFont;
 	private Label label;
 	
+	private AudioManager audioManager;
 	@Override
 	public void show() {
 		game = (ShakeThisBottle) Gdx.app.getApplicationListener();
+		
+		audioManager = new AudioManager("hittheballoon/11_flying_town.ogg");
+		audioManager.playMusic();
+		audioManager.addToSoundTrack("hittheballoon/balao.mp3");	
 		
 		stage = new Stage();
 		stage.getViewport().setScreenSize(Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
@@ -78,6 +83,7 @@ public class GameScreen implements Screen {
 			
 			//		it adds the balloon points to the game score
 			int points = balloon.getBalloonPoints();
+			audioManager.getSoundtrack().get(0).play();
 			GameManager.setScore(GameManager.getScore() + points);
 			label.setText("Score: " + Integer.toString(GameManager.getScore() + points));
 			
@@ -91,6 +97,7 @@ public class GameScreen implements Screen {
 			if(balloon.isOut()){
 				GameManager.saveScore();
 				game.setScreen(new GameOverScreen());
+				dispose();
 			}
 		}
 		
@@ -124,6 +131,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
+		audioManager.close();
 	}
 	
 	/**

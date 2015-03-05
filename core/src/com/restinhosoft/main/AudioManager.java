@@ -21,7 +21,10 @@ public class AudioManager{
 			this.musicFileName = gameMusic;
 			this.music = Gdx.audio.newMusic(Gdx.files.internal(gameMusic));	
 		}
+
 		this.soundTrack = new ArrayList<Sound>();
+		this.soundTrackFileNames = new ArrayList<String>();
+		
 		getVolume();
 	}
 	public Music getMusic(){ return music;}
