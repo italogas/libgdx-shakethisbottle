@@ -140,7 +140,7 @@ public class ShakeThisBottleLevelUpScreen implements Screen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
 		
-		audioManager = new AudioManager("audio/mainmenu/clear.ogg");
+		audioManager = new AudioManager("audio/clear.ogg");
 		audioManager.playMusic();
 		
 		stage = new Stage();
@@ -148,14 +148,14 @@ public class ShakeThisBottleLevelUpScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 
 		shakethebottleGameLevelUpYellow = new Texture(Gdx.files.internal(
-				 								 "shakethisbottle/shakethebottle_levelup_yellow.png"));
+				 								 "shakethisbottle/shakethisbottle_levelup_yellow.png"));
 		shakethebottleGameLevelUpRed   = new Texture(Gdx.files.internal(
-												 "shakethisbottle/shakethebottle_levelup_red.png"));
+												 "shakethisbottle/shakethisbottle_levelup_red.png"));
 		
 		shakethebottleGameBackGroundScreen = shakethebottleGameLevelUpYellow;
 		
 		this.atlasGameTexts    =creatingAtlas( "imageghostsqr.atlas");
-		this.atlasSquare=creatingAtlas( "memorizefast_img/memorizefast_square.atlas");
+		this.atlasSquare=creatingAtlas( "memorizefast/memorizefast_square.atlas");
 		
 		this.gameTextSkin=creatingSkin( this.atlasGameTexts);
 		this.squareSkin  =creatingSkin( this.atlasSquare);

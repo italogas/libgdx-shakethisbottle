@@ -140,7 +140,7 @@ public class MemorizeFastLevelUpScreen implements Screen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
 		
-		audioManager = new AudioManager("audio/mainmenu/clear.ogg");
+		audioManager = new AudioManager("audio/clear.ogg");
 		audioManager.playMusic();
 		
 		stage = new Stage();
@@ -148,14 +148,14 @@ public class MemorizeFastLevelUpScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 
 		memorizefastGameLevelUpYellow = new Texture(Gdx.files.internal(
-				 								 "memorizefast_img/memorizefast_levelup_yellow.png"));
+				 								 "memorizefast/memorizefast_levelup_yellow.png"));
 		memorizefastGameLevelUpRed   = new Texture(Gdx.files.internal(
-												 "memorizefast_img/memorizefast_levelup_red.png"));
+												 "memorizefast/memorizefast_levelup_red.png"));
 		
 		memorizefastGameBackGroundScreen = memorizefastGameLevelUpYellow;
 		
 		this.atlasGameTexts    =creatingAtlas( "imageghostsqr.atlas");
-		this.atlasSquare=creatingAtlas( "memorizefast_img/memorizefast_square.atlas");
+		this.atlasSquare=creatingAtlas( "memorizefast/memorizefast_square.atlas");
 		
 		this.gameTextSkin=creatingSkin( this.atlasGameTexts);
 		this.squareSkin  =creatingSkin( this.atlasSquare);

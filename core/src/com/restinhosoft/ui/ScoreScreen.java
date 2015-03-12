@@ -81,7 +81,7 @@ public class ScoreScreen implements Screen {
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
-		audioManager = new AudioManager("audio/mainmenu/scores.mp3");
+		audioManager = new AudioManager("audio/scores.mp3");
 		audioManager.playMusic();
 		audioManager.getMusic().setLooping(false);
 		

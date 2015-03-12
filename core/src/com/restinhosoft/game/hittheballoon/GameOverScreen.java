@@ -40,7 +40,7 @@ public class GameOverScreen implements Screen {
 		
 		languageManager = LanguageManager.getInstance();
 		
-		audioManager = new AudioManager("audio/mainmenu/gameover.ogg");
+		audioManager = new AudioManager("audio/gameover.ogg");
 		audioManager.playMusic();
 		
 		try {
@@ -137,7 +137,7 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 
 	@Override

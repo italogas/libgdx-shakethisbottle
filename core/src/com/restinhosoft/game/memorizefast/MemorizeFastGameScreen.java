@@ -296,9 +296,9 @@ public class MemorizeFastGameScreen implements Screen {
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
-		audioManager = new AudioManager("audio/mainmenu/gameselection.ogg");
-		audioManager.addToSoundTrack("audio/mainmenu/failbt.mp3");
-		audioManager.addToSoundTrack("audio/mainmenu/botoes_first.mp3");
+		audioManager = new AudioManager("audio/gameselection.ogg");
+		audioManager.addToSoundTrack("audio/failbt.mp3");
+		audioManager.addToSoundTrack("audio/botoes_first.mp3");
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
@@ -308,7 +308,7 @@ public class MemorizeFastGameScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 		
 		memorizefastGameBackground = new Texture(Gdx.files.internal(
-												 "memorizefast_img/memorizefast_background.png"));
+												 "memorizefast/memorizefast_background.png"));
 		
 		//timer
 		counterTimer = new Timer();
@@ -331,8 +331,8 @@ public class MemorizeFastGameScreen implements Screen {
         counterTimer.scheduleAtFixedRate(task, second, second);
 		
 		//creating graphics
-		this.atlasCircle=creatingAtlas( "memorizefast_img/memorizefast_circle.atlas");
-		this.atlasSquare=creatingAtlas( "memorizefast_img/memorizefast_square.atlas");
+		this.atlasCircle=creatingAtlas( "memorizefast/memorizefast_circle.atlas");
+		this.atlasSquare=creatingAtlas( "memorizefast/memorizefast_square.atlas");
 		
 		this.atlasSpace=creatingAtlas( "space.atlas");
 		this.atlasGameTexts    =creatingAtlas( "imageghostsqr.atlas");

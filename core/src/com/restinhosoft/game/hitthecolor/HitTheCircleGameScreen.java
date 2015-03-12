@@ -432,9 +432,9 @@ public class HitTheCircleGameScreen implements Screen {
 		public void show() {
 			this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 			
-			audioManager = new AudioManager("audio/mainmenu/gameselection.ogg");
-			audioManager.addToSoundTrack("audio/mainmenu/failbt.mp3");
-			audioManager.addToSoundTrack("audio/mainmenu/botoes_first.mp3");
+			audioManager = new AudioManager("audio/gameselection.ogg");
+			audioManager.addToSoundTrack("audio/failbt.mp3");
+			audioManager.addToSoundTrack("audio/botoes_first.mp3");
 			
 			camera = new OrthographicCamera();
 			camera.setToOrtho(false, width, height);

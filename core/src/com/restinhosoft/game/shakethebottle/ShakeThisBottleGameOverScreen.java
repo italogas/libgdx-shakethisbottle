@@ -164,7 +164,7 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
 		
-		audioManager = new AudioManager("audio/mainmenu/gameover.ogg");
+		audioManager = new AudioManager("audio/gameover.ogg");
 		audioManager.playMusic();
 		
 		stage = new Stage();
@@ -172,11 +172,11 @@ public class ShakeThisBottleGameOverScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 
 		shakethisbottleGameOverBKG = new Texture(Gdx.files.internal(
-				 								 "shakethisbottle/shakethebottle_gameover.png"));
+				 								 "shakethisbottle/shakethisbottle_gameover.png"));
 	
 		
 		this.atlasGameTexts    =creatingAtlas( "imageghostsqr.atlas");
-		this.atlasSquare=creatingAtlas( "memorizefast_img/memorizefast_square.atlas");
+		this.atlasSquare=creatingAtlas( "memorizefast/memorizefast_square.atlas");
 		
 		this.gameTextSkin=creatingSkin( this.atlasGameTexts);
 		this.squareSkin  =creatingSkin( this.atlasSquare);

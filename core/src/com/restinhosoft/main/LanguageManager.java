@@ -23,8 +23,10 @@ public class LanguageManager {
 	private LanguageManager() {
 		if(Gdx.files.isLocalStorageAvailable() && Gdx.files.local(languageFile) != null){
 			language = loadLanguage();
+			if(language == null) language = defaultLanguage;saveLanguage();
 		}else {
 			language = defaultLanguage;	
+			saveLanguage();
 		}
 		started = true;
 	}

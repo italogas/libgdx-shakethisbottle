@@ -138,7 +138,7 @@ public class GameSelectionScreen implements Screen {
 			System.err.println(e.getMessage());
 		}
 		
-		audioManager = new AudioManager("audio/mainmenu/gameselection.ogg");
+		audioManager = new AudioManager("audio/gameselection.ogg");
 		audioManager.playMusic();
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

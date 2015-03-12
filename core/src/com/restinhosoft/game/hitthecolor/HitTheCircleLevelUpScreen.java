@@ -140,7 +140,7 @@ public class HitTheCircleLevelUpScreen implements Screen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
 		
-		audioManager = new AudioManager("audio/mainmenu/clear.ogg");
+		audioManager = new AudioManager("audio/clear.ogg");
 		audioManager.playMusic();
 		
 		stage = new Stage();
@@ -155,7 +155,7 @@ public class HitTheCircleLevelUpScreen implements Screen {
 		hitTheCircleGameBackGroundScreen = hitTheCircleGameLevelUpYellow;
 		
 		this.atlasGameTexts    =creatingAtlas( "imageghostsqr.atlas");
-		this.atlasSquare=creatingAtlas( "memorizefast_img/memorizefast_square.atlas");
+		this.atlasSquare=creatingAtlas( "memorizefast/memorizefast_square.atlas");
 		
 		this.gameTextSkin=creatingSkin( this.atlasGameTexts);
 		this.squareSkin  =creatingSkin( this.atlasSquare);

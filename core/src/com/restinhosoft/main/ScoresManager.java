@@ -134,6 +134,7 @@ public class ScoresManager{
 			} catch (RuntimeException re){
 				System.err.println(re.getMessage());
 			}
+			if(readString == null) readString = "";
 			return readString;	
 		}return "";
 	}

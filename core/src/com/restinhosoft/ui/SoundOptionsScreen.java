@@ -91,6 +91,7 @@ public class SoundOptionsScreen implements Screen {
 		} catch (RuntimeException re){
 			System.err.println(re.getMessage());
 		}
+		if(readString==null) readString = "true true true 0.5";
 		return readString;
 		
 	}

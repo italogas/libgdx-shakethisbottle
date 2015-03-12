@@ -60,12 +60,13 @@ public class MainMenuScreen implements Screen {
 		
 		languageManager = LanguageManager.getInstance();
 		
-		audioManager = new AudioManager("audio/mainmenu/7inn.ogg");
+		audioManager = new AudioManager("audio/7inn.ogg");
 		if(!audioManager.getMusic().isPlaying()) audioManager.playMusic();
 		
 		
 		try {
 			language = languageManager.getLanguage();
+			if(language ==null)System.exit(0);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
@@ -98,7 +99,11 @@ public class MainMenuScreen implements Screen {
 		stage.addActor(table);
 		
 		//textButton1 = new TextButton("Play Game", textButtonStyle);
-		textButton1 = new TextButton((language.equals(languageManager.languageEN)?"Play Game ":"Jogar"), textButtonStyle);
+		textButton1 = new TextButton(
+				(language.equals(
+						languageManager.languageEN)
+						?"Play Game ":"Jogar"), 
+				textButtonStyle);
 		textButton1.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

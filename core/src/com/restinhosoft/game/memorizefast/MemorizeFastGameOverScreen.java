@@ -169,7 +169,7 @@ public class MemorizeFastGameOverScreen implements Screen {
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
-		audioManager = new AudioManager("audio/mainmenu/gameover.ogg");
+		audioManager = new AudioManager("audio/gameover.ogg");
 		audioManager.playMusic();
 		
 		camera = new OrthographicCamera();
@@ -180,11 +180,11 @@ public class MemorizeFastGameOverScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 
 		memorizefastGameOverBKG = new Texture(Gdx.files.internal(
-				 								 "memorizefast_img/memorizefast_gameover.png"));
+				 								 "memorizefast/memorizefast_gameover.png"));
 	
 		
 		this.atlasGameTexts    =creatingAtlas( "imageghostsqr.atlas");
-		this.atlasSquare=creatingAtlas( "memorizefast_img/memorizefast_square.atlas");
+		this.atlasSquare=creatingAtlas( "memorizefast/memorizefast_square.atlas");
 		
 		this.gameTextSkin=creatingSkin( this.atlasGameTexts);
 		this.squareSkin  =creatingSkin( this.atlasSquare);
