@@ -148,7 +148,7 @@ public class GameSelectionScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		menuImg = new Texture(Gdx.files.internal("menu.png"));
+		menuImg = new Texture(Gdx.files.internal("icons/sub_menu.png"));
 		atlas1 = new TextureAtlas(Gdx.files.internal("shakeit_button.atlas"));
 		atlas2 = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
@@ -159,25 +159,25 @@ public class GameSelectionScreen implements Screen {
 		
 		//******************************MUDANCAS**************************************************
 
-		textureMEMO = new Texture(Gdx.files.internal("menugame/menu_memoria.png"));
-		textureSHAKE= new Texture(Gdx.files.internal("menugame/menu_garrafa.png"));
-		textureCOLOR= new Texture(Gdx.files.internal("menugame/menu_color.png"));
-		textureBALL = new Texture(Gdx.files.internal("menugame/menu_balloon.png"));
+		textureMEMO = new Texture(Gdx.files.internal("icons/games_memoria.png"));
+		textureSHAKE= new Texture(Gdx.files.internal("icons/games_garrafa.png"));
+		textureCOLOR= new Texture(Gdx.files.internal("icons/games_colour.png"));
+		textureBALL = new Texture(Gdx.files.internal("icons/games_balao.png"));
 
-		textureAtlasMEMO = creatingAtlas("menugame/menu_memoria.atlas");
-		textureAtlasSHAKE= creatingAtlas("menugame/menu_garrafa.atlas");
-		textureAtlasCOLOR= creatingAtlas("menugame/menu_color.atlas");
-		textureAtlasBALL = creatingAtlas("menugame/menu_balloon.atlas");
+		textureAtlasMEMO = creatingAtlas("icons/games_memoria.atlas");
+		textureAtlasSHAKE= creatingAtlas("icons/games_garrafa.atlas");
+		textureAtlasCOLOR= creatingAtlas("icons/games_colour.atlas");
+		textureAtlasBALL = creatingAtlas("icons/games_balao.atlas");
 		
 		skinMEMO = creatingSkin(textureAtlasMEMO);
 		skinSHAKE = creatingSkin(textureAtlasSHAKE);
 		skinCOLOR = creatingSkin(textureAtlasCOLOR);
 		skinBALL = creatingSkin(textureAtlasBALL);
 
-		memoBTStyle = creatingTextButtonStyles(skinMEMO, "memoriabt", bitmapFont);
-		shakeBTStyle= creatingTextButtonStyles(skinSHAKE,"garrafabt", bitmapFont);
-		colorBTStyle= creatingTextButtonStyles(skinCOLOR,"colorbt", bitmapFont);
-		ballBTStyle = creatingTextButtonStyles(skinBALL, "balloonbt", bitmapFont);
+		memoBTStyle = creatingTextButtonStyles(skinMEMO, "game_memoria", bitmapFont);
+		shakeBTStyle= creatingTextButtonStyles(skinSHAKE,"game_garrafa", bitmapFont);
+		colorBTStyle= creatingTextButtonStyles(skinCOLOR,"game_colour", bitmapFont);
+		ballBTStyle = creatingTextButtonStyles(skinBALL, "game_balao", bitmapFont);
 		
 		memoButton = new TextButton("", memoBTStyle);
 		memoButton.addListener(new ChangeListener(){
@@ -300,15 +300,14 @@ public class GameSelectionScreen implements Screen {
 				
 			}
 		});
-		table.add(ballButton);
+		table.row().pad(20);
+		table.add(ballButton).pad(20);
 		//table.columnDefaults(3);
 		table.add(memoButton);
-		table.row();
-		table.add(shakeButton);
+		table.row().pad(20);
+		table.add(shakeButton).pad(20);
 		table.add(colorButton);
-		table.row();
-		table.row();
-		table.row();
+		table.row().pad(20);
 		table.align(Align.center);
 		/*table.add(imageButton1);
 		table.add(imageButton2);
