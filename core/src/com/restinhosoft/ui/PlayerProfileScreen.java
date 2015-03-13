@@ -5,7 +5,6 @@ package com.restinhosoft.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.main.LanguageManager;
@@ -42,17 +42,12 @@ public class PlayerProfileScreen implements Screen {
 	
 	private Table table;
 	
-	private TextButton playerProfileText;
+	private TextButton statusText;
 	private TextButton scoreText;
 	private TextButton achievementText;
-	private TextButton friendsText;
 	private TextButton backText;
 
-	private int width = 320;
-	private int height= 480;
-	
 	private FitViewport fitViewport;
-	
 	
 	private LanguageManager languageManager;
 	public String language;
@@ -77,7 +72,7 @@ public class PlayerProfileScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		menuImg = new Texture(Gdx.files.internal("menu.png"));
+		menuImg = new Texture(Gdx.files.internal("icons/main_menu.png"));
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
 		skin = new Skin(atlas);
@@ -96,16 +91,17 @@ public class PlayerProfileScreen implements Screen {
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
-		//playerProfileText = new TextButton("NAME: Player Name "+"\n ID: 26EAD857", textButtonEnableStyle);
-		playerProfileText = new TextButton((language.equals(languageManager.languageEN)
-				? "Name: Player Name "+"\n ID: 26EAD857"
-				: "Nome: Nome do Jogador "+"\n ID: 26EAD857"), textButtonEnableStyle);
-		playerProfileText.setColor(Color.BLACK);
-		playerProfileText.setHeight(height);
-		playerProfileText.setWidth(width);
-		playerProfileText.setDisabled(true);
+		statusText = new TextButton((language.equals(languageManager.languageEN)? "Status": "Dados "), textButtonEnableStyle);
+		statusText.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new ScoreScreen());
+				
+			}
+		});
+		statusText.pad(10);
 		
-		//scoreText = new TextButton("SCORE", textButtonEnableStyle);
+		
 		scoreText = new TextButton((language.equals(languageManager.languageEN)?"Score ":"Pontos "), textButtonEnableStyle);
 		scoreText.addListener(new ChangeListener(){
 			@Override
@@ -116,7 +112,6 @@ public class PlayerProfileScreen implements Screen {
 		});
 		scoreText.pad(10);
 		
-		//achievementText = new TextButton("ACHIEVEMENTS", textButtonEnableStyle);
 		achievementText = new TextButton((language.equals(languageManager.languageEN)?"Achievements ":"Conquistas "), textButtonEnableStyle);
 		achievementText.addListener(new ChangeListener(){
 			@Override
@@ -126,19 +121,6 @@ public class PlayerProfileScreen implements Screen {
 		});
 		achievementText.pad(10);
 		
-		//friendsText = new TextButton("FRIEND", textButtonEnableStyle);
-		friendsText = new TextButton((language.equals(languageManager.languageEN)?"Friends ":"Amigos "), textButtonEnableStyle);
-		friendsText.setColor(Color.LIGHT_GRAY);
-		friendsText.setDisabled(true);
-		friendsText.addListener(new ChangeListener(){
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-					
-			}
-		});
-		friendsText.pad(10);
-		
-		//backText = new TextButton("BACK", textButtonEnableStyle);
 		backText = new TextButton((language.equals(languageManager.languageEN)?"Back ":"Voltar "), textButtonEnableStyle);
 		backText.addListener(new ChangeListener(){
 			@Override
@@ -148,8 +130,8 @@ public class PlayerProfileScreen implements Screen {
 		});
 		backText.pad(10);
 		
-		table.add(playerProfileText);
-		table.getCell(playerProfileText).spaceBottom(25);
+		table.add(statusText);
+		table.getCell(statusText).spaceBottom(25);
 		table.row();
 		table.add(scoreText);
 		table.getCell(scoreText).spaceBottom(10);
@@ -157,12 +139,9 @@ public class PlayerProfileScreen implements Screen {
 		table.add(achievementText);
 		table.getCell(achievementText).spaceBottom(10);
 		table.row();
-		table.add(friendsText);
-		table.getCell(friendsText).spaceBottom(10);
-		table.row();
 		table.add(backText);
 		table.getCell(backText).spaceBottom(10);
-	
+		table.align(Align.right);
 	}
 
 	/* (non-Javadoc)

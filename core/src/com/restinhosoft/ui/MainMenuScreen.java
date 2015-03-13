@@ -46,10 +46,10 @@ public class MainMenuScreen implements Screen {
 	
 	private Table tableTitle;
 	
-	private TextButton textButton1;
-	private TextButton textButton2;
-	private TextButton textButton3;
-	private TextButton textButton4;
+	private TextButton gameSelectionBT;
+	private TextButton optionBT;
+	private TextButton playerProfileBT;
+	private TextButton exitBT;
 	
 	private TextButton title;
 	
@@ -114,51 +114,44 @@ public class MainMenuScreen implements Screen {
 		stage.addActor(tableTitle);
 		stage.addActor(table);
 		
-
-	
-		
-		//textButton1 = new TextButton("Play Game", textButtonStyle);
-		textButton1 = new TextButton((language.equals(languageManager.languageEN)?"Play Game ":"Jogar"),textButtonStyle);
-		textButton1.addListener(new ChangeListener(){
+		gameSelectionBT = new TextButton((language.equals(languageManager.languageEN)?"Play Game ":"Jogar"),textButtonStyle);
+		gameSelectionBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new GameSelectionScreen());
 				dispose();
 			}
 		});
-		textButton1.pad(15);
+		gameSelectionBT.pad(15);
 		
-		//textButton2 = new TextButton("Options", textButtonStyle);
-		textButton2 = new TextButton((language.equals(languageManager.languageEN)?"Options ":"Opcoes"), textButtonStyle);
-		textButton2.addListener(new ChangeListener(){
+		optionBT = new TextButton((language.equals(languageManager.languageEN)?"Options ":"Opcoes"), textButtonStyle);
+		optionBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new OptionsScreen());
 				dispose();
 			}
 		});
-		textButton2.pad(15);
+		optionBT.pad(15);
 		
-		//textButton3 = new TextButton("Player Profile", textButtonStyle);
-		textButton3 = new TextButton((language.equals(languageManager.languageEN)?"Player Profile ":"Perfil do Jogador"), textButtonStyle);
-		textButton3.addListener(new ChangeListener(){
+		playerProfileBT = new TextButton((language.equals(languageManager.languageEN)?"Player Profile ":"Perfil do Jogador"), textButtonStyle);
+		playerProfileBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new PlayerProfileScreen());//TEST
 				dispose();
 			}
 		});
-		textButton3.pad(15);
+		playerProfileBT.pad(15);
 		
-		//textButton4 = new TextButton("Exit", textButtonStyle);
-		textButton4 = new TextButton((language.equals(languageManager.languageEN)?"Exit ":"Sair"), textButtonStyle);
-		textButton4.addListener(new ChangeListener(){
+		exitBT = new TextButton((language.equals(languageManager.languageEN)?"Exit ":"Sair"), textButtonStyle);
+		exitBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				Gdx.app.exit();
 			}
 		});
-		textButton4.pad(15);
+		exitBT.pad(15);
 		
 		title = new TextButton("CHECK MY LAB", textButtonStyle);
 		title.setDisabled(true);
@@ -166,32 +159,31 @@ public class MainMenuScreen implements Screen {
 		tableTitle.add(title);
 		tableTitle.row();
 		
-		table.add(textButton1);
-		table.getCell(textButton1).spaceBottom(10);
+		table.add(gameSelectionBT);
+		table.getCell(gameSelectionBT).spaceBottom(10);
 		table.row();
-		table.add(textButton2);
-		table.getCell(textButton2).spaceBottom(10);
+		table.add(optionBT);
+		table.getCell(optionBT).spaceBottom(10);
 		table.row();
-		table.add(textButton3);
-		table.getCell(textButton3).spaceBottom(10);
+		table.add(playerProfileBT);
+		table.getCell(playerProfileBT).spaceBottom(10);
 		table.row();
-		table.add(textButton4);
+		table.add(exitBT);
 		table.align(Align.right);
-//		table.getCell(textButton4).spaceBottom(15);
 		
 		//		simple animation
 		tweenManager = new TweenManager();
 		Tween.registerAccessor(Actor.class, new ActorAccessor());
 		
 		Timeline.createSequence().beginSequence()
-			.push(Tween.set(textButton1, ActorAccessor.ALPHA).target(0))
-			.push(Tween.set(textButton2, ActorAccessor.ALPHA).target(0))
-			.push(Tween.set(textButton3, ActorAccessor.ALPHA).target(0))
-			.push(Tween.set(textButton4, ActorAccessor.ALPHA).target(0))
-			.push(Tween.to(textButton1, ActorAccessor.ALPHA, .5f).target(1))
-			.push(Tween.to(textButton2, ActorAccessor.ALPHA, .5f).target(1))
-			.push(Tween.to(textButton3, ActorAccessor.ALPHA, .5f).target(1))
-			.push(Tween.to(textButton4, ActorAccessor.ALPHA, .5f).target(1))
+			.push(Tween.set(gameSelectionBT, ActorAccessor.ALPHA).target(0))
+			.push(Tween.set(optionBT, ActorAccessor.ALPHA).target(0))
+			.push(Tween.set(playerProfileBT, ActorAccessor.ALPHA).target(0))
+			.push(Tween.set(exitBT, ActorAccessor.ALPHA).target(0))
+			.push(Tween.to(gameSelectionBT, ActorAccessor.ALPHA, .5f).target(1))
+			.push(Tween.to(optionBT, ActorAccessor.ALPHA, .5f).target(1))
+			.push(Tween.to(playerProfileBT, ActorAccessor.ALPHA, .5f).target(1))
+			.push(Tween.to(exitBT, ActorAccessor.ALPHA, .5f).target(1))
 			.end().start(tweenManager);
 		}
 
@@ -220,10 +212,6 @@ public class MainMenuScreen implements Screen {
 	 */
 	@Override
 	public void resize(int width, int height) {
-		//	app must be resized correctly
-//		stage.getViewport().update(width, height, true);
-//		table.invalidateHierarchy();
-//		table.setSize(width, height);
 		fitViewport.update(width, height);
 	}
 

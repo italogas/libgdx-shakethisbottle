@@ -53,7 +53,7 @@ public class OptionsScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		background = new Texture(Gdx.files.internal("menu.png"));
+		background = new Texture(Gdx.files.internal("icons/sub_menu.png"));//new Texture(Gdx.files.internal("menu.png"));
 		
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
@@ -62,11 +62,12 @@ public class OptionsScreen implements Screen {
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		textButtonStyle.up = skin.getDrawable("blue_button");
-		textButtonStyle.down = skin.getDrawable("blue_button");
+		//textButtonStyle.up = skin.getDrawable("blue_button");
+		//textButtonStyle.down = skin.getDrawable("blue_button");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
+		
 		
 		table = new Table();
 		table.setFillParent(true);
@@ -91,7 +92,7 @@ public class OptionsScreen implements Screen {
 		});
 		textButton2.pad(15);
 		
-		textButton3 = new TextButton((language.equals(languageManager.languageEN)?"Exit ":"Sair "), textButtonStyle);
+		textButton3 = new TextButton((language.equals(languageManager.languageEN)?"Back ":"Voltar "), textButtonStyle);
 		textButton3.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

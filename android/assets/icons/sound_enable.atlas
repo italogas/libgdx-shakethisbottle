@@ -1,0 +1,12 @@
+
+sound_enable.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+sound_enable
+  rotate: false
+  xy: 1, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1

@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.restinhosoft.game.hitthecolor.HitTheCircleStartScreen;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
 
@@ -39,6 +40,42 @@ public class LanguageOptionsScreen implements Screen {
 	private LanguageManager languageManager;
 	public String language;
 
+	private TextButton flagBRBT;
+	private TextButton flagUSBT;
+	
+	private Texture subBackGround;
+	private TextureAtlas flagAtlasBR;
+	private TextureAtlas flagAtlasUS;
+	private Skin flagSkinBR;
+	private Skin flagSkinUS;
+	
+	
+	private TextureAtlas creatingAtlas(String file){ 
+		return new TextureAtlas(Gdx.files.internal(file));
+	}
+	
+	private Skin creatingSkin(TextureAtlas atlas){ 
+		return new Skin(atlas);
+	}
+	
+	@SuppressWarnings("unused")
+	private TextButton creatingTextButton(String text,TextButtonStyle style, boolean disable){
+		TextButton button = new TextButton(text, style);
+		button.setDisabled(disable);
+		return button;
+	}
+	
+	private TextButtonStyle creatingTextButtonStyles(Skin skin, String file, BitmapFont font){
+		TextButtonStyle style = new TextButton.TextButtonStyle();
+		style.up   = skin.getDrawable(file);
+		style.down = skin.getDrawable(file);
+		style.pressedOffsetX = 1;
+		style.pressedOffsetY =-1;
+		style.font = font;
+		
+		return style;
+	}
+	
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
@@ -58,10 +95,16 @@ public class LanguageOptionsScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		background = new Texture(Gdx.files.internal("menu.png"));
+		background    = new Texture(Gdx.files.internal("menu.png"));
+		subBackGround = new Texture(Gdx.files.internal("icons/sub_menu.png"));
+		
 		atlas = new TextureAtlas(Gdx.files.internal("uiskin.atlas"));
+		flagAtlasBR = creatingAtlas("icons/icone_lang_br.atlas");//new TextureAtlas(Gdx.files.internal("icons/icone_lang_br.atlas"));
+		flagAtlasUS = creatingAtlas("icons/icone_lang_usa.atlas");//new TextureAtlas(Gdx.files.internal("icons/icone_lang_usa.atlas"));
 		
 		skin = new Skin(atlas);
+		flagSkinBR= creatingSkin(flagAtlasBR);//new Skin(flagAtlasBR);
+		flagSkinUS= creatingSkin(flagAtlasUS);//new Skin(flagAtlasUS);
 		
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
@@ -79,17 +122,66 @@ public class LanguageOptionsScreen implements Screen {
 		checkBox1 = new CheckBox("EN  ", checkBoxStyle);
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		textButtonStyle.up = skin.getDrawable("default-rect");
-		textButtonStyle.down = skin.getDrawable("default-rect-down");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
+		
+		TextButtonStyle flagBRStyle = creatingTextButtonStyles(flagSkinBR,"icone_lang_br", bitmapFont);
+		TextButtonStyle flagUSStyle = creatingTextButtonStyles(flagSkinUS,"icone_lang_usa", bitmapFont);
+		
+		flagBRBT = creatingTextButton("", flagBRStyle, false);
+		flagUSBT = creatingTextButton("", flagUSStyle, false);
+		
+		/*TextButtonStyle flagBRStyle = new TextButton.TextButtonStyle();
+		textButtonStyle.up = flagSkinBR.getDrawable("icone_lang_br");
+		textButtonStyle.down = flagSkinBR.getDrawable("icone_lang_br");
+		textButtonStyle.pressedOffsetX = 1;
+		textButtonStyle.pressedOffsetY = -1;
+		textButtonStyle.font = bitmapFont;
+		
+		TextButtonStyle flagUSStyle = new TextButton.TextButtonStyle();
+		textButtonStyle.up = flagSkinUS.getDrawable("icone_lang_usa");
+		textButtonStyle.down = flagSkinUS.getDrawable("icone_lang_usa");
+		textButtonStyle.pressedOffsetX = 1;
+		textButtonStyle.pressedOffsetY = -1;
+		textButtonStyle.font = bitmapFont;*/
+		
+		
+		flagBRBT.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				language = languageManager.languagePT;
+				try {
+					languageManager.setLanguage(language);
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+				selectLabel.setText("Selecionar Linguagem:");
+				backButton.setText("Voltar");
+			}
+		});
+
+		
+		flagUSBT.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				language = languageManager.languageEN;
+				try {
+					languageManager.setLanguage(language);
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+				selectLabel.setText("Select Language:");
+				backButton.setText("Back");
+			}
+		});
 		
 		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back ":"Voltar "), textButtonStyle);
 		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new OptionsScreen());
+				dispose();
 			}
 		});
 		
@@ -98,6 +190,16 @@ public class LanguageOptionsScreen implements Screen {
 		table.setFillParent(true);
 		stage.addActor(table);
 		
+		table.add(selectLabel);
+		table.getCell(selectLabel).spaceBottom(10);
+		table.row();
+		table.add(flagUSBT).pad(20);
+		table.row();
+		table.add(flagBRBT).pad(20);
+		table.row();
+		table.add(backButton);
+		table.getCell(backButton).spaceBottom(15);
+		/*
 		table.add(selectLabel);
 		table.getCell(selectLabel).spaceBottom(25);
 		table.row();
@@ -108,7 +210,7 @@ public class LanguageOptionsScreen implements Screen {
 		table.getCell(checkBox1).spaceBottom(10);
 		table.row();
 		table.add(backButton);
-		table.getCell(backButton).spaceBottom(15);
+		table.getCell(backButton).spaceBottom(15);*/
 
 	}
 
@@ -118,7 +220,7 @@ public class LanguageOptionsScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		game.batch.begin();
-		game.batch.draw(background, 0, 0);
+		game.batch.draw(subBackGround,0,0);//background, 0, 0);
 		game.batch.end();
 		
 		if(language.equals(languageManager.languagePT)) checkBox0.setChecked(true);

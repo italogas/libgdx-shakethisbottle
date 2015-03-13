@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -23,8 +25,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
@@ -41,7 +45,7 @@ public class SoundOptionsScreen implements Screen {
 	public Stage stage;
 	public TextureAtlas atlas;
 	public Skin skin;
-	public BitmapFont bitmapFont;
+	public final BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 	public Table table;
 	public Label enableSoundLabel;
 	public Label gameMusicLabel;
@@ -96,11 +100,76 @@ public class SoundOptionsScreen implements Screen {
 		
 	}
 	
+	private TextButton soundEnableBT;
+	private TextButton musicEnableBT;
+	private TextButton trackEnableBT;
+	
+	private Texture subBackGround;
+	
+	private TextureAtlas soundAtlas;
+	private TextureAtlas musicAtlas;
+	private TextureAtlas trackAtlas;
+	
+	private final TextureAtlas soundAtlasTempEnable = creatingAtlas("icons/sound_enable.atlas");
+	private final TextureAtlas musicAtlasTempEnable = creatingAtlas("icons/music_enable.atlas");
+	private final TextureAtlas trackAtlasTempEnable = creatingAtlas("icons/bgm_enable.atlas");
+	private final TextureAtlas soundAtlasTempDisable= creatingAtlas("icons/sound_disable.atlas");
+	private final TextureAtlas musicAtlasTempDisable= creatingAtlas("icons/music_disable.atlas");
+	private final TextureAtlas trackAtlasTempDisable= creatingAtlas("icons/bgm_disable.atlas");
+	
+	private Skin soundSkin;
+	private Skin musicSkin;
+	private Skin trackSkin;
+	
+	private final Skin soundSkinTempEnable = creatingSkin(soundAtlasTempEnable);
+	private final Skin musicSkinTempEnable = creatingSkin(musicAtlasTempEnable);
+	private final Skin trackSkinTempEnable = creatingSkin(trackAtlasTempEnable);
+	private final Skin soundSkinTempDisable= creatingSkin(soundAtlasTempDisable);
+	private final Skin musicSkinTempDisable= creatingSkin(musicAtlasTempDisable);
+	private final Skin trackSkinTempDisable= creatingSkin(trackAtlasTempDisable);
+	
+	private TextButtonStyle soundStyle;
+	private TextButtonStyle musicStyle;
+	private TextButtonStyle trackStyle;
+	
+	private final TextButtonStyle soundStyleEnable = creatingTextButtonStyles(soundSkinTempEnable, "sound_enable", bitmapFont);
+	private final TextButtonStyle musicStyleEnable = creatingTextButtonStyles(musicSkinTempEnable, "music_enable", bitmapFont);
+	private final TextButtonStyle trackStyleEnable = creatingTextButtonStyles(trackSkinTempEnable, "bgm_enable", bitmapFont);
+	private final TextButtonStyle soundStyleDisable = creatingTextButtonStyles(soundSkinTempDisable, "sound_disable", bitmapFont);
+	private final TextButtonStyle musicStyleDisable = creatingTextButtonStyles(musicSkinTempDisable, "music_disable", bitmapFont);
+	private final TextButtonStyle trackStyleDisable = creatingTextButtonStyles(trackSkinTempDisable, "bgm_disable", bitmapFont);
+	
+	private TextureAtlas creatingAtlas(String file){ 
+		return new TextureAtlas(Gdx.files.internal(file));
+	}
+	
+	private Skin creatingSkin(TextureAtlas atlas){ 
+		return new Skin(atlas);
+	}
+	
+	@SuppressWarnings("unused")
+	private TextButton creatingTextButton(String text,TextButtonStyle style, boolean disable){
+		TextButton button = new TextButton(text, style);
+		button.setDisabled(disable);
+		return button;
+	}
+	
+	private TextButtonStyle creatingTextButtonStyles(Skin skin, String file, BitmapFont font){
+		TextButtonStyle style = new TextButton.TextButtonStyle();
+		style.up   = skin.getDrawable(file);
+		style.down = skin.getDrawable(file);
+		style.pressedOffsetX = 1;
+		style.pressedOffsetY =-1;
+		style.font = font;
+		
+		return style;
+	}
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
 	@Override
 	public void show() {
+		enabled();
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
 		FileHandle local = Gdx.files.local(fileName);
@@ -112,7 +181,7 @@ public class SoundOptionsScreen implements Screen {
 			saveOptions();	
 		}
 		//pref = new PlayerPreferencesIOBuffer();
-		
+		enabled();
 		languageManager = LanguageManager.getInstance();
 		try {
 			language = languageManager.getLanguage();
@@ -127,12 +196,13 @@ public class SoundOptionsScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 		
 		background = new Texture(Gdx.files.internal("menu.png"));
+		subBackGround = new Texture(Gdx.files.internal("icons/sub_menu.png"));
 		
 		atlas = new TextureAtlas(Gdx.files.internal("uiskin.atlas"));
 		
 		skin = new Skin(atlas);
 		
-		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
+		//bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
@@ -154,11 +224,12 @@ public class SoundOptionsScreen implements Screen {
 		checkBox2 = new CheckBox("", checkBoxStyle);
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		textButtonStyle.up = skin.getDrawable("default-rect");
-		textButtonStyle.down = skin.getDrawable("default-rect-down");
+		//textButtonStyle.up = skin.getDrawable("default-rect");
+		//textButtonStyle.down = skin.getDrawable("default-rect-down");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
+		
 		
 		//backButton = new TextButton("Back", textButtonStyle);
 		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back: ":"Voltar "), textButtonStyle);
@@ -168,6 +239,77 @@ public class SoundOptionsScreen implements Screen {
 				game.setScreen(new OptionsScreen());
 			}
 		});
+		
+		soundEnableBT = creatingTextButton("", soundStyle, false);
+		musicEnableBT = creatingTextButton("", musicStyle, false);
+		trackEnableBT = creatingTextButton("", trackStyle, false);
+		
+		
+		
+		
+		
+		soundEnableBT.addListener(new ChangeListener() {
+			boolean soundEnable = Boolean.parseBoolean(optionArray[0]);
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if(soundEnable){
+					optionArray[0] = "false";	
+					saveOptions();
+					soundEnableBT.setStyle(soundStyleDisable);
+					game.setScreen(new SoundOptionsScreen());
+					dispose();
+				}else{
+					optionArray[0] = "true";	
+					saveOptions();
+					soundEnableBT.setStyle(soundStyleEnable);
+					game.setScreen(new SoundOptionsScreen());
+					dispose();
+				}
+			}
+		});
+		
+		musicEnableBT.addListener(new ChangeListener() {
+			boolean soundEnable = Boolean.parseBoolean(optionArray[0]);
+			boolean musicEnable = Boolean.parseBoolean(optionArray[1]);
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if(soundEnable && musicEnable){
+					optionArray[1] = "false";	
+					saveOptions();
+					game.setScreen(new SoundOptionsScreen());
+					dispose();
+				}else if(soundEnable && !musicEnable){
+					optionArray[1] = "true";	
+					saveOptions();
+					game.setScreen(new SoundOptionsScreen());
+					dispose();
+				}
+				enabled();
+			}
+		});
+		
+		trackEnableBT.addListener(new ChangeListener() {
+			boolean soundEnable = Boolean.parseBoolean(optionArray[0]);
+			boolean trackEnable = Boolean.parseBoolean(optionArray[2]);
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if(soundEnable && trackEnable){
+					optionArray[2] = "false";	
+					saveOptions();
+					game.setScreen(new SoundOptionsScreen());
+					dispose();
+				}else if(soundEnable && !trackEnable){
+					optionArray[2] = "true";	
+					saveOptions();
+					game.setScreen(new SoundOptionsScreen());
+					dispose();
+				}
+				enabled();
+			}
+		});
+		
+		
+		
 		
 		ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle();
 		progressBarStyle.background = skin.getDrawable("default-slider");
@@ -187,7 +329,7 @@ public class SoundOptionsScreen implements Screen {
 		table.setFillParent(true);
 //		table.setDebug(true);
 		stage.addActor(table);
-		
+		/*
 		table.add(enableSoundLabel);
 		table.getCell(enableSoundLabel).spaceBottom(10);
 		table.add(checkBox0);
@@ -206,24 +348,67 @@ public class SoundOptionsScreen implements Screen {
 		table.add(generalVolumeLabel);
 		table.getCell(generalVolumeLabel).spaceBottom(10);
 		table.add(progressBar);
-		table.getCell(progressBar).spaceBottom(10);
+		table.getCell(progressBar).spaceBottom(10);*/
+		table.row().pad(10);
+		table.add(soundEnableBT).pad(15);
+		table.row();
+		table.add(musicEnableBT).pad(15);
+		table.row();
+		table.add(trackEnableBT).pad(15);
 		table.row();
 		table.add(backButton);
+		table.align(Align.center);
 
 	}
+	private void enabled(){
+		if(optionArray[0].equals("true")){
+			soundAtlas= soundAtlasTempEnable;
+			soundSkin = soundSkinTempEnable;
+			soundStyle= soundStyleEnable;
+		}else{
+			soundAtlas= soundAtlasTempDisable;
+			soundSkin = soundSkinTempDisable;
+			soundStyle= soundStyleDisable;
+		}
+		if(optionArray[1].equals("true")){
+			musicAtlas= musicAtlasTempEnable;
+			musicSkin = musicSkinTempEnable;
+			musicStyle= musicStyleEnable;
+		}else{
+			musicAtlas= musicAtlasTempDisable;
+			musicSkin = musicSkinTempDisable;
+			musicStyle= musicStyleDisable;
+		}
+		if(optionArray[2].equals("true")){
+			trackAtlas= trackAtlasTempEnable;
+			trackSkin = trackSkinTempEnable;
+			trackStyle= trackStyleEnable;
+		}else{
+			trackAtlas= trackAtlasTempDisable;
+			trackSkin = trackSkinTempDisable;
+			trackStyle= trackStyleDisable;
+		}
+		
+		
+	}
 
+	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#render(float)
 	 */
 	@Override
 	public void render(float delta) {
+		
 		GL20 gl = Gdx.gl;
 		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 				
 		game.batch.begin();
-		game.batch.draw(background, 0, 0);
+		game.batch.draw(subBackGround, 0, 0);
 		game.batch.end();
+		
+		enabled();
+		
 		
 		//checkbox*********************************
 		/*options = loadOptions();
