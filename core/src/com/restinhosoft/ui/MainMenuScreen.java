@@ -9,6 +9,7 @@ import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,14 +18,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.hittheballoon.ActorAccessor;
 import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
 
 /**
  * @author Italo
@@ -39,10 +43,16 @@ public class MainMenuScreen implements Screen {
 	private Skin skin;
 	private BitmapFont bitmapFont;
 	private Table table;
+	
+	private Table tableTitle;
+	
 	private TextButton textButton1;
 	private TextButton textButton2;
 	private TextButton textButton3;
 	private TextButton textButton4;
+	
+	private TextButton title;
+	
 	private TweenManager tweenManager;
 	private FitViewport fitViewport;
 	
@@ -78,7 +88,7 @@ public class MainMenuScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		menuImg = new Texture(Gdx.files.internal("menu.png"));
+		menuImg = new Texture(Gdx.files.internal("main/main_menu.png"));
 		
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
@@ -92,18 +102,23 @@ public class MainMenuScreen implements Screen {
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
-		
+	
 		table = new Table();
 		table.setFillParent(true);
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		tableTitle = new Table();
+		tableTitle.setFillParent(true);
+		tableTitle.setBounds(-155, -20, 320, 200);
+		
+		stage.addActor(tableTitle);
 		stage.addActor(table);
 		
+
+	
+		
 		//textButton1 = new TextButton("Play Game", textButtonStyle);
-		textButton1 = new TextButton(
-				(language.equals(
-						languageManager.languageEN)
-						?"Play Game ":"Jogar"), 
-				textButtonStyle);
+		textButton1 = new TextButton((language.equals(languageManager.languageEN)?"Play Game ":"Jogar"),textButtonStyle);
 		textButton1.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -129,8 +144,6 @@ public class MainMenuScreen implements Screen {
 		textButton3.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				//TO DO
-				
 				game.setScreen(new PlayerProfileScreen());//TEST
 				dispose();
 			}
@@ -142,11 +155,16 @@ public class MainMenuScreen implements Screen {
 		textButton4.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				//	app closed correctly
 				Gdx.app.exit();
 			}
 		});
 		textButton4.pad(15);
+		
+		title = new TextButton("CHECK MY LAB", textButtonStyle);
+		title.setDisabled(true);
+		
+		tableTitle.add(title);
+		tableTitle.row();
 		
 		table.add(textButton1);
 		table.getCell(textButton1).spaceBottom(10);
@@ -158,6 +176,7 @@ public class MainMenuScreen implements Screen {
 		table.getCell(textButton3).spaceBottom(10);
 		table.row();
 		table.add(textButton4);
+		table.align(Align.right);
 //		table.getCell(textButton4).spaceBottom(15);
 		
 		//		simple animation
