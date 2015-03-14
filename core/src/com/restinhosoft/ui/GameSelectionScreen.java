@@ -224,14 +224,14 @@ public class GameSelectionScreen implements Screen {
 		stage.addActor(table2);
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		textButtonStyle.up = skin2.getDrawable("blue_button");
-		textButtonStyle.down = skin2.getDrawable("blue_button");
+		//textButtonStyle.up = skin2.getDrawable("blue_button");
+		//textButtonStyle.down = skin2.getDrawable("blue_button");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
 		//textButton = new TextButton("Back to MAIN MENU", textButtonStyle);
-		textButton = new TextButton((language.equals(languageManager.languageEN)?"Back to Menu":"Voltar para Menu"), textButtonStyle);
+		textButton = new TextButton((language.equals(languageManager.languageEN)?"Back":"Voltar"), textButtonStyle);
 		textButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -307,7 +307,8 @@ public class GameSelectionScreen implements Screen {
 		table.row().pad(20);
 		table.add(shakeButton).pad(20);
 		table.add(colorButton);
-		table.row().pad(20);
+		table.row().pad(15);
+		//
 		table.align(Align.center);
 		/*table.add(imageButton1);
 		table.add(imageButton2);
@@ -319,7 +320,8 @@ public class GameSelectionScreen implements Screen {
 		table.row();
 		table.add();*/
 		table2.add(textButton);
-		table2.align(Align.bottom);
+		table2.align(Align.center);
+		//table2.align(Align.bottom);
 
 	}
 
