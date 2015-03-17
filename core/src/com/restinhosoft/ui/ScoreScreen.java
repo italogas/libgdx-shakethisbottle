@@ -52,7 +52,7 @@ public class ScoreScreen implements Screen {
 	private TextButton scoreText;
 	private TextButton backText;
 	
-	private final ButtonCreation creatingButton = new ButtonCreation();
+	private final AuxScreenCreation creatingButton = new AuxScreenCreation();
 	
 	private TextButton balloonBT;
 	private TextButton memoryBT;

@@ -95,7 +95,7 @@ public class PlayerProfileScreen implements Screen {
 		statusText.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ScoreScreen());
+				game.setScreen(new StatusScreen());
 				
 			}
 		});

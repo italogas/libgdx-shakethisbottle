@@ -15,18 +15,14 @@ public class Player {
 		
 	private String[] playerProfile;
 	
-	private final int max = 16;
-	
-	private final String fileName = "player.txt";
+	private final String fileName = "player_profile.txt";
 	private final String pula = "\n";
 	
 	
 	private String generateID(){
 		String tempString ="";
 		Random r = new Random(9);
-		for(int i=0; i<=max;i++){
-			tempString+=r.nextInt();
-		}
+		tempString+=r.nextInt();
 		ID = tempString;
 		return tempString;
 	}
@@ -36,9 +32,10 @@ public class Player {
 		if(name!= null || name!="") this.name = name;
 		
 		profile = new StringFileManager();
-		playerProfile = profile.loadFile(fileName).split("\n");
+		playerProfile = profile.loadFile(fileName).split(pula);
 		
-		if(playerProfile.equals("")){
+		if(playerProfile.equals("") ||playerProfile==null){
+			System.out.println("aui");
 			this.ID = generateID();
 			this.numberOfAchievements = getNumberOfAchievements();
 			this.highScoreEver = highScoreEver();
@@ -46,12 +43,22 @@ public class Player {
 										ID+pula+
 										numberOfAchievements+pula+
 										highScoreEver,false);
-		}else{
+		}else if(playerProfile.length>1){
 			this.name = playerProfile[0];
 			this.ID = playerProfile[1];
 			this.numberOfAchievements = Integer.parseInt(playerProfile[2]);
 			this.highScoreEver = Integer.parseInt(playerProfile[3]);
+		}else{
+			System.out.println("ats");
+			this.ID = generateID();
+			this.numberOfAchievements = 0;
+			this.highScoreEver = 0;
+			profile.saveFile(fileName,name+pula+
+										ID+pula+
+										numberOfAchievements+pula+
+										highScoreEver,false);
 		}
+		playerProfile = profile.loadFile(fileName).split(pula);
 	}
 	
 	public String getName(){ return name;}

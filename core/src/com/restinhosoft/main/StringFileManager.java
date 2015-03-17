@@ -18,10 +18,12 @@ public class StringFileManager {
 	}
 	
 	public boolean saveFile(String fileName, String fileContent, boolean addContent){
-		FileHandle local = Gdx.files.internal(folderName+fileName);
+		//FileHandle local = Gdx.files.internal(folderName+fileName);
+		FileHandle local = Gdx.files.local(fileName);
 		String previousContent ="";
 		if(local.exists()){
-			previousContent = loadFile(folderName+fileName);
+			//previousContent = loadFile(folderName+fileName);
+			previousContent = loadFile(fileName);
 		}
 		try{
 			if(fileName!= null && fileName!="" && addContent){
@@ -39,13 +41,15 @@ public class StringFileManager {
 	
 	public String loadFile(String fileName){
 		if(fileName!= null && fileName !=""){	
-			FileHandle call = Gdx.files.internal(folderName+fileName);
+			//FileHandle call = Gdx.files.internal(folderName+fileName);
+			FileHandle call = Gdx.files.local(fileName);
 			if(!call.exists()){
 				call.writeString("",false);
 			}
 			String readString = null;
 			try {
-				FileHandle local = Gdx.files.internal(folderName+fileName);
+				//FileHandle local = Gdx.files.internal(folderName+fileName);
+				FileHandle local = Gdx.files.local(fileName);
 				readString = local.readString();
 			} catch (RuntimeException re){
 				System.err.println(re.getMessage());

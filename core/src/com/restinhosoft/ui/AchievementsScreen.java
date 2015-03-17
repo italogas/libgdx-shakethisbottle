@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -21,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.shakethebottle.ShakeThisBottleStartScreen;
+import com.restinhosoft.main.AchievementsManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
 
@@ -36,38 +39,133 @@ public class AchievementsScreen implements Screen {
 	private Texture button;
 	private Texture backtomenu;
 	
+	public Label selectLabel;
+	
 	private Stage stage;
 	
 	private Texture menuImg;
 	
-	private TextureAtlas atlas1;
-	private TextureAtlas atlas2;
-	
-	private Skin skin1;
-	private Skin skin2;
-	
-	private BitmapFont bitmapFont;
+	private TextureAtlas atlas;
+		
+	private Skin skin;
+		
+	private final BitmapFont bitmapFont =new BitmapFont(Gdx.files.internal("default.fnt"));
 	
 	private Table table;
-	
-	private ImageButton achievement01BT;
-	private ImageButton achievement02BT;
-	private ImageButton achievement03BT;
-	private ImageButton achievement04BT;
-	private ImageButton achievement05BT;
 	
 	private Actor imageButton6;
 	
 	private TextButton backtxBT;
+	private TextButton descBT;
 	
 	private FitViewport fitViewport;
+
+	private final AuxScreenCreation creatingButton = new AuxScreenCreation();
 	
-	//private int width = Gdx.graphics.getWidth();
-	//private int height= Gdx.graphics.getHeight();
+	private final AchievementsManager aManager = new AchievementsManager();
+	
+	private final TextureAtlas atlasBalloon = creatingButton.creatingAtlas("icons/achieviement_balloons.atlas");
+	private final TextureAtlas atlasMemory  = creatingButton.creatingAtlas("icons/achieviement_genius.atlas");
+	private final TextureAtlas atlasColour  = creatingButton.creatingAtlas("icons/achieviement_colours.atlas");
+	private final TextureAtlas atlasBottle  = creatingButton.creatingAtlas("icons/achieviement_happy.atlas");
+	private final TextureAtlas atlasLoser   = creatingButton.creatingAtlas("icons/achieviement_loser.atlas");
+	private final TextureAtlas atlasChampion= creatingButton.creatingAtlas("icons/achieviement_medal.atlas");
+		
+	private final Skin skinBalloon= creatingButton.creatingSkin(atlasBalloon);
+	private final Skin skinMemory = creatingButton.creatingSkin(atlasMemory);
+	private final Skin skinColour = creatingButton.creatingSkin(atlasColour);
+	private final Skin skinBottle = creatingButton.creatingSkin(atlasBottle);
+	private final Skin skinLoser = creatingButton.creatingSkin(atlasLoser);
+	private final Skin skinChampion = creatingButton.creatingSkin(atlasChampion);
+		
+	private final TextButtonStyle balloonStyle= creatingButton.creatingTextButtonStyles(skinBalloon,"achieviements_balloons",  bitmapFont);
+	private final TextButtonStyle memoryStyle = creatingButton.creatingTextButtonStyles(skinMemory ,"achieviements_genius",bitmapFont);
+	private final TextButtonStyle colourStyle = creatingButton.creatingTextButtonStyles(skinColour ,"achieviements_colours", bitmapFont);
+	private final TextButtonStyle bottleStyle = creatingButton.creatingTextButtonStyles(skinBottle ,"achieviements_happy",bitmapFont);
+	private final TextButtonStyle loserStyle  = creatingButton.creatingTextButtonStyles(skinLoser ,"achieviements_loser", bitmapFont);
+	private final TextButtonStyle championStyle=creatingButton.creatingTextButtonStyles(skinChampion ,"achieviements_medal",bitmapFont);
+	
+	private final TextButton level10Balloon= creatingButton.creatingTextButton("", balloonStyle, false);
+	private final TextButton level10Colour= creatingButton.creatingTextButton("", colourStyle, false);
+	private final TextButton level10Bottle= creatingButton.creatingTextButton("", bottleStyle, false);
+	private final TextButton level10Memory= creatingButton.creatingTextButton("", memoryStyle, false);
+	private final TextButton         loser= creatingButton.creatingTextButton("", loserStyle, false);
+	private final TextButton champion     = creatingButton.creatingTextButton("", championStyle, false);	
 	
 	private LanguageManager languageManager;
 	public String language;
+	
+	private String name ="";
+	private String desc ="";
 		
+	private void showAchievements(){
+		level10Balloon.setVisible(false);
+		level10Colour.setVisible(false);
+		level10Bottle.setVisible(false);
+		level10Memory.setVisible(false);
+		loser.setVisible(false);
+		champion.setVisible(false);
+		String[] achievements = aManager.getAllAchievements();
+		for(int i=0;i<aManager.getNumberOfAchievements();i++){
+			if(achievements[i].equals("superHitter")) level10Balloon.setVisible(true);
+			if(achievements[i].equals("superVision")) level10Colour.setVisible(true);
+			if(achievements[i].equals("superShake")) level10Bottle.setVisible(true);
+			if(achievements[i].equals("superGenius")) level10Memory.setVisible(true);
+			if(achievements[i].equals("Loser")) loser.setVisible(true);
+			if(achievements[i].equals("Lucky")) champion.setVisible(true);
+		}
+	}
+	
+	private void buttonClicked(){
+		level10Balloon.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				name = "superHitter";
+				desc = aManager.getAchievementDescription(name);
+			}
+		});
+		
+		level10Colour.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				name = "superVision";
+				desc = aManager.getAchievementDescription(name);
+			}
+		});
+		
+		level10Bottle.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				name = "superShake";
+				desc = aManager.getAchievementDescription(name);
+			}
+		});
+		
+		level10Memory.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				name = "superGenius";
+				desc = aManager.getAchievementDescription(name);
+			}
+		});
+		
+		loser.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				name = "Loser";
+				desc = aManager.getAchievementDescription(name);
+			}
+		});
+		
+		champion.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				name = "Lucky";
+				desc = aManager.getAchievementDescription(name);
+			}
+		});
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
@@ -88,31 +186,30 @@ public class AchievementsScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		menuImg = new Texture(Gdx.files.internal("menu.png"));
 		
-		atlas1 = new TextureAtlas(Gdx.files.internal("conquistas00_button.atlas"));
+		LabelStyle labelStyle = new Label.LabelStyle();
+		labelStyle.font = bitmapFont;
+		selectLabel = new Label(
+				(language.equals(languageManager.languageEN)?
+						"ACHIEVEMENTS ":"CONQUISTAS "), 
+				labelStyle);
 		
-		atlas2 = new TextureAtlas(Gdx.files.internal("button.atlas"));
+		menuImg = new Texture(Gdx.files.internal("icons/sub_menu.png"));
 		
-		
-		skin1 = new Skin(atlas1);
-		skin2 = new Skin(atlas2);
-		
-		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
-		
+		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
+				
+		skin = new Skin(atlas);
+
 		table = new Table();
 		table.setFillParent(true);
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		textButtonStyle.up = skin2.getDrawable("blue_button");
-		textButtonStyle.down = skin2.getDrawable("blue_button");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
 		
-		//backtxBT = new TextButton("BACK", textButtonStyle);
 		backtxBT = new TextButton(language.equals(languageManager.languageEN)?"Back ":"Voltar ", textButtonStyle);
 		backtxBT.addListener(new ChangeListener() {
 			@Override
@@ -121,74 +218,25 @@ public class AchievementsScreen implements Screen {
 			}
 		});
 		
-		ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = skin1.getDrawable("conquistas00");
-		imageButtonStyle.down = skin1.getDrawable("conquistas00");
-		imageButtonStyle.pressedOffsetX = 1;
-		imageButtonStyle.pressedOffsetX = -1;
-		
-		achievement01BT = new ImageButton(imageButtonStyle);
-		achievement01BT.setColor(Color.BLACK);
-		achievement01BT.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ShakeThisBottleStartScreen());
-				
-			}
-		});
-		
-		achievement02BT = new ImageButton(imageButtonStyle);
-		achievement02BT.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		achievement03BT = new ImageButton(imageButtonStyle);
-		achievement03BT.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		achievement04BT = new ImageButton(imageButtonStyle);
-		achievement04BT.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		achievement05BT = new ImageButton(imageButtonStyle);
-		achievement05BT.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		imageButton6 = new ImageButton(imageButtonStyle);
-		imageButton6.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-			}
-		});
-		
-		table.add(achievement01BT);
-		table.add(achievement02BT);
-		table.add(achievement03BT);
-		table.row();
-		table.add(achievement04BT);
-		table.add(achievement05BT);
-		table.add(imageButton6);
-		table.row();
-		table.add();
+		descBT = new TextButton(
+				language.equals(languageManager.languageEN)?"Name: "+ name+"\nDescription:\n"+desc:
+								"Nome: "+ name+"\nDescricao:\n"+desc, textButtonStyle);
+		descBT.setDisabled(true);
+
+	
+		table.add(selectLabel);
+		table.row().pad(10);
+		table.add(descBT);
+		table.row().pad(15);
+		table.add(level10Balloon).pad(10);
+		table.add(level10Colour);
+		table.row().pad(15);
+		table.add(level10Bottle).pad(10);
+		table.add(level10Memory);
+		table.row().pad(15);
+		table.add(loser).pad(10);
+		table.add(champion);
+		table.row().pad(15);
 		table.add(backtxBT);
 
 	}
@@ -201,6 +249,8 @@ public class AchievementsScreen implements Screen {
 		GL20 gl = Gdx.gl;
 		gl.glClearColor(1, 1, 1, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		showAchievements();
 		
 		game.batch.begin();
 		game.batch.draw(menuImg, 0, 0);
