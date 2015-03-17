@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.hittheballoon.StartScreen;
+import com.restinhosoft.game.hitthecolor.ColorGameMenu;
 import com.restinhosoft.game.hitthecolor.HitTheCircleStartScreen;
 import com.restinhosoft.game.hitthecolor.HitTheColor;
 import com.restinhosoft.game.memorizefast.MemorizeFastStartScreen;
@@ -200,8 +201,7 @@ public class GameSelectionScreen implements Screen {
 		colorButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				//game.setScreen(new HitTheColor());
-				game.setScreen(new HitTheCircleStartScreen());
+				game.setScreen(new ColorGameMenu());
 				dispose();
 			}
 		});

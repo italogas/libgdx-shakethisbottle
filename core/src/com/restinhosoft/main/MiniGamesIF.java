@@ -26,4 +26,5 @@ public interface MiniGamesIF {
 	public boolean saveTempGame();
 	public boolean loadTempGame();
 	
+	
 }

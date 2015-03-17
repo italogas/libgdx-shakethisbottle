@@ -153,7 +153,7 @@ public class MainMenuScreen implements Screen {
 		});
 		exitBT.pad(15);
 		
-		title = new TextButton("CHECK MY LAB", textButtonStyle);
+		title = new TextButton("THE GAME NAME", textButtonStyle);
 		title.setDisabled(true);
 		
 		tableTitle.add(title);
