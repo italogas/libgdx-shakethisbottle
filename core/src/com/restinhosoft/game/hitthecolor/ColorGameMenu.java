@@ -30,8 +30,12 @@ public class ColorGameMenu implements Screen {
 	private final AuxScreenCreation creating = new AuxScreenCreation(); 
 	private TextureAtlas atlastitle = creating.creatingAtlas("games/hittitle.atlas");
 	private Skin skintitle = creating.creatingSkin(atlastitle);
-	private TextButtonStyle titleStyle = creating.creatingTextButtonStyles(skintitle, "title", new BitmapFont(Gdx.files.internal("default.fnt")));
-	private TextButton title = creating.creatingTextButton("", titleStyle, true);
+	private TextButtonStyle titleStyleEN = creating.creatingTextButtonStyles(skintitle, "title", new BitmapFont(Gdx.files.internal("default.fnt")));
+	private TextButtonStyle titleStyle = creating.creatingTextButtonStyles(skintitle, "title_pt", new BitmapFont(Gdx.files.internal("default.fnt")));
+	//private TextButton title = creating.creatingTextButton("", titleStyleEN, true);
+	private TextButton title;
+	private TextButton titlePT = creating.creatingTextButton("", titleStyle, true);
+	private TextButton titleEN = creating.creatingTextButton("", titleStyleEN, true);
 	
 	private BitmapFont bitmapFont;
 	private Table table;
@@ -82,6 +86,9 @@ public class ColorGameMenu implements Screen {
 		table.setFillParent(true);
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
+		
+		if(language.equals(languageManager.languageEN)){title = titleEN;}
+		else{title=titlePT;}
 		
 		description = new TextButton((language.equals(languageManager.languageEN)?"DESCRIPTION ":"DESCRICAO "), textButtonStyle);
 		description.addListener(new ChangeListener(){
@@ -159,6 +166,8 @@ public class ColorGameMenu implements Screen {
 		game.batch.begin();
 		game.batch.draw(background, 0, 0);
 		game.batch.end();
+		if(language.equals(languageManager.languageEN)){title = titleEN;}
+		else{title=titlePT;}
 		
 		stage.act(delta);
 		stage.draw();
