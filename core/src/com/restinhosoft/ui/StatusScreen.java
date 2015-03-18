@@ -112,7 +112,7 @@ public class StatusScreen implements Screen {
 				 + "\n" + player.getNumberOfAchievements(), textButtonStyle, true);
 		highBT         = creating.creatingTextButton(
 				(language.equals(languageManager.languageEN)?"High Score EVER: ":"Melhor Pontuacao de TODAS: ")
-				 + "\n"+player.highScoreEver(), textButtonStyle, true);
+				 + "\n"+player.highScoreEver(0), textButtonStyle, true);
 		
 		
 				

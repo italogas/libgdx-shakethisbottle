@@ -251,6 +251,10 @@ public class AchievementsScreen implements Screen {
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		showAchievements();
+		buttonClicked();
+		
+		descBT.setText(language.equals(languageManager.languageEN)?"Name: "+ name+"\nDescription:\n"+desc:
+								"Nome: "+ name+"\nDescricao:\n"+desc);
 		
 		game.batch.begin();
 		game.batch.draw(menuImg, 0, 0);

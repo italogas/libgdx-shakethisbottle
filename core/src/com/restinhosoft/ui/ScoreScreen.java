@@ -109,7 +109,7 @@ public class ScoreScreen implements Screen {
 		String[] scoresArray = score.split("\n"); 
 		for(int i=0;i<scoresArray.length;i++){
 			String[] tempArray = scoresArray[i].split(":");
-			if(tempArray[0].equals("HIT THE CIRCLE")||tempArray[0].equals("ACERTE NO CIRCULO")){
+			if(tempArray[0].equals("HIT THE COLOR")||tempArray[0].equals("ACERTE NA COR")){
 				scoreMaster[0] = tempArray[1];
 				colourBT.setVisible(true);
 				colourBT.setDisabled(false);

@@ -6,8 +6,8 @@ repeat: none
 blue_bt
   rotate: false
   xy: 1, 1
-  size: 30, 30
-  orig: 30, 30
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
 
@@ -18,8 +18,8 @@ repeat: none
 red_bt
   rotate: false
   xy: 1, 1
-  size: 30, 30
-  orig: 30, 30
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
   
@@ -30,8 +30,8 @@ repeat: none
 yellow_bt
   rotate: false
   xy: 1, 1
-  size: 30, 30
-  orig: 30, 30
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
   
@@ -42,8 +42,8 @@ repeat: none
 green_bt
   rotate: false
   xy: 1, 1
-  size: 30, 30
-  orig: 30, 30
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
   
@@ -54,8 +54,8 @@ repeat: none
 purple_bt
   rotate: false
   xy: 1, 1
-  size: 30, 30
-  orig: 30, 30
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
   
@@ -66,21 +66,103 @@ repeat: none
 white_bt
   rotate: false
   xy: 1, 1
-  size: 30, 30
-  orig: 30, 30
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
   
- color_gray_bt.png
+color_gray_bt.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 gray_bt
   rotate: false
   xy: 1, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+ 
+color_white.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+white
+  rotate: false
+  xy: 1, 1
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
- 
-  
+
+color_purple.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+purple
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+
+color_blue.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+blue
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+
+color_red.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+red
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+
+color_gray.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gray
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+
+color_green.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+green
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+
+color_yellow.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+yellow
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1  

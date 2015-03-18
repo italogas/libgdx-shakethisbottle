@@ -6,8 +6,8 @@ public class AchievementsManager {
 	private final String fileAchievementName = "achievement_name.txt";
 	private final String fileAchievementDesc = "achievement_desc.txt";
 	private final String pula = "\n";
-	private final String start = "sta*";
-	private final String end   = "*end";
+	private final String start = "sta1";
+	private final String end   = "1end";
 	
 	private String[] allAchievementsNames;
 	private String[] allAchievementsDescs;
@@ -35,7 +35,7 @@ public class AchievementsManager {
 		for(int i=0;i<allAchievementsNames.length;i++){
 			if(allAchievementsNames[i].equals(achievementName))position =i;
 		}
-		if(position >=0)return allAchievementsDescs[position].split("*")[2];
+		if(position >=0)return allAchievementsDescs[position].split("1")[2];
 		return "have no description";
 	}
 	
