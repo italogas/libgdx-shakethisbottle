@@ -34,7 +34,7 @@ tutorial_color_not_hit
   orig: 128, 192
   offset: 0, 0
   index: -1
-  
+
 tutorial_color_start.png
 format: RGBA8888
 filter: Nearest,Nearest
@@ -46,4 +46,55 @@ tutorial_color_start
   orig: 128, 192
   offset: 0, 0
   index: -1
+  
+tutorial_memory_start.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tutorial_memory_start
+  rotate: false
+  xy: 1, 1
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+
+
+tutorial_memory_hit_1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tutorial_memory_hit_1
+  rotate: false
+  xy: 1, 1
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+
+tutorial_memory_hit_2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tutorial_memory_hit_2
+  rotate: false
+  xy: 1, 1
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+  
+tutorial_memory_not_hit.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tutorial_memory_not_hit
+  rotate: false
+  xy: 1, 1
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+  
+
 

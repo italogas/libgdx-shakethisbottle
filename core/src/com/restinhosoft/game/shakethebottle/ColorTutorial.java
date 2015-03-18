@@ -1,4 +1,4 @@
-package com.restinhosoft.game.memorizefast;
+package com.restinhosoft.game.shakethebottle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -23,7 +23,7 @@ import com.restinhosoft.ui.MainMenuScreen;
 import com.restinhosoft.ui.SoundOptionsScreen;
 
 
-public class NovaGeniusTutorial implements Screen {
+public class ColorTutorial implements Screen {
 
 	private ShakeThisBottle game;
 	private Stage stage;
@@ -43,22 +43,22 @@ public class NovaGeniusTutorial implements Screen {
 	private final TextureAtlas colorAtlas = creating.creatingAtlas("hitthecolour/color_tutorial_button.atlas");
 	private final Skin colorSkin = creating.creatingSkin(colorAtlas);
 	
-	private final TextButtonStyle colorStylehitOne  = creating.creatingTextButtonStyles(colorSkin, "tutorial_memory_hit_1", bitmapFont);
-	private final TextButtonStyle colorStylehittwo   = creating.creatingTextButtonStyles(colorSkin,"tutorial_memory_hit_2", bitmapFont);
-	private final TextButtonStyle colorStyleNoHit = creating.creatingTextButtonStyles(colorSkin,"tutorial_memory_not_hit", bitmapFont);
-	private final TextButtonStyle colorStyleStart= creating.creatingTextButtonStyles(colorSkin, "tutorial_memory_start", bitmapFont);
+	private final TextButtonStyle colorStylehitOne  = creating.creatingTextButtonStyles(colorSkin, "tutorial_color_hit_1", bitmapFont);
+	private final TextButtonStyle colorStylehittwo   = creating.creatingTextButtonStyles(colorSkin,"tutorial_color_hit_2", bitmapFont);
+	private final TextButtonStyle colorStyleNoHit = creating.creatingTextButtonStyles(colorSkin,"tutorial_color_not_hit", bitmapFont);
+	private final TextButtonStyle colorStyleStart= creating.creatingTextButtonStyles(colorSkin, "tutorial_color_start", bitmapFont);
 	
-	private TextButton hitShow = creating.creatingTextButton("", colorStyleStart, false);
+	private TextButton hitShow = creating.creatingTextButton("hit", colorStyleStart, false);
 	
-	private final String memoryStartPt = "clique no nome 'inicio'\n para iniciar o jogo";
-	private final String memoryHitOnePt= "clique na cor correta\n para marcar pontos";
-	private final String memoryHitTwoPt= "ao clicar na cor correta\n a cor aparece";
-	private final String memoryNoHitPt = "ao clicar em uma cor \ndiferente da sequencia,\n ocorre gameover.";
+	private final String colorStartPt = "clique no nome 'inicio'\n para iniciar o jogo";
+	private final String colorHitOnePt= "clique na cor correta\n para marcar pontos";
+	private final String colorHitTwoPt= "ao clicar na cor correta\n a cor desaparece";
+	private final String colorNoHitPt = "ao clicar em uma cor \ndiferente da pedida,\n a pontuação é decrescida.";
 	
-	private final String memoryStartEn = "click the name 'start'\n to start the game";
-	private final String memoryHitOneEn= "click the correct color\n to score points";
-	private final String memoryHitTwoEn= "by clicking on the correct\n color the color appears";
-	private final String memoryNoHitEn = "when you click a different\n color of the sequence,\n is gameover.";
+	private final String colorStartEn = "click the name 'start'\n to start the game";
+	private final String colorHitOneEn= "click the correct color\n to score points";
+	private final String colorHitTwoEn= "by clicking on the correct\n color the color disappears";
+	private final String colorNoHitEn = "when you click a different\n color requested,\n the score is decreased.";
 	
 	private int nextPage = 0;
 	@Override
@@ -100,7 +100,7 @@ public class NovaGeniusTutorial implements Screen {
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
-		textButtonDesc = new TextButton((language.equals(languageManager.languageEN)?memoryStartEn:memoryStartPt), textButtonStyle);
+		textButtonDesc = new TextButton((language.equals(languageManager.languageEN)?colorStartEn:colorStartPt), textButtonStyle);
 		textButtonDesc.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -125,7 +125,7 @@ public class NovaGeniusTutorial implements Screen {
 		textButtonBack.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new NovaGeniusGameMenu());
+				game.setScreen(new ShakeTheBottleGameMenu());
 				dispose();
 			}
 		});
@@ -151,19 +151,19 @@ public class NovaGeniusTutorial implements Screen {
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		if(nextPage==0){
-			textButtonDesc.setText((language.equals(languageManager.languageEN)?memoryStartEn:memoryStartPt));
+			textButtonDesc.setText((language.equals(languageManager.languageEN)?colorStartEn:colorStartPt));
 			hitShow.setStyle(colorStyleStart);
 		}
 		if(nextPage==1){
-			textButtonDesc.setText((language.equals(languageManager.languageEN)?memoryHitOneEn:memoryHitOnePt));
+			textButtonDesc.setText((language.equals(languageManager.languageEN)?colorHitOneEn:colorHitOnePt));
 			hitShow.setStyle(colorStylehitOne);
 		}
 		if(nextPage==2){
-			textButtonDesc.setText((language.equals(languageManager.languageEN)?memoryHitTwoEn:memoryHitTwoPt));
+			textButtonDesc.setText((language.equals(languageManager.languageEN)?colorHitTwoEn:colorHitTwoPt));
 			hitShow.setStyle(colorStylehittwo);
 		}
 		if(nextPage==3){
-			textButtonDesc.setText((language.equals(languageManager.languageEN)?memoryNoHitEn:memoryNoHitPt));
+			textButtonDesc.setText((language.equals(languageManager.languageEN)?colorNoHitEn:colorNoHitPt));
 			hitShow.setStyle(colorStyleNoHit);
 		}
 		

@@ -19,11 +19,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.hittheballoon.StartScreen;
 import com.restinhosoft.game.hitthecolor.ColorGameMenu;
 import com.restinhosoft.game.memorizefast.MemorizeFastStartScreen;
 import com.restinhosoft.game.memorizefast.NovaGeniusGameMenu;
+import com.restinhosoft.game.shakethebottle.ShakeTheBottleDescription;
+import com.restinhosoft.game.shakethebottle.ShakeTheBottleGameMenu;
 import com.restinhosoft.game.shakethebottle.ShakeThisBottleStartScreen;
 import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
@@ -179,6 +182,11 @@ public class GameSelectionScreen implements Screen {
 		colorBTStyle= creatingTextButtonStyles(skinCOLOR,"game_colour", bitmapFont);
 		ballBTStyle = creatingTextButtonStyles(skinBALL, "game_balao", bitmapFont);
 		
+		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+		textButtonStyle.pressedOffsetX = 1;
+		textButtonStyle.pressedOffsetY = -1;
+		textButtonStyle.font = bitmapFont;
+		
 		memoButton = new TextButton("", memoBTStyle);
 		memoButton.addListener(new ChangeListener(){
 			@Override
@@ -193,7 +201,8 @@ public class GameSelectionScreen implements Screen {
 		shakeButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ShakeThisBottleStartScreen());
+				//game.setScreen(new ShakeThisBottleStartScreen());
+				game.setScreen(new ShakeTheBottleGameMenu());
 				dispose();
 			}
 		});
@@ -215,6 +224,14 @@ public class GameSelectionScreen implements Screen {
 			}
 		});
 		
+		textButton = new TextButton((language.equals(languageManager.languageEN)?"Back ":"Voltar "), textButtonStyle);
+		textButton.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new MainMenuScreen());
+			}
+		});
+		textButton.pad(15);
 		
 		Table table2 = creatingTable(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), 100);
 		table = new Table();

@@ -7,17 +7,26 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.restinhosoft.game.memorizefast.NovaGeniusGameMenu;
+import com.restinhosoft.main.AchievementsManager;
+import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.MiniGamesIF;
+import com.restinhosoft.main.ScoresManager;
 import com.restinhosoft.main.ShakeThisBottle;
+import com.restinhosoft.ui.AuxScreenCreation;
 //import jdk.nashorn.internal.runtime.regexp.joni.Config;
 //import android.hardware.Sensor;
 //import android.hardware.SensorEvent;
@@ -31,7 +40,62 @@ import com.badlogic.gdx.Gdx;
  * @author Mailson
  *
  */
-public class ShakeThisBottleGameScreen implements Screen{
+public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF{
+	//********************************Novo**************************
+private final String defaultDifficulty = "normal";
+	
+	private final BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
+	
+	private int level = 0;
+	private int score = 0;
+	private int bonus = 0;
+	private int next = 0;
+	
+	private boolean survival = false;
+	private boolean pause = false;
+	private boolean start = false;
+	private boolean gameover = false;
+	
+	private String difficulty = defaultDifficulty;
+	
+	private final AuxScreenCreation creating = new AuxScreenCreation();
+
+	private TextButton title;
+	private TextButton scoreBt;
+	private TextButton levelBt;
+	private TextButton startBt;
+	private TextButton pauseBt;
+	private TextButton timerBt;
+	private TextButton back;
+	
+	private LanguageManager languageManager;
+	public String language;
+	
+	private AchievementsManager aManager = new AchievementsManager();
+	
+	private void LangInstance(){
+		languageManager = LanguageManager.getInstance();
+		try {
+			language = languageManager.getLanguage();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	private void saveScore(int score){
+		LangInstance();
+		String temp = language;
+		try {
+			languageManager.setLanguage("engl");
+			new ScoresManager("scores_eng.txt").saveDefaultMultipleScore("NOVA GENIUS", score);
+			languageManager.setLanguage("ptbr");
+			new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("NOVA GENIUS", score);
+			languageManager.setLanguage(temp);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
+	
 	//*******************************Accel*****************************
 	private float minimalX =4.0f;
 	
@@ -45,10 +109,10 @@ public class ShakeThisBottleGameScreen implements Screen{
 	
 	private int timer = maxGameTimer;
 	private int difficultyTimer = maxGameTimer;
-	private int level = initialLevel;
+	//private int level = initialLevel;
 	
-	private int score = initialScore;
-	private int bonus = initialBonus;
+//	private int score = initialScore;
+	//private int bonus = initialBonus;
 	
 	private boolean gameOver = false;
 	private boolean levelUp  = false;
@@ -71,7 +135,7 @@ public class ShakeThisBottleGameScreen implements Screen{
 	private Skin spaceSkin;
 	private Skin gameTextSkin;
 	
-	private BitmapFont bitmapFont;
+	//private BitmapFont bitmapFont;
 	
 	private Table gameTextTable;
 	//private Table gameButtonsTable;
@@ -158,11 +222,11 @@ public class ShakeThisBottleGameScreen implements Screen{
 		
 	}
 //	
-	public ShakeThisBottleGameScreen(int score,int level,int bonus){
+	/*public ShakeTheBottleGameScreen(int score,int level,int bonus){
 		this.score = score;
 		this.level=level;
 		this.bonus=bonus;
-	}
+	}*/
 //	
 //	/* (non-Javadoc)
 //	 * @see com.badlogic.gdx.Screen#show()
@@ -210,11 +274,12 @@ public class ShakeThisBottleGameScreen implements Screen{
 		this.bottleSkin  =creatingSkin( this.atlasBottle);
 		this.spaceSkin   =creatingSkin(this.atlasSpace);
 		this.gameTextSkin=creatingSkin( this.atlasGameTexts);
-//		
-		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
-//		
-		this.gameStatsStyle=creatingTextButtonStyles( this.gameTextSkin, "imageghost_sqr", bitmapFont);
 		this.bottleStyle   =creatingTextButtonStyles( this.bottleSkin, "garrafa", bitmapFont);
+//		
+	//	bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
+		/*
+		this.gameStatsStyle=creatingTextButtonStyles( this.gameTextSkin, "imageghost_sqr", bitmapFont);
+		
 		this.spaceStyle    =creatingTextButtonStyles( this.spaceSkin, "space", bitmapFont);
 //		
 		this.bottleBT=creatingTextButton( "", this.bottleStyle, true);
@@ -223,14 +288,64 @@ public class ShakeThisBottleGameScreen implements Screen{
 		this.timerBT=creatingTextButton( "TIMER: "+ showTimer, this.gameStatsStyle, true);
 		this.spaceBT=creatingTextButton("", this.spaceStyle, true);
 		this.scoreBT=creatingTextButton( "SCORE: "+ score, this.gameStatsStyle, true);
-//				
+//			*/	
+		this.bottleBT=creatingTextButton( "", this.bottleStyle, true);
+		LangInstance();
+		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+		textButtonStyle.pressedOffsetX = 1;
+		textButtonStyle.pressedOffsetY = -1;
+		textButtonStyle.font = bitmapFont;
+		
+		title = new TextButton((language.equals(languageManager.languageEN)?"SHAKE THE BOTTLE ":"AGITE A GARRAFA"), textButtonStyle);
+		title.setDisabled(true);
+		
+		scoreBt = new TextButton((language.equals(languageManager.languageEN)?"SCORE: "+score:"PONTOS: "+score), textButtonStyle);
+		scoreBt.setDisabled(true);
+		
+		levelBt = new TextButton((language.equals(languageManager.languageEN)?"LEVEL: "+level:"NIVEL: "+level), textButtonStyle);
+		levelBt.setDisabled(true);
+		
+		timerBt = new TextButton((language.equals(languageManager.languageEN)?"TIME LEFT: "+timer:"TEMPO RESTANTE: "+timer), textButtonStyle);
+		timerBt.setDisabled(true);
+		
+		startBt = new TextButton((language.equals(languageManager.languageEN)?"START":"INICIO"), textButtonStyle);
+		startBt.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if(start==false)start=true;
+				startBt.setColor(Color.GREEN);
+				startBt.setDisabled(true);
+			}
+		});
+		startBt.setColor(Color.RED);
+		
+		pauseBt = new TextButton((language.equals(languageManager.languageEN)?"PAUSE ":"PAUSA"), textButtonStyle);
+		pauseBt.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if(pause)pause=false;
+				else pause=true;
+			}
+		});
+		
+		back = new TextButton((language.equals(languageManager.languageEN)?"BACK ":"VOLTAR "), textButtonStyle);
+		back.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				saveScore(score);
+				
+				game.setScreen(new NovaGeniusGameMenu());
+				//dispose();
+			}
+		});
+		
 		this.gameTextTable   =creatingTable( 0,30, Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
 //		
 		stage.addActor(gameTextTable);
 //			
 //		//********************************Logic Game*****************************************************
 		showSequence();
-		addGameButtons();
+		addGameButtonsT();
 	}
 //
 //	/* (non-Javadoc)
@@ -252,7 +367,7 @@ public class ShakeThisBottleGameScreen implements Screen{
 //		
 		if(timer<0){
 			gameOver = true;
-		}
+		}/*
 		if(shakes>=30){
 			score = timer*level;
 			if(timer>difficultyTimer/2){
@@ -286,7 +401,11 @@ public class ShakeThisBottleGameScreen implements Screen{
 				updates();
 			}
         showSequence();
-		}
+		}*/
+		timerBt.setText((language.equals(languageManager.languageEN)?"TIME LEFT: "+timer:"TEMPO RESTANTE: "+timer));
+		
+		scoreBt.setText((language.equals(languageManager.languageEN)?"SCORE: "+score:"PONTUACAO: "+score));
+		levelBt.setText((language.equals(languageManager.languageEN)?"LEVEL: "+level:"NIVEL: "+level));
 		//************************game logic*******************************************
 		float accelX = Gdx.input.getAccelerometerX();
 		move = accelX+minimalX;
@@ -298,6 +417,29 @@ public class ShakeThisBottleGameScreen implements Screen{
 		stage.draw();
 	}
 //		
+	private void addGameButtonsT(){
+		gameTextTable.add(title);
+		gameTextTable.row();
+		gameTextTable.add(scoreBt);
+		gameTextTable.add(levelBt);
+		gameTextTable.row();
+		gameTextTable.add(timerBt);
+		gameTextTable.row().pad(10);
+	
+		gameTextTable.row();
+		gameTextTable.row().pad(10);
+		gameTextTable.add(startBt).pad(10);
+		gameTextTable.add(pauseBt).pad(10);
+		gameTextTable.row().pad(10);
+		gameTextTable.row();
+		gameTextTable.row();
+		gameTextTable.add(bottleBT);
+		gameTextTable.row();
+		gameTextTable.add(back);
+		gameTextTable.center();
+		
+	}
+	
 //	private float move;
 //	/* (non-Javadoc)
 //	 * @see com.badlogic.gdx.Screen#resize(int, int)
@@ -349,5 +491,89 @@ public class ShakeThisBottleGameScreen implements Screen{
 		stage.dispose();
 
 	}
+
+    	@Override
+    	public void setSurvival(boolean mode) {
+    		survival = mode;
+    	}
+
+    	@Override
+    	public void setDifficulty(String difficulty) {
+    		if(difficulty.equals("easy")||difficulty.equals("normal")||difficulty.equals("hard")||difficulty.equals("insane")) this.difficulty = difficulty;
+    	}
+
+    	@Override
+    	public void setScore(int score) {
+    		if(score>=0)this.score=score;
+    	}
+
+    	@Override
+    	public void setLevel(int level) {
+    		if(level>=0)this.level = level;
+
+    	}
+
+    	@Override
+    	public void setBonus(int bonus) {
+    		if(bonus>=0)this.bonus = bonus;
+
+    	}
+
+    	@Override
+    	public void setPause(boolean pause) {
+    		this.pause = pause;
+    	}
+
+    	@Override
+    	public String getName() {
+    		return "";
+    	}
+
+    	@Override
+    	public String getDescription() {
+    		// TODO Auto-generated method stub
+    		return null;
+    	}
+
+    	@Override
+    	public boolean getSurvival() {
+    		return survival;
+    	}
+
+    	@Override
+    	public String getDifficulty() {
+    		return difficulty;
+    	}
+
+    	@Override
+    	public int getScore() {
+    		return score;
+    	}
+
+    	@Override
+    	public int getLevel() {
+    		return level;
+    	}
+
+    	@Override
+    	public int getBonus() {
+    		return bonus;
+    	}
+
+    	@Override
+    	public boolean paused() {
+    		return pause;
+    	}
+
+    	@Override
+    	public boolean saveTempGame() {
+    		return false;
+    	}
+
+    	@Override
+    	public boolean loadTempGame() {
+    		return false;
+    	}
+   
 
 }
