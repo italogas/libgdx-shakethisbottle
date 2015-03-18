@@ -1,4 +1,4 @@
-package com.restinhosoft.game.hitthecolor;
+package com.restinhosoft.game.memorizefast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,7 +22,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.restinhosoft.game.hitthecolor.ColorGameMenu;
+import com.restinhosoft.game.hitthecolor.ColorGameover;
 import com.restinhosoft.main.AchievementsManager;
 import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
@@ -31,7 +34,7 @@ import com.restinhosoft.main.ScoresManager;
 import com.restinhosoft.main.ShakeThisBottle;
 import com.restinhosoft.ui.AuxScreenCreation;
 
-public class ColorStart implements MiniGamesIF, Screen {
+public class NovaGeniusStart implements MiniGamesIF, Screen {
 	private ShakeThisBottle game;
 	private Stage stage;
 	private TextureAtlas atlas;
@@ -56,7 +59,6 @@ public class ColorStart implements MiniGamesIF, Screen {
 	private TextButton levelBt;
 	private TextButton startBt;
 	private TextButton pauseBt;
-	private TextButton hitBt;
 	private TextButton timerBt;
 	
 	private final TextureAtlas colorAtlas = creating.creatingAtlas("games/color_button.atlas");
@@ -69,6 +71,9 @@ public class ColorStart implements MiniGamesIF, Screen {
 	private final TextButtonStyle colorStyleWhite = creating.creatingTextButtonStyles(colorSkin, "white_bt", bitmapFont);
 	private final TextButtonStyle colorStylePurple= creating.creatingTextButtonStyles(colorSkin, "purple_bt", bitmapFont);
 	
+	private final TextButtonStyle colorStyleBarra= creating.creatingTextButtonStyles(colorSkin, "barra", bitmapFont);
+	private TextButton barra = creating.creatingTextButton("", colorStyleBarra,  true);
+	
 	private final TextButtonStyle styleBlue  = creating.creatingTextButtonStyles(colorSkin, "blue", bitmapFont);
 	private final TextButtonStyle styleRed   = creating.creatingTextButtonStyles(colorSkin, "red", bitmapFont);
 	private final TextButtonStyle styleGreen = creating.creatingTextButtonStyles(colorSkin, "green", bitmapFont);
@@ -77,43 +82,41 @@ public class ColorStart implements MiniGamesIF, Screen {
 	private final TextButtonStyle styleWhite = creating.creatingTextButtonStyles(colorSkin, "white", bitmapFont);
 	private final TextButtonStyle stylePurple= creating.creatingTextButtonStyles(colorSkin, "purple", bitmapFont);
 	
-	private TextButton hitShow = creating.creatingTextButton("hit", colorStyleBlue, false);
+	private TextButton seq01 = creating.creatingTextButton("", styleBlue,  true);
+	private TextButton seq02 = creating.creatingTextButton("", styleGreen, true);
+	private TextButton seq03 = creating.creatingTextButton("", styleRed,   true);
+	private TextButton seq04 = creating.creatingTextButton("", styleWhite, true);
+	private TextButton seq05 = creating.creatingTextButton("", styleYellow,true);
+	private TextButton seq06 = creating.creatingTextButton("", stylePurple,true);
 	
-	private TextButton cor01 = creating.creatingTextButton("", colorStyleBlue, false);
-	private TextButton cor02 = creating.creatingTextButton("", colorStyleGreen, false);
-	private TextButton cor03 = creating.creatingTextButton("", colorStyleRed, false);
-	private TextButton cor04 = creating.creatingTextButton("", colorStyleWhite, false);
-	private TextButton cor05 = creating.creatingTextButton("", colorStyleYellow, false);
-	private TextButton cor06 = creating.creatingTextButton("", colorStyleGray, false);
-	private TextButton cor07 = creating.creatingTextButton("", colorStylePurple, false);
-	private TextButton cor08 = creating.creatingTextButton("", colorStyleBlue, false);
-	private TextButton cor09 = creating.creatingTextButton("", colorStyleWhite, false);
-	private TextButton cor10 = creating.creatingTextButton("", colorStylePurple, false);
-	private TextButton cor11 = creating.creatingTextButton("", colorStyleRed, false);
-	private TextButton cor12 = creating.creatingTextButton("", colorStyleGreen, false);
-	private TextButton cor13 = creating.creatingTextButton("", colorStyleGray, false);
-	private TextButton cor14 = creating.creatingTextButton("", colorStyleYellow, false);
-	private TextButton cor15 = creating.creatingTextButton("", colorStyleRed, false);
-	private TextButton cor16 = creating.creatingTextButton("", colorStyleBlue, false);
-	private TextButton cor17 = creating.creatingTextButton("", colorStyleGreen, false);
-	private TextButton cor18 = creating.creatingTextButton("", colorStyleYellow, false);
+	private TextButton hit01 = creating.creatingTextButton("", colorStyleBlue, false);
+	private TextButton hit02 = creating.creatingTextButton("", colorStyleRed, false);
+	private TextButton hit03 = creating.creatingTextButton("", colorStyleGreen, false);
+	private TextButton hit04 = creating.creatingTextButton("", colorStyleYellow, false);
+	private TextButton hit05 = creating.creatingTextButton("", colorStyleGray, false);
+	private TextButton hit06 = creating.creatingTextButton("", colorStyleWhite, false);
+	private TextButton hit07 = creating.creatingTextButton("", colorStylePurple, false);
+	
+	private ArrayList<TextButton> seqColor = new ArrayList<TextButton>();
+	private ArrayList<TextButton> hitList = new ArrayList<TextButton>();
 	
 	private ArrayList<Integer> colorNumber = new ArrayList<Integer>();
-	private ArrayList<TextButton> buttons  = new ArrayList<TextButton>();
+	
 	
 	private AchievementsManager aManager = new AchievementsManager();
 	
-	private final int max = 18-6;
+	private final int max = 6;
 	private final String defaultDifficulty = "normal";
 	
-	private int hit = 0;
 	private int level = 0;
 	private int score = 0;
 	private int bonus = 0;
+	private int next = 0;
 	
 	private boolean survival = false;
 	private boolean pause = false;
 	private boolean start = false;
+	private boolean gameover = false;
 	
 	private String difficulty = defaultDifficulty;
 	
@@ -122,9 +125,9 @@ public class ColorStart implements MiniGamesIF, Screen {
 		String temp = language;
 		try {
 			languageManager.setLanguage("engl");
-			new ScoresManager("scores_eng.txt").saveDefaultMultipleScore("HIT THE COLOR", score);
+			new ScoresManager("scores_eng.txt").saveDefaultMultipleScore("NOVA GENIUS", score);
 			languageManager.setLanguage("ptbr");
-			new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("ACERTE NA COR", score);
+			new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("NOVA GENIUS", score);
 			languageManager.setLanguage(temp);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -132,34 +135,29 @@ public class ColorStart implements MiniGamesIF, Screen {
 	}
 	
 	private AudioManager audioManager;
-
+	
 	private void addColorNumberList(){
 		Random rn = new Random();
-		
 		for(int i=0;i<max;i++){
 			colorNumber.add( rn.nextInt(6));
 		}
 	}
 	
 	private void addButtonsList(){
-		buttons.add(cor01);
-		buttons.add(cor02);
-		buttons.add(cor03);
-		buttons.add(cor04);
-		buttons.add(cor05);
-		buttons.add(cor06);
-		buttons.add(cor07);
-		buttons.add(cor08);
-		buttons.add(cor09);
-		buttons.add(cor10);
-		buttons.add(cor11);
-		buttons.add(cor12);
-		/*buttons.add(cor13);
-		buttons.add(cor14);
-		buttons.add(cor15);
-		buttons.add(cor16);
-		buttons.add(cor17);
-		buttons.add(cor18);*/
+		seqColor.add(seq01);
+		seqColor.add(seq02);
+		seqColor.add(seq03);
+		seqColor.add(seq04);
+		seqColor.add(seq05);
+		seqColor.add(seq06);
+		
+		hitList.add(hit01);
+		hitList.add(hit02);
+		hitList.add(hit03);
+		hitList.add(hit04);
+		hitList.add(hit05);
+		hitList.add(hit06);
+		hitList.add(hit07);
 	}
 	
 	private void updateColorList(){
@@ -168,26 +166,17 @@ public class ColorStart implements MiniGamesIF, Screen {
 	}
 	
 	private void updateColors(){
+		updateColorList();
 		for(int i=0;i<max;i++){
-			buttons.get(i).setVisible(true);
-			     if(colorNumber.get(i)==0)buttons.get(i).setStyle(colorStyleBlue);
-			else if(colorNumber.get(i)==1)buttons.get(i).setStyle(colorStyleRed);
-			else if(colorNumber.get(i)==2)buttons.get(i).setStyle(colorStyleGreen);
-			else if(colorNumber.get(i)==3)buttons.get(i).setStyle(colorStyleYellow);
-			else if(colorNumber.get(i)==4)buttons.get(i).setStyle(colorStyleGray);
-			else if(colorNumber.get(i)==5)buttons.get(i).setStyle(colorStyleWhite);
-			else if(colorNumber.get(i)==6)buttons.get(i).setStyle(colorStylePurple);
+			seqColor.get(i).setVisible(true);
+			     if(colorNumber.get(i)==0)seqColor.get(i).setStyle(styleBlue);
+			else if(colorNumber.get(i)==1)seqColor.get(i).setStyle(styleRed);
+			else if(colorNumber.get(i)==2)seqColor.get(i).setStyle(styleGreen);
+			else if(colorNumber.get(i)==3)seqColor.get(i).setStyle(styleYellow);
+			else if(colorNumber.get(i)==4)seqColor.get(i).setStyle(styleGray);
+			else if(colorNumber.get(i)==5)seqColor.get(i).setStyle(styleWhite);
+			else if(colorNumber.get(i)==6)seqColor.get(i).setStyle(stylePurple);
 		}
-		Random rn = new Random();
-		int uso =rn.nextInt(max-1);
-			 if(hit==0)buttons.get(uso).setStyle(colorStyleBlue);
-		else if(hit==1)buttons.get(uso).setStyle(colorStyleRed);
-		else if(hit==2)buttons.get(uso).setStyle(colorStyleGreen);
-		else if(hit==3)buttons.get(uso).setStyle(colorStyleYellow);
-		else if(hit==4)buttons.get(uso).setStyle(colorStyleGray);
-		else if(hit==5)buttons.get(uso).setStyle(colorStyleWhite);
-		else buttons.get(uso).setStyle(colorStylePurple);
-		colorNumber.set(uso, hit);
 	}
 	
 	private int givePoints(int c){
@@ -195,27 +184,25 @@ public class ColorStart implements MiniGamesIF, Screen {
 		else if(c==1)return 12;
 		else if(c==2)return 15;
 		else if(c==3)return 17;
-		else if(c==4)return 15;
-		else if(c==5)return 12;
-		else return 10;
+		else return 15;
+		
 	}
 	
-	private void hit(final TextButton button, final int position){
+	private void hit(final TextButton button, final int cor){
 		button.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				if(colorNumber.get(position)==hit){
+				if(cor==colorNumber.get(next)){
 					if(start && !pause){
-						score += givePoints(hit);
-						button.setVisible(false);
+						score += givePoints(next);
+						seqColor.get(next).setVisible(true);
 						audioManager.getSoundtrack().get(1).play();
+						if(next<max)next++;
 					}
-					 
 				}
 				else{
 					if(start && !pause){
-						if(score-hit >=0)score -= givePoints(hit);
-						else score = 0;	
+						gameover =true;	
 					}
 				}
 			}
@@ -223,46 +210,28 @@ public class ColorStart implements MiniGamesIF, Screen {
 	}
 
 	private void hittingButtons(){
-		hit(cor01,0);
-		hit(cor02,1);
-		hit(cor03,2);
-		hit(cor04,3);
-		hit(cor05,4);
-		hit(cor06,5);
-		hit(cor07,6);
-		hit(cor08,7);
-		hit(cor09,8);
-		hit(cor10,9);
-		hit(cor11,10);
-		hit(cor12,11);
-		/*hit(cor13,12);
-		hit(cor14,13);
-		hit(cor15,14);
-		hit(cor16,15);
-		hit(cor17,16);
-		hit(cor18,17);*/
+		hit(hit01,0);
+		hit(hit02,1);
+		hit(hit03,2);
+		hit(hit04,3);
+		hit(hit05,4);
+		hit(hit06,5);
+		hit(hit07,6);
 	}
-	
-	private void hitShow(){
-			 if(hit==0)hitShow.setStyle(styleBlue);
-		else if(hit==1)hitShow.setStyle(styleRed);
-		else if(hit==2)hitShow.setStyle(styleGreen);
-		else if(hit==3)hitShow.setStyle(styleYellow);
-		else if(hit==4)hitShow.setStyle(styleGray);
-		else if(hit==5)hitShow.setStyle(styleWhite);
-		else if(hit==6)hitShow.setStyle(stylePurple);
-	}
-
 	
 	private void levelup(){
 		Random rn = new Random();
-		hit = rn.nextInt(6);
-		hitShow();
-		int timerTemp = timer;
+		next=0;
+		timerChange = 0;
 		estimateTime();
-		this.timer+=timerTemp;
 		saveScore(score);
 		level++;
+	}
+	
+	private void sequenceInvisible(){
+		for(int i=0;i<max;i++){
+			seqColor.get(i).setVisible(false);
+		}	
 	}
 	
 	@Override
@@ -384,7 +353,7 @@ public class ColorStart implements MiniGamesIF, Screen {
 			audioManager.getSoundtrack().get(0).play();
 		}else if(level==9 && score >=1250){
 			levelup();
-			aManager.addAchievement("superVision", "Level 10 HIT THE COLOR");
+			aManager.addAchievement("superGenius", "Level 10 NOVA GENIUS");
 			audioManager.getSoundtrack().get(0).play();
 		}else if(level==10 && score >=1500){
 			levelup();
@@ -410,7 +379,9 @@ public class ColorStart implements MiniGamesIF, Screen {
 		this.task = new TimerTask() {  
             public void run() {  
                 try {
-                	if(timerChange==2 && !pause){	timerChange = 1; 	}
+                	if(timerChange==2 && !pause){	
+                		sequenceInvisible();
+                	}
                 	else timerChange++;
                 } catch (Exception e) {System.err.println(e.getMessage());;}  
            }  
@@ -432,9 +403,9 @@ public class ColorStart implements MiniGamesIF, Screen {
 	}
 	
 	private void estimateTime(){
-		if(difficulty.equals("easy"))   timer =20;
-		if(difficulty.equals("normal")) timer =15;
-		if(difficulty.equals("hard"))   timer =10;
+		if(difficulty.equals("easy"))   timer =15;
+		if(difficulty.equals("normal")) timer =10;
+		if(difficulty.equals("hard"))   timer =8;
 		if(difficulty.equals("insane")) timer =5;
 	}
 
@@ -447,7 +418,6 @@ public class ColorStart implements MiniGamesIF, Screen {
 		
 		LangInstance();
 		addButtonsList();
-		updateColorList();
 		updateColors();
 		levelup();
 		
@@ -482,11 +452,15 @@ public class ColorStart implements MiniGamesIF, Screen {
 		
 		tableScore = new Table();
 		tableScore.setFillParent(true);
-		tableScore.setBounds(-160, -50, Gdx.graphics.getWidth(), 300);
+		tableScore.setBounds(-160, -50, Gdx.graphics.getWidth(), 100);
 		
 		tableGame = new Table();
 		tableGame.setFillParent(true);
-		tableGame.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		tableGame.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), 100);
+		
+		Table tableGame2 = new Table();
+		tableGame2.setFillParent(true);
+		tableGame2.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), 200);
 		
 		tableBack = new Table();
 		tableBack.setFillParent(true);
@@ -559,32 +533,31 @@ public class ColorStart implements MiniGamesIF, Screen {
 		
 		tableGame.align(Align.center);
 		tableGame.add(startBt);
-		tableGame.add(hitShow);
 		if(!survival)tableGame.add(pauseBt);
 		tableGame.row().pad(10);
-		tableGame.add(cor01).pad(10);
-		tableGame.add(cor02).pad(10);
-		tableGame.add(cor03).pad(10);
+		
+		tableGame.add(barra);
+		tableGame.getCell(barra).align(Align.center);
 		tableGame.row().pad(10);
-		tableGame.add(cor04).pad(10);
-		tableGame.add(cor05).pad(10);
-		tableGame.add(cor06).pad(10);
+		tableGame.add(seq01);
+		tableGame.add(seq02);
+		tableGame.add(seq03);
 		tableGame.row().pad(10);
-		tableGame.add(cor07).pad(10);
-		tableGame.add(cor08).pad(10);
-		tableGame.add(cor09).pad(10);
+		tableGame.add(seq04);
+		tableGame.add(seq05);
+		tableGame.add(seq06);
 		tableGame.row().pad(10);
-		tableGame.add(cor10).pad(10);
-		tableGame.add(cor11).pad(10);
-		tableGame.add(cor12).pad(10);
-		/*tableGame.row().pad(10);
-		tableGame.add(cor13).pad(1);
-		tableGame.add(cor14).pad(1);
-		tableGame.add(cor15).pad(1);
+		tableGame.add(barra);
+		tableGame.row().pad(30);
+		tableGame.add(hit01).pad(10);
+		tableGame.add(hit02).pad(10);
+		tableGame.add(hit03);
 		tableGame.row().pad(10);
-		tableGame.add(cor16).pad(1);
-		tableGame.add(cor17).pad(1);
-		tableGame.add(cor18).pad(1);*/
+		tableGame.add(hit04).pad(10);
+		tableGame.add(hit05).pad(10);
+		tableGame.add(hit06);
+		tableGame.row().pad(10);
+		tableGame.add(hit07);
 		tableGame.row().pad(10);
 		
 		tableBack.align(Align.center);
@@ -603,14 +576,13 @@ public class ColorStart implements MiniGamesIF, Screen {
 		
 		
 		if(timerChange==2){
-			updateColorList();
-			updateColors();	
+			sequenceInvisible();
 		}
-		if(timer==0){
+		if(timer==0 || gameover){
 			audioManager.getSoundtrack().get(2).play();
 			aManager.addAchievement("Loser", "GAMEOVER");
 			saveScore(score);
-			game.setScreen(new ColorGameover());
+			game.setScreen(new NovaGeniusGameover());
 			dispose();
 		}
 		

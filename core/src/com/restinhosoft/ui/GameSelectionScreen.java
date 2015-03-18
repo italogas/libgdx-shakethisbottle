@@ -22,9 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.hittheballoon.StartScreen;
 import com.restinhosoft.game.hitthecolor.ColorGameMenu;
-import com.restinhosoft.game.hitthecolor.HitTheCircleStartScreen;
-import com.restinhosoft.game.hitthecolor.HitTheColor;
 import com.restinhosoft.game.memorizefast.MemorizeFastStartScreen;
+import com.restinhosoft.game.memorizefast.NovaGeniusGameMenu;
 import com.restinhosoft.game.shakethebottle.ShakeThisBottleStartScreen;
 import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
@@ -184,7 +183,8 @@ public class GameSelectionScreen implements Screen {
 		memoButton.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new MemorizeFastStartScreen());	
+				//game.setScreen(new MemorizeFastStartScreen());	
+				game.setScreen(new NovaGeniusGameMenu());
 				dispose();
 			}
 		});
@@ -215,92 +215,14 @@ public class GameSelectionScreen implements Screen {
 			}
 		});
 		
+		
 		Table table2 = creatingTable(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), 100);
-		//******************************MUDANCAS**************************************************
 		table = new Table();
 		table.setFillParent(true);
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()-100);
-//		table.setDebug(true);
 		stage.addActor(table);
 		stage.addActor(table2);
 		
-		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		//textButtonStyle.up = skin2.getDrawable("blue_button");
-		//textButtonStyle.down = skin2.getDrawable("blue_button");
-		textButtonStyle.pressedOffsetX = 1;
-		textButtonStyle.pressedOffsetY = -1;
-		textButtonStyle.font = bitmapFont;
-		
-		//textButton = new TextButton("Back to MAIN MENU", textButtonStyle);
-		textButton = new TextButton((language.equals(languageManager.languageEN)?"Back":"Voltar"), textButtonStyle);
-		textButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new MainMenuScreen());
-				dispose();
-			}
-		});
-		
-		ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = skin1.getDrawable("shakeitbutton");
-		imageButtonStyle.down = skin1.getDrawable("shakeitbutton");
-		imageButtonStyle.pressedOffsetX = 1;
-		imageButtonStyle.pressedOffsetX = -1;
-		
-		imageButton1 = new ImageButton(imageButtonStyle);
-		imageButton1.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new StartScreen());
-				
-			}
-		});
-		
-		imageButton2 = new ImageButton(imageButtonStyle);
-		imageButton2.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ShakeThisBottleStartScreen());
-				
-			}
-		});
-		
-		imageButton3 = new ImageButton(imageButtonStyle);
-		imageButton3.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
-				game.setScreen(new MemorizeFastStartScreen());
-			}
-		});
-		
-		imageButton4 = new ImageButton(imageButtonStyle);
-		imageButton4.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
-				game.setScreen(new HitTheCircleStartScreen());
-				//game.setScreen(new HitTheColor());
-			}
-		});
-		
-		imageButton5 = new ImageButton(imageButtonStyle);
-		imageButton5.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				//game.setScreen(new DoNotShakeThisBottleStartScreen());
-				
-			}
-		});
-		
-		imageButton6 = new ImageButton(imageButtonStyle);
-		imageButton6.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		table.row().pad(20);
 		table.add(ballButton).pad(20);
 		//table.columnDefaults(3);

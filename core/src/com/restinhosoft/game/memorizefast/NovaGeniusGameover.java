@@ -1,4 +1,4 @@
-package com.restinhosoft.game.hitthecolor;
+package com.restinhosoft.game.memorizefast;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
 import com.restinhosoft.ui.LanguageOptionsScreen;
@@ -21,7 +22,7 @@ import com.restinhosoft.ui.MainMenuScreen;
 import com.restinhosoft.ui.SoundOptionsScreen;
 
 
-public class ColorDescription implements Screen {
+public class NovaGeniusGameover implements Screen {
 
 	private ShakeThisBottle game;
 	private Stage stage;
@@ -29,7 +30,7 @@ public class ColorDescription implements Screen {
 	private Skin skin;
 	private BitmapFont bitmapFont;
 	private Table table;
-	private TextButton textButtondesc;
+	private TextButton textButtongGameover;
 	private TextButton textButtonBack;
 	private Texture background;
 	private FitViewport fitViewport;
@@ -37,11 +38,17 @@ public class ColorDescription implements Screen {
 	private LanguageManager languageManager;
 	public String language;
 	
+	
+	private AudioManager audioManager;
+	
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
 		
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		audioManager = new AudioManager("audio/gameover.ogg");
+		audioManager.addToSoundTrack("audio/gameover.ogg");
+		audioManager.getSoundtrack().get(0).play();
 		
 		languageManager = LanguageManager.getInstance();
 		try {
@@ -55,7 +62,7 @@ public class ColorDescription implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		background = new Texture(Gdx.files.internal("icons/sub_menu.png"));//new Texture(Gdx.files.internal("menu.png"));
+		background = new Texture(Gdx.files.internal("icons/gameover.png"));
 		
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
@@ -64,8 +71,6 @@ public class ColorDescription implements Screen {
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		//textButtonStyle.up = skin.getDrawable("blue_button");
-		//textButtonStyle.down = skin.getDrawable("blue_button");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
@@ -76,33 +81,23 @@ public class ColorDescription implements Screen {
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
-		String description = "The objective of this mini game"
-							+ "\n is to hit the correct color"
-							+ "\n provided by the game if err,"
-							+ "\n your score will be decreased."
-							+ " \nHave a good time.";
-		String descricao   = "O objetivo deste mini game"
-							+ "\n e acertar na cor correta"
-							+ "\n fornecida pelo jogo,"
-							+ "\n caso erre, sua pontuação"
-							+ "\n sera diminuida."
-							+ "\n Divirta-se.";
-		textButtondesc = new TextButton((language.equals(languageManager.languageEN)?description:descricao), textButtonStyle);
-		textButtondesc.setDisabled(true);
-		textButtondesc.pad(15);
+
+		textButtongGameover = new TextButton((language.equals(languageManager.languageEN)?"GAMEOVER":"FIM DE JOGO"), textButtonStyle);
+		textButtongGameover.setDisabled(true);
+		textButtongGameover.pad(15);
 		
 		textButtonBack = new TextButton((language.equals(languageManager.languageEN)?"Back ":"Voltar "), textButtonStyle);
 		textButtonBack.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ColorGameMenu());
+				game.setScreen(new NovaGeniusGameMenu());
 				dispose();
 			}
 		});
 		textButtonBack.pad(15);
 		
-		table.add(textButtondesc);
-		table.getCell(textButtondesc).spaceBottom(10);
+		table.add(textButtongGameover);
+		table.getCell(textButtongGameover).spaceBottom(10);
 		table.row();
 		table.row();
 		table.add(textButtonBack);
@@ -144,6 +139,7 @@ public class ColorDescription implements Screen {
 		skin.dispose();
 		stage.dispose();
 		bitmapFont.dispose();
+		audioManager.close();
 	}
 
 }

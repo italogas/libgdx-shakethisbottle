@@ -1,4 +1,4 @@
-package com.restinhosoft.game.hitthecolor;
+package com.restinhosoft.game.memorizefast;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,12 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.main.LanguageManager;
+import com.restinhosoft.main.MiniGamesIF;
 import com.restinhosoft.main.ShakeThisBottle;
 import com.restinhosoft.ui.AuxScreenCreation;
 import com.restinhosoft.ui.GameSelectionScreen;
 
 
-public class ColorGameMenu implements Screen {
+public class NovaGeniusGameMenu implements Screen{
 
 	private ShakeThisBottle game;
 	private Stage stage;
@@ -30,11 +31,8 @@ public class ColorGameMenu implements Screen {
 	private final AuxScreenCreation creating = new AuxScreenCreation(); 
 	private TextureAtlas atlastitle = creating.creatingAtlas("games/hittitle.atlas");
 	private Skin skintitle = creating.creatingSkin(atlastitle);
-	private TextButtonStyle titleStyleEN = creating.creatingTextButtonStyles(skintitle, "title", new BitmapFont(Gdx.files.internal("default.fnt")));
-	private TextButtonStyle titleStyle = creating.creatingTextButtonStyles(skintitle, "title_pt", new BitmapFont(Gdx.files.internal("default.fnt")));
-	private TextButton title;
-	private TextButton titlePT = creating.creatingTextButton("", titleStyle, true);
-	private TextButton titleEN = creating.creatingTextButton("", titleStyleEN, true);
+	private TextButtonStyle titleStyleEN = creating.creatingTextButtonStyles(skintitle, "memory", new BitmapFont(Gdx.files.internal("default.fnt")));
+	private TextButton title= creating.creatingTextButton("", titleStyleEN, true);
 	
 	private BitmapFont bitmapFont;
 	private Table table;
@@ -86,14 +84,12 @@ public class ColorGameMenu implements Screen {
 		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
-		if(language.equals(languageManager.languageEN)){title = titleEN;}
-		else{title=titlePT;}
-		
+
 		description = new TextButton((language.equals(languageManager.languageEN)?"DESCRIPTION ":"DESCRICAO "), textButtonStyle);
 		description.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ColorDescription());
+				game.setScreen(new NovaGeniusDescription());
 				dispose();
 			}
 		});
@@ -103,7 +99,7 @@ public class ColorGameMenu implements Screen {
 		tutorial.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ColorTutorial());
+				game.setScreen(new NovaGeniusTutorial());
 				dispose();
 			}
 		});
@@ -113,9 +109,10 @@ public class ColorGameMenu implements Screen {
 		survival.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				ColorStart neo = new ColorStart();
+				//NovaGeniusStart neo = new NovaGeniusStart();
+				NovaGeniusGameScreen neo = new NovaGeniusGameScreen();
 				neo.setSurvival(true);
-				game.setScreen(new ColorDifficultyMenu(neo));
+				game.setScreen(new NovaGeniusDifficultyMenu(neo));
 				dispose();
 			}
 		});
@@ -125,7 +122,8 @@ public class ColorGameMenu implements Screen {
 		play.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ColorDifficultyMenu(new ColorStart()));
+				//game.setScreen(new NovaGeniusDifficultyMenu(new NovaGeniusStart()));
+				game.setScreen(new NovaGeniusDifficultyMenu(new NovaGeniusGameScreen()));
 				dispose();
 			}
 		});
@@ -172,8 +170,6 @@ public class ColorGameMenu implements Screen {
 		game.batch.begin();
 		game.batch.draw(background, 0, 0);
 		game.batch.end();
-		if(language.equals(languageManager.languageEN)){title = titleEN;}
-		else{title=titlePT;}
 		
 		stage.act(delta);
 		stage.draw();

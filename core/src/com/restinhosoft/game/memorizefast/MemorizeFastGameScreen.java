@@ -97,6 +97,8 @@ public class MemorizeFastGameScreen implements Screen {
 	private TextButton circle02;
 	private TextButton circle03;
 	private TextButton circle04;
+	private TextButton circle05;
+	private TextButton circle06;
 
 	
 	private TextButton square01;

@@ -1,4 +1,4 @@
-package com.restinhosoft.game.hitthecolor;
+package com.restinhosoft.game.memorizefast;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -23,7 +23,7 @@ import com.restinhosoft.ui.MainMenuScreen;
 import com.restinhosoft.ui.SoundOptionsScreen;
 
 
-public class ColorTutorial implements Screen {
+public class NovaGeniusTutorial implements Screen {
 
 	private ShakeThisBottle game;
 	private Stage stage;
@@ -125,7 +125,7 @@ public class ColorTutorial implements Screen {
 		textButtonBack.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ColorGameMenu());
+				game.setScreen(new NovaGeniusGameMenu());
 				dispose();
 			}
 		});

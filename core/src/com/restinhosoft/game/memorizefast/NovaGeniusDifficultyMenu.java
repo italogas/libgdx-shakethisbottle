@@ -1,4 +1,4 @@
-package com.restinhosoft.game.hitthecolor;
+package com.restinhosoft.game.memorizefast;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,12 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.main.LanguageManager;
+import com.restinhosoft.main.MiniGamesIF;
 import com.restinhosoft.main.ShakeThisBottle;
 import com.restinhosoft.ui.AuxScreenCreation;
 import com.restinhosoft.ui.GameSelectionScreen;
 
 
-public class ColorGameMenu implements Screen {
+public class NovaGeniusDifficultyMenu implements Screen{
 
 	private ShakeThisBottle game;
 	private Stage stage;
@@ -30,18 +31,18 @@ public class ColorGameMenu implements Screen {
 	private final AuxScreenCreation creating = new AuxScreenCreation(); 
 	private TextureAtlas atlastitle = creating.creatingAtlas("games/hittitle.atlas");
 	private Skin skintitle = creating.creatingSkin(atlastitle);
-	private TextButtonStyle titleStyleEN = creating.creatingTextButtonStyles(skintitle, "title", new BitmapFont(Gdx.files.internal("default.fnt")));
-	private TextButtonStyle titleStyle = creating.creatingTextButtonStyles(skintitle, "title_pt", new BitmapFont(Gdx.files.internal("default.fnt")));
+	private TextButtonStyle titleStyleEN = creating.creatingTextButtonStyles(skintitle, "memory", new BitmapFont(Gdx.files.internal("default.fnt")));
+	private TextButtonStyle titleStyle = creating.creatingTextButtonStyles(skintitle, "memory", new BitmapFont(Gdx.files.internal("default.fnt")));
 	private TextButton title;
 	private TextButton titlePT = creating.creatingTextButton("", titleStyle, true);
 	private TextButton titleEN = creating.creatingTextButton("", titleStyleEN, true);
 	
 	private BitmapFont bitmapFont;
 	private Table table;
-	private TextButton description;
-	private TextButton tutorial;
-	private TextButton survival;
-	private TextButton play;
+	private TextButton easy;
+	private TextButton normal;
+	private TextButton hard;
+	private TextButton insane;
 	private TextButton back;
 		
 	private Texture background;
@@ -49,6 +50,14 @@ public class ColorGameMenu implements Screen {
 	
 	private LanguageManager languageManager;
 	public String language;
+	
+	//private NovaGeniusStart gameInstance;
+	private NovaGeniusGameScreen gameInstance;
+	
+	//public NovaGeniusDifficultyMenu(NovaGeniusStart gameInstance) {
+	public NovaGeniusDifficultyMenu(NovaGeniusGameScreen gameInstance) {
+		if(gameInstance!=null)this.gameInstance = gameInstance;
+	}
 	
 	@Override
 	public void show() {
@@ -62,6 +71,7 @@ public class ColorGameMenu implements Screen {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		
 		
 		stage = new Stage();
 		stage.setViewport(fitViewport);
@@ -89,47 +99,49 @@ public class ColorGameMenu implements Screen {
 		if(language.equals(languageManager.languageEN)){title = titleEN;}
 		else{title=titlePT;}
 		
-		description = new TextButton((language.equals(languageManager.languageEN)?"DESCRIPTION ":"DESCRICAO "), textButtonStyle);
-		description.addListener(new ChangeListener(){
+		easy = new TextButton((language.equals(languageManager.languageEN)?"EASY ":"FACIL "), textButtonStyle);
+		easy.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ColorDescription());
+				gameInstance.setDifficulty("easy");
+				game.setScreen(gameInstance);
 				dispose();
 			}
 		});
-		description.pad(15);
+		easy.pad(15);
 		
-		tutorial = new TextButton((language.equals(languageManager.languageEN)?"TUTORIAL ":"TUTORIAL "), textButtonStyle);
-		tutorial.addListener(new ChangeListener(){
+		normal = new TextButton((language.equals(languageManager.languageEN)?"NORMAL ":"NORMAL "), textButtonStyle);
+		normal.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ColorTutorial());
+				gameInstance.setDifficulty("normal");
+				game.setScreen(gameInstance);
 				dispose();
 			}
 		});
-		tutorial.pad(15);
+		normal.pad(15);
 		
-		survival = new TextButton((language.equals(languageManager.languageEN)?"SURVIVAL PLAY ":"JOGAR SOBREVIVENCIA "), textButtonStyle);
-		survival.addListener(new ChangeListener(){
+		hard = new TextButton((language.equals(languageManager.languageEN)?"HARD":"DIFICIL"), textButtonStyle);
+		hard.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				ColorStart neo = new ColorStart();
-				neo.setSurvival(true);
-				game.setScreen(new ColorDifficultyMenu(neo));
+				gameInstance.setDifficulty("hard");
+				game.setScreen(gameInstance);
 				dispose();
 			}
 		});
-		survival.pad(15);
+		hard.pad(15);
 		
-		play = new TextButton((language.equals(languageManager.languageEN)?"PLAY ":"JOGAR "), textButtonStyle);
-		play.addListener(new ChangeListener(){
+		insane = new TextButton((language.equals(languageManager.languageEN)?"INSANE":"INSANO"), textButtonStyle);
+		insane.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ColorDifficultyMenu(new ColorStart()));
+				gameInstance.setDifficulty("insane");
+				game.setScreen(gameInstance);
 				dispose();
 			}
 		});
-		play.pad(15);
+		insane.pad(15);
 		
 		back = new TextButton((language.equals(languageManager.languageEN)?"BACK ":"VOLTAR "), textButtonStyle);
 		back.addListener(new ChangeListener(){
@@ -144,17 +156,17 @@ public class ColorGameMenu implements Screen {
 		table.getCell(title).spaceBottom(10);
 		table.row();
 		back.pad(15);
-		table.add(play);
-		table.getCell(play).spaceBottom(10);
+		table.add(insane);
+		table.getCell(insane).spaceBottom(10);
 		table.row();
-		table.add(survival);
-		table.getCell(survival).spaceBottom(10);
+		table.add(hard);
+		table.getCell(hard).spaceBottom(10);
 		table.row();
-		table.add(tutorial);
-		table.getCell(tutorial).spaceBottom(10);
+		table.add(normal);
+		table.getCell(normal).spaceBottom(10);
 		table.row();
-		table.add(description);
-		table.getCell(description).spaceBottom(10);
+		table.add(easy);
+		table.getCell(easy).spaceBottom(10);
 		table.row();
 		table.add(back);
 		table.getCell(back).spaceBottom(10);

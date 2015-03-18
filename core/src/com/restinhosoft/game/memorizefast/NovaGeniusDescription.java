@@ -1,4 +1,4 @@
-package com.restinhosoft.game.hitthecolor;
+package com.restinhosoft.game.memorizefast;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -21,7 +21,7 @@ import com.restinhosoft.ui.MainMenuScreen;
 import com.restinhosoft.ui.SoundOptionsScreen;
 
 
-public class ColorDescription implements Screen {
+public class NovaGeniusDescription implements Screen {
 
 	private ShakeThisBottle game;
 	private Stage stage;
@@ -55,7 +55,7 @@ public class ColorDescription implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		background = new Texture(Gdx.files.internal("icons/sub_menu.png"));//new Texture(Gdx.files.internal("menu.png"));
+		background = new Texture(Gdx.files.internal("icons/sub_menu.png"));
 		
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
@@ -64,8 +64,6 @@ public class ColorDescription implements Screen {
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		//textButtonStyle.up = skin.getDrawable("blue_button");
-		//textButtonStyle.down = skin.getDrawable("blue_button");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
@@ -77,15 +75,14 @@ public class ColorDescription implements Screen {
 		stage.addActor(table);
 		
 		String description = "The objective of this mini game"
-							+ "\n is to hit the correct color"
-							+ "\n provided by the game if err,"
-							+ "\n your score will be decreased."
+							+ "\n is to put the correct color"
+							+ "\n in the correct position if err,"
+							+ "\n it's game over."
 							+ " \nHave a good time.";
 		String descricao   = "O objetivo deste mini game"
-							+ "\n e acertar na cor correta"
-							+ "\n fornecida pelo jogo,"
-							+ "\n caso erre, sua pontuação"
-							+ "\n sera diminuida."
+							+ "\n e colocar a cor correta"
+							+ "\n na posicao correta,"
+							+ "\n caso erre, e fim de jogo"
 							+ "\n Divirta-se.";
 		textButtondesc = new TextButton((language.equals(languageManager.languageEN)?description:descricao), textButtonStyle);
 		textButtondesc.setDisabled(true);
@@ -95,7 +92,7 @@ public class ColorDescription implements Screen {
 		textButtonBack.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ColorGameMenu());
+				game.setScreen(new NovaGeniusGameMenu());
 				dispose();
 			}
 		});

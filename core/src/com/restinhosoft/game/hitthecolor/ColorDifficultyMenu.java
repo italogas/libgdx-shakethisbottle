@@ -103,6 +103,7 @@ public class ColorDifficultyMenu implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				gameInstance.setDifficulty("easy");
 				game.setScreen(gameInstance);
+				dispose();
 			}
 		});
 		easy.pad(15);
@@ -113,6 +114,7 @@ public class ColorDifficultyMenu implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				gameInstance.setDifficulty("normal");
 				game.setScreen(gameInstance);
+				dispose();
 			}
 		});
 		normal.pad(15);
@@ -123,6 +125,7 @@ public class ColorDifficultyMenu implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				gameInstance.setDifficulty("hard");
 				game.setScreen(gameInstance);
+				dispose();
 			}
 		});
 		hard.pad(15);
@@ -133,6 +136,7 @@ public class ColorDifficultyMenu implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				gameInstance.setDifficulty("insane");
 				game.setScreen(gameInstance);
+				dispose();
 			}
 		});
 		insane.pad(15);
@@ -142,6 +146,7 @@ public class ColorDifficultyMenu implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new GameSelectionScreen());
+				dispose();
 			}
 		});
 		back.pad(15);

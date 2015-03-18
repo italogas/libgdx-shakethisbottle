@@ -166,3 +166,15 @@ yellow
   orig: 30, 30
   offset: 0, 0
   index: -1  
+   
+barra.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+barra
+  rotate: false
+  xy: 1, 1
+  size: 256, 6
+  orig: 256, 6
+  offset: 0, 0
+  index: -1  

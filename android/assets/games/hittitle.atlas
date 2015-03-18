@@ -22,3 +22,39 @@ title_pt
   orig: 256, 64
   offset: 0, 0
   index: -1
+  
+memorytitle.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+memory
+  rotate: false
+  xy: 1, 1
+  size: 256, 64
+  orig: 256, 64
+  offset: 0, 0
+  index: -1
+  
+garrafatitle_pt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+garrafatitle_pt
+  rotate: false
+  xy: 1, 1
+  size: 256, 64
+  orig: 256, 64
+  offset: 0, 0
+  index: -1
+  
+garrafatitle_en.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+garrafatitle_en
+  rotate: false
+  xy: 1, 1
+  size: 256, 64
+  orig: 256, 64
+  offset: 0, 0
+  index: -1      
