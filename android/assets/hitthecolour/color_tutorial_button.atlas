@@ -1,0 +1,48 @@
+
+tutorial_color_hit_1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tutorial_color_hit_1
+  rotate: false
+  xy: 1, 1
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+
+tutorial_color_hit_2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tutorial_color_hit_2
+  rotate: false
+  xy: 1, 1
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+  
+tutorial_color_not_hit.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tutorial_color_not_hit
+  rotate: false
+  xy: 1, 1
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+  
+tutorial_color_start.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tutorial_color_start
+  rotate: false
+  xy: 1, 1
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1

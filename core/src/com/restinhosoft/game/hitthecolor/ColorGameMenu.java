@@ -93,7 +93,7 @@ public class ColorGameMenu implements Screen {
 		description.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				
+				game.setScreen(new ColorDescription());
 			}
 		});
 		description.pad(15);
@@ -102,7 +102,7 @@ public class ColorGameMenu implements Screen {
 		tutorial.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				
+				game.setScreen(new ColorTutorial());
 			}
 		});
 		tutorial.pad(15);
@@ -111,7 +111,9 @@ public class ColorGameMenu implements Screen {
 		survival.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				
+				ColorStart neo = new ColorStart();
+				neo.setSurvival(true);
+				game.setScreen(new ColorDifficultyMenu(neo));
 			}
 		});
 		survival.pad(15);

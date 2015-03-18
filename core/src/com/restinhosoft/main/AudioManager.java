@@ -91,35 +91,6 @@ public class AudioManager{
 		}
 	}
 	
-	/*public void setVolume(float volume){
-		FileHandle local = Gdx.files.local(vol);
-		try{
-			if(volume>=0 && volume<=1){
-				local.writeString(""+volume,false);	
-			}
-		}  catch (RuntimeException re){
-			System.err.println(re.getMessage());
-		}
-	}
-	
-	private final String vol = "volume.txt"; 
-	
-	public void getVolume(){
-		FileHandle call = Gdx.files.local(vol);
-		if(!call.exists()){call.writeString(""+(0.5),false);	}
-		String readString = null;
-		try {
-			FileHandle local = Gdx.files.local(vol);
-			readString = local.readString();
-			if(readString.equals("")){
-				readString = "0,5";
-			}
-		} catch (RuntimeException re){
-			System.err.println(re.getMessage());
-		}
-		volume = Float.parseFloat(readString);
-	}*/
-	
 	public void getVolume(){
 		loadOptions();
 	}

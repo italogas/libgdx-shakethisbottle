@@ -359,7 +359,6 @@ public class ColorStart implements MiniGamesIF, Screen {
 	
 	private void changeLevel(){
 		if(level==1 && score >=100) {
-			aManager.addAchievement("superVision", "Level 10 HIT THE COLOR");
 			levelup();
 			audioManager.getSoundtrack().get(0).play(); 
 		}else if(level==2 && score >=150){
@@ -391,8 +390,7 @@ public class ColorStart implements MiniGamesIF, Screen {
 			levelup();
 			audioManager.getSoundtrack().get(0).play();
 		}else if(score>=2000){
-			levelup();
-			audioManager.getSoundtrack().get(0).play();
+			
 		}
 		
 	}
@@ -412,7 +410,7 @@ public class ColorStart implements MiniGamesIF, Screen {
 		this.task = new TimerTask() {  
             public void run() {  
                 try {
-                	if(timerChange==2){	timerChange = 1; 	}
+                	if(timerChange==2 && !pause){	timerChange = 1; 	}
                 	else timerChange++;
                 } catch (Exception e) {System.err.println(e.getMessage());;}  
            }  
@@ -426,7 +424,7 @@ public class ColorStart implements MiniGamesIF, Screen {
 		this.task = new TimerTask() {  
             public void run() {  
                 try {
-                	timer--;
+                	if(!pause) 	timer--;
                 } catch (Exception e) {System.err.println(e.getMessage());;}  
            }  
 		};
@@ -560,7 +558,7 @@ public class ColorStart implements MiniGamesIF, Screen {
 		tableGame.row().pad(10);
 		
 		tableGame.align(Align.center);
-		if(!survival)tableGame.add(startBt);
+		tableGame.add(startBt);
 		tableGame.add(hitShow);
 		if(!survival)tableGame.add(pauseBt);
 		tableGame.row().pad(10);
@@ -590,7 +588,7 @@ public class ColorStart implements MiniGamesIF, Screen {
 		tableGame.row().pad(10);
 		
 		tableBack.align(Align.center);
-		if(!survival)tableBack.add(back);
+		tableBack.add(back);
 		tableBack.getCell(back).spaceBottom(10);
 		
 		

@@ -21,10 +21,23 @@ public class AchievementsManager {
 	public int getNumberOfAchievements(){return allAchievementsNames.length;}
 	
 	public void addAchievement(String achievementName, String description){
+		allAchievementsNames = fileManager.loadFile(fileAchievementName).split("\n");
+		boolean exist = false;
 		if(achievementName!=null && !achievementName.equals("")
 		&& description!=null     && !description.equals("")){
-			fileManager.saveFile(fileAchievementName,achievementName, true);
-			fileManager.saveFile(fileAchievementDesc,start+description+end, true);
+			
+			for(int i=0;i<allAchievementsNames.length;i++){
+				if(allAchievementsNames[i].equals(achievementName)){
+					exist=true;
+				}
+			}
+			if(exist){
+				fileManager.saveFile(fileAchievementName,achievementName, false);
+				fileManager.saveFile(fileAchievementDesc,start+description+end, false);
+			}else{	
+				fileManager.saveFile(fileAchievementName,achievementName, true);
+				fileManager.saveFile(fileAchievementDesc,start+description+end, true);
+			}
 		}
 	}
 	
@@ -40,7 +53,7 @@ public class AchievementsManager {
 	}
 	
 	public String[] getAllAchievements(){
-		fileManager.loadFile(fileAchievementName).split("\n");
+		allAchievementsNames = fileManager.loadFile(fileAchievementName).split("\n");
 		return allAchievementsNames;
 	}
 }

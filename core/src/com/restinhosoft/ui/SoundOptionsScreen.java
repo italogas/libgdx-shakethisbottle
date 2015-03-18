@@ -66,7 +66,7 @@ public class SoundOptionsScreen implements Screen {
 	public String language;
 
 	private static final String fileName = "options.txt";
-	private static String options = "true true true 25";
+	private static String options = "true true true 1";
 	private static String[] optionArray = options.split(" ");
 	
 	private static String buildingSave(){
@@ -95,7 +95,7 @@ public class SoundOptionsScreen implements Screen {
 		} catch (RuntimeException re){
 			System.err.println(re.getMessage());
 		}
-		if(readString==null) readString = "true true true 0.5";
+		if(readString==null) readString = "true true true 1";
 		return readString;
 		
 	}
