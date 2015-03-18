@@ -207,6 +207,7 @@ public class StartScreen implements Screen {
 		
 		stage.act(delta);
 		stage.draw();
+		
 	}
 
 	@Override
