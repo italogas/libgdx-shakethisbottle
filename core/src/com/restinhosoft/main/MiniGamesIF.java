@@ -1,9 +1,11 @@
 package com.restinhosoft.main;
 
-public interface MiniGamesIF {
+import com.badlogic.gdx.Screen;
+
+public interface MiniGamesIF{
 	
-	public void setName(String name);
-	public void setDescription(String desc);
+	//public void setName(String name);
+	//public void setDescription(String desc);
 	public void setGameMode(String mode);
 	public void setDifficulty(String difficulty);
 	
@@ -11,7 +13,7 @@ public interface MiniGamesIF {
 	public void setLevel(int level);
 	public void setBonus(int bonus);
 	
-	public void pause();
+	public void setPause();
 	
 	public String getName();
 	public String getDescription();
@@ -25,6 +27,5 @@ public interface MiniGamesIF {
 	public boolean paused();
 	public boolean saveTempGame();
 	public boolean loadTempGame();
-	
 	
 }

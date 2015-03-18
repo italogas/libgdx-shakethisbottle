@@ -32,7 +32,6 @@ public class ColorGameMenu implements Screen {
 	private Skin skintitle = creating.creatingSkin(atlastitle);
 	private TextButtonStyle titleStyleEN = creating.creatingTextButtonStyles(skintitle, "title", new BitmapFont(Gdx.files.internal("default.fnt")));
 	private TextButtonStyle titleStyle = creating.creatingTextButtonStyles(skintitle, "title_pt", new BitmapFont(Gdx.files.internal("default.fnt")));
-	//private TextButton title = creating.creatingTextButton("", titleStyleEN, true);
 	private TextButton title;
 	private TextButton titlePT = creating.creatingTextButton("", titleStyle, true);
 	private TextButton titleEN = creating.creatingTextButton("", titleStyleEN, true);
@@ -121,7 +120,7 @@ public class ColorGameMenu implements Screen {
 		play.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				//game.setScreen(new SoundOptionsScreen());
+				game.setScreen(new ColorDifficultyMenu(new ColorStart()));
 			}
 		});
 		play.pad(15);

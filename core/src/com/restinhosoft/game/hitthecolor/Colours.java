@@ -18,10 +18,10 @@ public class Colours extends Actor{
 		RED   ("red"   , 100),
 		BLUE  ("blue"  , 110),
 		GREEN ("green" , 120),
-		ORANGE("orange", 150), 
+		WHITE("white", 150), 
 		PURPLE("purple", 120), 
 		YELLOW("yellow", 110), 
-		PINK  ("pink"  , 100);
+		GRAY  ("gray"  , 100);
 		
 		private final String color;
 		private final int value;
@@ -105,13 +105,13 @@ public class Colours extends Actor{
 			texture = new Texture(Gdx.files.internal("hitthecolour/red.png"));
 		} else if(color.equals(Colours.Colour.GREEN)){
 			texture = new Texture(Gdx.files.internal("hitthecolour/green.png"));
-		} else if(color.equals(Colours.Colour.ORANGE)){
+		} else if(color.equals(Colours.Colour.WHITE)){
 			texture = new Texture(Gdx.files.internal("hitthecolour/orange.png"));
 		}else if(color.equals(Colours.Colour.PURPLE)){
 			texture = new Texture(Gdx.files.internal("hitthecolour/purple.png"));
 		}else if(color.equals(Colours.Colour.YELLOW)){
 			texture = new Texture(Gdx.files.internal("hitthecolour/yellow.png"));
-		} else if(color.equals(Colours.Colour.PINK)){
+		} else if(color.equals(Colours.Colour.GRAY)){
 			texture = new Texture(Gdx.files.internal("hitthecolour/pink.png"));
 		}else {
 			throw new InvalidParameterException("Invalid Balloon Color. ");
@@ -137,10 +137,10 @@ public class Colours extends Actor{
 		     if(cor == 0) this.color = Colour.RED;
 		else if(cor == 1) this.color = Colour.BLUE;
 		else if(cor == 2) this.color = Colour.GREEN;
-		else if(cor == 3) this.color = Colour.ORANGE;
+		else if(cor == 3) this.color = Colour.WHITE;
 		else if(cor == 4) this.color = Colour.PURPLE;
 		else if(cor == 5) this.color = Colour.YELLOW;
-		else if(cor == 6) this.color = Colour.PINK;
+		else if(cor == 6) this.color = Colour.GRAY;
 	}
 	
 	public int getPoints(){

@@ -61,7 +61,7 @@ public class MainMenuScreen implements Screen {
 	
 	private AudioManager audioManager;
 
-	/* (non-Javadoc)
+		/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#show()
 	 */
 	@Override

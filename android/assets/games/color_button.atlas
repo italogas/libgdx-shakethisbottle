@@ -1,0 +1,86 @@
+
+color_blue_bt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+blue_bt
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+
+color_red_bt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+red_bt
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+  
+color_yellow_bt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+yellow_bt
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+  
+color_green_bt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+green_bt
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+  
+color_purple_bt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+purple_bt
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+  
+color_white_bt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+white_bt
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+  
+ color_gray_bt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gray_bt
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+ 
+  
