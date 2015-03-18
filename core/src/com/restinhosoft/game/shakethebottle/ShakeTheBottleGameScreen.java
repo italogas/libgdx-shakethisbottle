@@ -18,10 +18,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.restinhosoft.game.memorizefast.NovaGeniusGameMenu;
 import com.restinhosoft.main.AchievementsManager;
+import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.MiniGamesIF;
 import com.restinhosoft.main.ScoresManager;
@@ -42,7 +44,9 @@ import com.badlogic.gdx.Gdx;
  */
 public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF{
 	//********************************Novo**************************
-private final String defaultDifficulty = "normal";
+	private final int max = 30;
+	
+	private final String defaultDifficulty = "normal";
 	
 	private final BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 	
@@ -50,6 +54,8 @@ private final String defaultDifficulty = "normal";
 	private int score = 0;
 	private int bonus = 0;
 	private int next = 0;
+	
+	private int shakes = 0;
 	
 	private boolean survival = false;
 	private boolean pause = false;
@@ -66,10 +72,13 @@ private final String defaultDifficulty = "normal";
 	private TextButton startBt;
 	private TextButton pauseBt;
 	private TextButton timerBt;
+	private TextButton garrafa;
 	private TextButton back;
 	
 	private LanguageManager languageManager;
 	public String language;
+	
+	private AudioManager audioManager;
 	
 	private AchievementsManager aManager = new AchievementsManager();
 	
@@ -96,52 +105,91 @@ private final String defaultDifficulty = "normal";
 		}
 	}
 	
-	//*******************************Accel*****************************
+
+	private Timer counterTimerNo;
+	private TimerTask taskNo;
+	private final long seconds = 1000;
+	private final long twoSeconds = 2000;
+	
+	private int timerDefault = 0;
+	private int timerChange = 0;
+	private int timerNo = 0; 
+	
+	private void timerChange(){
+		counterTimerNo = new Timer();
+		
+		this.taskNo = new TimerTask() {  
+            public void run() {  
+                try {
+                	if(timerChange==1 && !pause){	
+                		timerChange++;
+                	}
+                	else timerChange++;
+                } catch (Exception e) {System.err.println(e.getMessage());;}  
+           }  
+		};
+		if(!pause && start)	counterTimerNo.scheduleAtFixedRate(taskNo, twoSeconds, twoSeconds);
+	}
+	
+	private void timer(){
+		counterTimerNo = new Timer();
+		
+		this.taskNo = new TimerTask() {  
+            public void run() {  
+                try {
+                	if(!pause) 	timerNo--;
+                } catch (Exception e) {System.err.println(e.getMessage());;}  
+           }  
+		};
+		if(!pause && start)	counterTimerNo.scheduleAtFixedRate(taskNo, seconds, seconds);
+	}
+	
+	private void estimateTime(){
+		if(difficulty.equals("easy"))   timerNo =25;
+		if(difficulty.equals("normal")) timerNo =20;
+		if(difficulty.equals("hard"))   timerNo =12;
+		if(difficulty.equals("insane")) timerNo =8;
+		timerDefault = timerNo;
+	}
+
+	
+	private void levelup(){
+		next=0;
+		timerChange = 0;
+		estimateTime();
+		saveScore(score);
+		level++;
+	}
+	
+	private void changeLevel(){
+		if(max==shakes) {
+			levelup();
+			audioManager.getSoundtrack().get(0).play(); 
+		}
+		if(level==10){
+			aManager.addAchievement("superShake", "Level 10 Shake the bottle");
+			audioManager.getSoundtrack().get(0).play();
+		}if(level>=20){
+			aManager.addAchievement("Lucky", "FINAL LEVEL");
+		}
+		
+	}
+	
 	private float minimalX =4.0f;
-	
-	//********************LOGICS*****************************************
-	private int shakes = 0;
-	
-	private final int maxGameTimer = 15;
-	private final int initialLevel = 1; 
-	private final int initialBonus = 0;
-	private final int initialScore = 0;
-	
-	private int timer = maxGameTimer;
-	private int difficultyTimer = maxGameTimer;
-	//private int level = initialLevel;
-	
-//	private int score = initialScore;
-	//private int bonus = initialBonus;
-	
-	private boolean gameOver = false;
-	private boolean levelUp  = false;
-	
-//********************GRAPHICS***************************************
+		
 	ShakeThisBottle game;
 	
 	private OrthographicCamera camera;
 	
-	private Texture memorizefastGameBackground;
+	private Texture background;
 	
 	private Stage stage;
 	
 	private TextureAtlas atlasBottle;
-	private TextureAtlas atlasSpace;
-	private TextureAtlas atlasImageGhostSqr;
-	private TextureAtlas atlasGameTexts;
 	
 	private Skin bottleSkin;
-	private Skin spaceSkin;
-	private Skin gameTextSkin;
-	
-	//private BitmapFont bitmapFont;
-	
 	private Table gameTextTable;
-	//private Table gameButtonsTable;
-	
-	private TextButton levelBT;
-	private TextButton scoreBT;
+		
 	@SuppressWarnings("unused")
 	private TextButton spaceBT;
 	private TextButton timerBT;
@@ -149,9 +197,7 @@ private final String defaultDifficulty = "normal";
 	private TextButton bottleBT;
 	
 	private TextButtonStyle bottleStyle;
-	private TextButtonStyle spaceStyle;
-	private TextButtonStyle gameStatsStyle;
-
+	
 	private int width = 320;
 	private int height= 480;
 	
@@ -189,48 +235,12 @@ private final String defaultDifficulty = "normal";
 		
 		return table;
 	}
-//	
-	private Timer counterTimer;
-	private TimerTask task;
-	private final long second = 1000;
-//	
-	private int showTimer = 5;
-	private boolean play = false;	
-//	
-	private void showSequence(){
-//		
-		if(showTimer>0){
-			play=false;
-		}else if(showTimer==0){
-		}else{
-			play=true;
-		}
-	}
-//	
-	private void updates(){
-		timerBT.setText( "TIMER: "+ timer);
-		levelBT.setText( "LEVEL: "+ level);
-		scoreBT.setText( "SCORE: "+ score);
-	}
-//
-	private void addGameButtons(){
-		gameTextTable.add(levelBT);
-		gameTextTable.add(timerBT);
-		gameTextTable.row();
-		gameTextTable.add(bottleBT);
-		gameTextTable.top();
-		
-	}
-//	
-	/*public ShakeTheBottleGameScreen(int score,int level,int bonus){
-		this.score = score;
-		this.level=level;
-		this.bonus=bonus;
-	}*/
-//	
-//	/* (non-Javadoc)
-//	 * @see com.badlogic.gdx.Screen#show()
-//	 */
+
+
+
+	/* (non-Javadoc)
+	 * @see com.badlogic.gdx.Screen#show()
+	 */
 	@Override
 	public void show() {
 		this.game = (ShakeThisBottle) Gdx.app.getApplicationListener();
@@ -238,59 +248,26 @@ private final String defaultDifficulty = "normal";
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
 		
-		stage = new Stage();
-//		
-		Gdx.input.setInputProcessor(stage);
-//		
-		memorizefastGameBackground = new Texture(Gdx.files.internal("background_profile_screen.png"));
-												// "shakethisbottle/shakethebottle_background.png"));
-//		
-//		//timer
-		counterTimer = new Timer();
-//		
-		this.task = new TimerTask() {  
-            public void run() {  
-                try { 
-                	if(showTimer >= 0){                		
-                		showTimer--;
-                	}else{
-                		
-                		timer--;
-                	}
-                 } catch (Exception e) {  
-                	 System.err.println(e.getMessage());  
-                 }  
-            }  
-        }; 
-//       
-        counterTimer.scheduleAtFixedRate(task, second, second);
-//		
-//		//creating graphics
-		this.atlasBottle=creatingAtlas( "shakethisbottle/garrafa.atlas");
-//		
-		this.atlasSpace=creatingAtlas( "space.atlas");
-		this.atlasGameTexts    =creatingAtlas( "imageghostsqr.atlas");
-//		
-		this.bottleSkin  =creatingSkin( this.atlasBottle);
-		this.spaceSkin   =creatingSkin(this.atlasSpace);
-		this.gameTextSkin=creatingSkin( this.atlasGameTexts);
-		this.bottleStyle   =creatingTextButtonStyles( this.bottleSkin, "garrafa", bitmapFont);
-//		
-	//	bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
-		/*
-		this.gameStatsStyle=creatingTextButtonStyles( this.gameTextSkin, "imageghost_sqr", bitmapFont);
+		audioManager = new AudioManager("audio/gameselection.ogg");
+		audioManager.addToSoundTrack("audio/clear.ogg");
+		audioManager.addToSoundTrack("audio/botoes_first.mp3");
+		audioManager.addToSoundTrack("audio/clear.ogg");
 		
-		this.spaceStyle    =creatingTextButtonStyles( this.spaceSkin, "space", bitmapFont);
-//		
-		this.bottleBT=creatingTextButton( "", this.bottleStyle, true);
-//		
-		this.levelBT=creatingTextButton( "LEVEL: "+ level+"      ", this.gameStatsStyle, true);
-		this.timerBT=creatingTextButton( "TIMER: "+ showTimer, this.gameStatsStyle, true);
-		this.spaceBT=creatingTextButton("", this.spaceStyle, true);
-		this.scoreBT=creatingTextButton( "SCORE: "+ score, this.gameStatsStyle, true);
-//			*/	
+		estimateTime();
+		
+		stage = new Stage();
+		
+		Gdx.input.setInputProcessor(stage);
+		
+		background = new Texture(Gdx.files.internal("games/game_background.png"));
+ 
+        this.atlasBottle=creatingAtlas( "games/garrafa.atlas");
+		this.bottleSkin  =creatingSkin( this.atlasBottle);
+		this.bottleStyle   =creatingTextButtonStyles( this.bottleSkin, "garrafa", bitmapFont);
+
 		this.bottleBT=creatingTextButton( "", this.bottleStyle, true);
 		LangInstance();
+		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
@@ -305,7 +282,7 @@ private final String defaultDifficulty = "normal";
 		levelBt = new TextButton((language.equals(languageManager.languageEN)?"LEVEL: "+level:"NIVEL: "+level), textButtonStyle);
 		levelBt.setDisabled(true);
 		
-		timerBt = new TextButton((language.equals(languageManager.languageEN)?"TIME LEFT: "+timer:"TEMPO RESTANTE: "+timer), textButtonStyle);
+		timerBt = new TextButton((language.equals(languageManager.languageEN)?"TIME LEFT: "+timerNo:"TEMPO RESTANTE: "+timerNo), textButtonStyle);
 		timerBt.setDisabled(true);
 		
 		startBt = new TextButton((language.equals(languageManager.languageEN)?"START":"INICIO"), textButtonStyle);
@@ -313,6 +290,7 @@ private final String defaultDifficulty = "normal";
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if(start==false)start=true;
+				timer();
 				startBt.setColor(Color.GREEN);
 				startBt.setDisabled(true);
 			}
@@ -335,89 +313,60 @@ private final String defaultDifficulty = "normal";
 				saveScore(score);
 				
 				game.setScreen(new NovaGeniusGameMenu());
-				//dispose();
+				dispose();
 			}
 		});
 		
 		this.gameTextTable   =creatingTable( 0,30, Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
-//		
+		
 		stage.addActor(gameTextTable);
-//			
-//		//********************************Logic Game*****************************************************
-		showSequence();
-		addGameButtonsT();
+			
+		addGameButtons();
 	}
-//
-//	/* (non-Javadoc)
-//	 * @see com.badlogic.gdx.Screen#render(float)
-//	 */
+	
+	private float x = 0;
+	private float y = 0;
+
+	/* (non-Javadoc)
+	 * @see com.badlogic.gdx.Screen#render(float)
+	 */
 	@SuppressWarnings("static-access")
 	@Override
 	public void render(float delta) {
 		GL20 gl = Gdx.gl;
 		gl.glClearColor(1, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//		
+		
 		game.batch.begin();
-		game.batch.draw(memorizefastGameBackground, 0, 0);
-//
+		game.batch.draw(background, 0, 0);
+
 		game.batch.end();
-//		
-//		//************************game logic*******************************************
-//		
-		if(timer<0){
-			gameOver = true;
-		}/*
-		if(shakes>=30){
-			score = timer*level;
-			if(timer>difficultyTimer/2){
-				bonus = timer*level;
-				score = score+bonus;
-//			
-			}
-			level++;
-			game.setScreen(new ShakeThisBottleLevelUpScreen(score, level, bonus));
+
+		if(timerNo<0){
+			gameover = true;
+			audioManager.getSoundtrack().get(2).play();
+			aManager.addAchievement("Loser", "GAMEOVER");
+			game.setScreen(new ShakeTheBottleGameover());
 		}
-		if(levelUp){
-			levelUp=false;
-			score = score + level*timer;
-			
-			timer = 10;
-			showTimer=5;
-//				
-			if(level%2==0){
-				difficultyTimer--;
-			}
-//			
-			showSequence();	
-//			
-		}else if(gameOver){
-			bonus=0;
-			game.setScreen(new ShakeThisBottleGameOverScreen(score, level, bonus));
-		}else{
-			if(showTimer>0)			timerBT.setText( "SHOWING: "+ showTimer);
-			else if(showTimer==0)	timerBT.setText( "START");
-			else{
-				updates();
-			}
-        showSequence();
-		}*/
-		timerBt.setText((language.equals(languageManager.languageEN)?"TIME LEFT: "+timer:"TEMPO RESTANTE: "+timer));
+		changeLevel();
+		timerBt.setText((language.equals(languageManager.languageEN)?"TIME LEFT: "+timerNo:"TEMPO RESTANTE: "+timerNo));
 		
 		scoreBt.setText((language.equals(languageManager.languageEN)?"SCORE: "+score:"PONTUACAO: "+score));
 		levelBt.setText((language.equals(languageManager.languageEN)?"LEVEL: "+level:"NIVEL: "+level));
 		//************************game logic*******************************************
 		float accelX = Gdx.input.getAccelerometerX();
 		move = accelX+minimalX;
-        if(accelX>minimalX &&play){// && accelX!=move){//(accelX>move+minimalX ||accelX<move+minimalX)){
+		x =move;
+		y =Gdx.input.getAccelerometerY()+minimalX;;
+        if(accelX>minimalX &&start){// && accelX!=move){//(accelX>move+minimalX ||accelX<move+minimalX)){
 			shakes++;
-			try{Thread.currentThread().sleep(100);}catch(Exception e){gameOver=true;};
+			try{Thread.currentThread().sleep(100);}catch(Exception e){gameover=true;};
 		}
 		stage.act(delta);
 		stage.draw();
 	}
 //		
-	private void addGameButtonsT(){
+	private void addGameButtons(){
 		gameTextTable.add(title);
 		gameTextTable.row();
 		gameTextTable.add(scoreBt);
@@ -430,13 +379,18 @@ private final String defaultDifficulty = "normal";
 		gameTextTable.row().pad(10);
 		gameTextTable.add(startBt).pad(10);
 		gameTextTable.add(pauseBt).pad(10);
-		gameTextTable.row().pad(10);
+		gameTextTable.row().pad(30);
 		gameTextTable.row();
 		gameTextTable.row();
 		gameTextTable.add(bottleBT);
+		gameTextTable.getCell(bottleBT).align(Align.center);
+		gameTextTable.getCell(bottleBT).pad(x);
+		gameTextTable.getCell(bottleBT).pad(y);
 		gameTextTable.row();
+		gameTextTable.row().pad(30);
 		gameTextTable.add(back);
 		gameTextTable.center();
+		gameTextTable.top();
 		
 	}
 	
@@ -480,15 +434,10 @@ private final String defaultDifficulty = "normal";
         @Override
 	public void dispose() {
 		atlasBottle.dispose();
-		atlasSpace.dispose();
-		atlasImageGhostSqr.dispose();
-		atlasGameTexts.dispose();
-	
 		bitmapFont.dispose();
-		
-		memorizefastGameBackground.dispose();
-		
+		background.dispose();
 		stage.dispose();
+		audioManager.close();
 
 	}
 

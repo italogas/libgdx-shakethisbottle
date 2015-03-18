@@ -229,6 +229,7 @@ public class GameSelectionScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(new MainMenuScreen());
+				dispose();
 			}
 		});
 		textButton.pad(15);

@@ -6,7 +6,7 @@ repeat: none
 garrafa
   rotate: false
   xy: 1, 1
-  size: 82, 24
-  orig: 82, 24
+  size: 24, 82
+  orig: 24, 82
   offset: 0, 0
   index: -1

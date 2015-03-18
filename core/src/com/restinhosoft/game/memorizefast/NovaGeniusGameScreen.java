@@ -384,8 +384,14 @@ public class NovaGeniusGameScreen implements Screen , MiniGamesIF {
 		pauseBt.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				if(pause)pause=false;
-				else pause=true;
+				if(pause){
+					
+					pause=false;
+				}
+				else{
+					pause=true;
+					sequenceInvisible();
+				}
 			}
 		});
 		
@@ -461,8 +467,8 @@ public class NovaGeniusGameScreen implements Screen , MiniGamesIF {
 			dispose();
 		}
 		
-		
-		
+		if(pause) sequenceInvisible();
+		else 
 		changeLevel();
 		
 		timerBt.setText((language.equals(languageManager.languageEN)?"TIME LEFT: "+timerNo:"TEMPO RESTANTE: "+timerNo));
