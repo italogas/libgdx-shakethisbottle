@@ -60,7 +60,7 @@ public class SplashScreen implements Screen {
 		spriteBatch.end();
 		
 		if(timeHelper.getElapsedTimeInSeconds() > 5) {
-			applicationListener.setScreen(new MainMenuScreen());
+			applicationListener.setScreen(new StartScreen());
 		}
 		
 	}
