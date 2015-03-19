@@ -95,8 +95,8 @@ public class MainMenuScreen implements Screen {
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		textButtonStyle.up = skin.getDrawable("blue_button");
-		textButtonStyle.down = skin.getDrawable("blue_button");
+		//textButtonStyle.up = skin.getDrawable("blue_button");
+		//textButtonStyle.down = skin.getDrawable("blue_button");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
@@ -113,7 +113,7 @@ public class MainMenuScreen implements Screen {
 		stage.addActor(tableTitle);
 		stage.addActor(table);
 		
-		gameSelectionBT = new TextButton((language.equals(languageManager.languageEN)?"Play Game ":"Jogar"),textButtonStyle);
+		gameSelectionBT = new TextButton((language.equals(languageManager.languageEN)?"PLAY GAME ":"JOGAR"),textButtonStyle);
 		gameSelectionBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -123,7 +123,7 @@ public class MainMenuScreen implements Screen {
 		});
 		gameSelectionBT.pad(15);
 		
-		optionBT = new TextButton((language.equals(languageManager.languageEN)?"Options ":"Opcoes"), textButtonStyle);
+		optionBT = new TextButton((language.equals(languageManager.languageEN)?"OPTIONS ":"OPCOES"), textButtonStyle);
 		optionBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -133,7 +133,7 @@ public class MainMenuScreen implements Screen {
 		});
 		optionBT.pad(15);
 		
-		playerProfileBT = new TextButton((language.equals(languageManager.languageEN)?"Player Profile ":"Perfil do Jogador"), textButtonStyle);
+		playerProfileBT = new TextButton((language.equals(languageManager.languageEN)?"PLAYER PROFILE ":"PERFIL DO JOGADOR"), textButtonStyle);
 		playerProfileBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -143,7 +143,7 @@ public class MainMenuScreen implements Screen {
 		});
 		playerProfileBT.pad(15);
 		
-		exitBT = new TextButton((language.equals(languageManager.languageEN)?"Exit ":"Sair"), textButtonStyle);
+		exitBT = new TextButton((language.equals(languageManager.languageEN)?"EXIT":"SAIR"), textButtonStyle);
 		exitBT.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
