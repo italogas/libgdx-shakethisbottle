@@ -20,7 +20,7 @@ import com.restinhosoft.main.ShakeThisBottle;
 
 public class TutorialScreen implements Screen {
 	
-	private String tutorial_description_en = "Hit the ballons as soon as\n     they appear in the game screen!";
+	private String tutorial_description_en = "  Hit the ballons as soon as\n     they appear in the game screen!";
 	private String tutorial_description_pt = "Acerte os baloes \n     assim que eles aparecerem \n          na tela do jogo!";
 	private ShakeThisBottle game;
 	private Stage stage;
@@ -32,6 +32,7 @@ public class TutorialScreen implements Screen {
 	
 	private LanguageManager languageManager;
 	public String language;
+	private BitmapFont bitmapFont2;
 
 	@Override
 	public void show() {
@@ -52,14 +53,15 @@ public class TutorialScreen implements Screen {
 		
 		skin = new Skin(atlas);
 		
-		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"), false);
+		bitmapFont = new BitmapFont(Gdx.files.internal("neuropol-x-free-small.fnt"), false);
+		bitmapFont2 = new BitmapFont(Gdx.files.internal("default.fnt"), false);
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.up = skin.getDrawable("blue_button");
 		textButtonStyle.down = skin.getDrawable("blue_button");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
-		textButtonStyle.font = bitmapFont;
+		textButtonStyle.font = bitmapFont2;
 		
 		//TextButton okButton = new TextButton("Understood!!", textButtonStyle);
 		okButton = new TextButton((language.equals(languageManager.languageEN)?"Understood!!":"Entendido!!"), textButtonStyle);
@@ -74,6 +76,9 @@ public class TutorialScreen implements Screen {
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
 		labelStyle.fontColor = Color.MAGENTA;
+		
+		LabelStyle labelStyle2 = new Label.LabelStyle();
+		labelStyle2.font = bitmapFont2;
 		
 		//Label label = new Label(tutorial_description, labelStyle);
 		Label label = new Label((language.equals(languageManager.languageEN)? tutorial_description_en : tutorial_description_pt), labelStyle);

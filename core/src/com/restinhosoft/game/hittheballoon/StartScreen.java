@@ -44,6 +44,7 @@ public class StartScreen implements Screen {
 	
 	private LanguageManager languageManager;
 	public String language;
+	private BitmapFont bitmapFont2;
 
 	@Override
 	public void show() {
@@ -65,6 +66,7 @@ public class StartScreen implements Screen {
 		skin = new Skin(atlas);
 		
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"), false);
+		bitmapFont2 = new BitmapFont(Gdx.files.internal("neuropol-x-free.fnt"), false);
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.up = skin.getDrawable("blue_button");
@@ -76,6 +78,9 @@ public class StartScreen implements Screen {
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
 		labelStyle.fontColor = Color.WHITE;
+		
+		LabelStyle labelStyle2 = new Label.LabelStyle();
+		labelStyle2.font = bitmapFont2;
 
 		table = new Table(skin);
 		table.setFillParent(true);
@@ -83,7 +88,7 @@ public class StartScreen implements Screen {
 		
 		stage.addActor(table);
 		
-		label = new Label("Hit The Balloon!", labelStyle);
+		label = new Label("Hit The Balloon!", labelStyle2);
 		
 		//playButton = new TextButton("Play!", textButtonStyle);
 		playButton = new TextButton((language.equals(languageManager.languageEN)?"Play!":"Jogar!"), textButtonStyle);

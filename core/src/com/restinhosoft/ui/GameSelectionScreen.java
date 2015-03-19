@@ -260,7 +260,7 @@ public class GameSelectionScreen implements Screen {
 		table.add(imageButton6);
 		table.row();
 		table.add();*/
-		table2.add(textButton);
+		table2.add(textButton).spaceBottom(20);
 		table2.align(Align.center);
 		//table2.align(Align.bottom);
 

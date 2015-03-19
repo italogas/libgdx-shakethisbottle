@@ -85,15 +85,10 @@ public class StatusScreen implements Screen {
 		
 		skin = new Skin(atlas);
 		
-		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
+		bitmapFont = new BitmapFont(Gdx.files.internal("neuropol-x-free-small.fnt"));
 		
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
-		selectLabel = new Label(
-				(language.equals(languageManager.languageEN)?
-						"PLAYERs STATUS ":"DADOS DO JOGADOR "), 
-				labelStyle);
-		
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.pressedOffsetX = 1;
@@ -139,9 +134,6 @@ public class StatusScreen implements Screen {
 		table.setFillParent(true);
 		stage.addActor(table);
 		
-		table.add(selectLabel);
-		table.getCell(selectLabel).spaceBottom(10);
-		table.row();
 		table.add(nameBT).pad(20);
 		table.row();
 		table.add(idBT).pad(20);
