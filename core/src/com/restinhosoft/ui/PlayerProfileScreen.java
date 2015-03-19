@@ -72,7 +72,7 @@ public class PlayerProfileScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		menuImg = new Texture(Gdx.files.internal("icons/main_menu.png"));
+		menuImg = new Texture(Gdx.files.internal("icons/sub_menu.png"));
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
 		skin = new Skin(atlas);
@@ -88,7 +88,8 @@ public class PlayerProfileScreen implements Screen {
 		
 		table = new Table();
 		table.setFillParent(true);
-		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2,
+				Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(table);
 		
 		statusText = new TextButton((language.equals(languageManager.languageEN)? "Status": "Dados "), textButtonEnableStyle);
@@ -141,7 +142,7 @@ public class PlayerProfileScreen implements Screen {
 		table.row();
 		table.add(backText);
 		table.getCell(backText).spaceBottom(10);
-		table.align(Align.right);
+//		table.align(Align.right);
 	}
 
 	/* (non-Javadoc)

@@ -11,8 +11,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -28,7 +26,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
@@ -106,20 +103,12 @@ public class SoundOptionsScreen implements Screen {
 	
 	private Texture subBackGround;
 	
-	private TextureAtlas soundAtlas;
-	private TextureAtlas musicAtlas;
-	private TextureAtlas trackAtlas;
-	
 	private final TextureAtlas soundAtlasTempEnable = creatingAtlas("icons/sound_enable.atlas");
 	private final TextureAtlas musicAtlasTempEnable = creatingAtlas("icons/music_enable.atlas");
 	private final TextureAtlas trackAtlasTempEnable = creatingAtlas("icons/bgm_enable.atlas");
 	private final TextureAtlas soundAtlasTempDisable= creatingAtlas("icons/sound_disable.atlas");
 	private final TextureAtlas musicAtlasTempDisable= creatingAtlas("icons/music_disable.atlas");
 	private final TextureAtlas trackAtlasTempDisable= creatingAtlas("icons/bgm_disable.atlas");
-	
-	private Skin soundSkin;
-	private Skin musicSkin;
-	private Skin trackSkin;
 	
 	private final Skin soundSkinTempEnable = creatingSkin(soundAtlasTempEnable);
 	private final Skin musicSkinTempEnable = creatingSkin(musicAtlasTempEnable);
@@ -147,7 +136,6 @@ public class SoundOptionsScreen implements Screen {
 		return new Skin(atlas);
 	}
 	
-	@SuppressWarnings("unused")
 	private TextButton creatingTextButton(String text,TextButtonStyle style, boolean disable){
 		TextButton button = new TextButton(text, style);
 		button.setDisabled(disable);
@@ -232,7 +220,7 @@ public class SoundOptionsScreen implements Screen {
 		
 		
 		//backButton = new TextButton("Back", textButtonStyle);
-		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back: ":"Voltar "), textButtonStyle);
+		backButton = new TextButton((language.equals(languageManager.languageEN)?"Back ":"Voltar "), textButtonStyle);
 		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -362,30 +350,18 @@ public class SoundOptionsScreen implements Screen {
 	}
 	private void enabled(){
 		if(optionArray[0].equals("true")){
-			soundAtlas= soundAtlasTempEnable;
-			soundSkin = soundSkinTempEnable;
 			soundStyle= soundStyleEnable;
 		}else{
-			soundAtlas= soundAtlasTempDisable;
-			soundSkin = soundSkinTempDisable;
 			soundStyle= soundStyleDisable;
 		}
 		if(optionArray[1].equals("true")){
-			musicAtlas= musicAtlasTempEnable;
-			musicSkin = musicSkinTempEnable;
 			musicStyle= musicStyleEnable;
 		}else{
-			musicAtlas= musicAtlasTempDisable;
-			musicSkin = musicSkinTempDisable;
 			musicStyle= musicStyleDisable;
 		}
 		if(optionArray[2].equals("true")){
-			trackAtlas= trackAtlasTempEnable;
-			trackSkin = trackSkinTempEnable;
 			trackStyle= trackStyleEnable;
 		}else{
-			trackAtlas= trackAtlasTempDisable;
-			trackSkin = trackSkinTempDisable;
 			trackStyle= trackStyleDisable;
 		}
 		

@@ -51,8 +51,6 @@ public class MainMenuScreen implements Screen {
 	private TextButton playerProfileBT;
 	private TextButton exitBT;
 	
-	private TextButton title;
-	
 	private TweenManager tweenManager;
 	private FitViewport fitViewport;
 	
@@ -88,7 +86,7 @@ public class MainMenuScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		menuImg = new Texture(Gdx.files.internal("main/main_menu.png"));
+		menuImg = new Texture(Gdx.files.internal("icons/sub_menu.png"));
 		
 		atlas = new TextureAtlas(Gdx.files.internal("button.atlas"));
 		
@@ -105,7 +103,8 @@ public class MainMenuScreen implements Screen {
 	
 		table = new Table();
 		table.setFillParent(true);
-		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setBounds(-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, 
+				Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		tableTitle = new Table();
 		tableTitle.setFillParent(true);
@@ -153,12 +152,6 @@ public class MainMenuScreen implements Screen {
 		});
 		exitBT.pad(15);
 		
-		title = new TextButton("THE GAME NAME", textButtonStyle);
-		title.setDisabled(true);
-		
-		tableTitle.add(title);
-		tableTitle.row();
-		
 		table.add(gameSelectionBT);
 		table.getCell(gameSelectionBT).spaceBottom(10);
 		table.row();
@@ -169,7 +162,7 @@ public class MainMenuScreen implements Screen {
 		table.getCell(playerProfileBT).spaceBottom(10);
 		table.row();
 		table.add(exitBT);
-		table.align(Align.right);
+//		table.align(Align.right);
 		
 		//		simple animation
 		tweenManager = new TweenManager();

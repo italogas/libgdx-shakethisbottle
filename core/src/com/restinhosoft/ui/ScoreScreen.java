@@ -45,7 +45,7 @@ public class ScoreScreen implements Screen {
 	
 	private Skin skin;
 	
-	private final BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
+	private final BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal("neuropol-x-free-small.fnt"));
 	
 	private Table table;
 	

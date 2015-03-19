@@ -11,23 +11,17 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.restinhosoft.game.hittheballoon.StartScreen;
 import com.restinhosoft.game.hitthecolor.ColorGameMenu;
-import com.restinhosoft.game.memorizefast.MemorizeFastStartScreen;
 import com.restinhosoft.game.memorizefast.NovaGeniusGameMenu;
-import com.restinhosoft.game.shakethebottle.ShakeTheBottleDescription;
 import com.restinhosoft.game.shakethebottle.ShakeTheBottleGameMenu;
-import com.restinhosoft.game.shakethebottle.ShakeThisBottleStartScreen;
 import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
 import com.restinhosoft.main.ShakeThisBottle;
@@ -78,12 +72,6 @@ public class GameSelectionScreen implements Screen {
 	private Skin skin1;
 	private BitmapFont bitmapFont;
 	private Table table;
-	private ImageButton imageButton1;
-	private ImageButton imageButton2;
-	private ImageButton imageButton3;
-	private ImageButton imageButton4;
-	private ImageButton imageButton5;
-	private Actor imageButton6;
 	private TextureAtlas atlas2;
 	private Skin skin2;
 	private TextButton textButton;
@@ -158,7 +146,7 @@ public class GameSelectionScreen implements Screen {
 		skin1 = new Skin(atlas1);
 		skin2 = new Skin(atlas2);
 		
-		bitmapFont = new BitmapFont(Gdx.files.internal("font.fnt"));
+		bitmapFont = new BitmapFont(Gdx.files.internal("neuropol-x-free-m.fnt"));
 		
 		//******************************MUDANCAS**************************************************
 

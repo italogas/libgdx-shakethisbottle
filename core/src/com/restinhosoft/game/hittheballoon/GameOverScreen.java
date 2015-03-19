@@ -33,6 +33,7 @@ public class GameOverScreen implements Screen {
 	public String language;
 
 	private AudioManager audioManager;
+	private BitmapFont bitmapFont2;
 	
 	@Override
 	public void show() {
@@ -59,6 +60,8 @@ public class GameOverScreen implements Screen {
 		
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"), false);
 		
+		bitmapFont2 = new BitmapFont(Gdx.files.internal("neuropol-x-free-small.fnt"), false);
+		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.up = skin.getDrawable("blue_button");
 		textButtonStyle.down  = skin.getDrawable("blue_button");
@@ -68,7 +71,7 @@ public class GameOverScreen implements Screen {
 		textButtonStyle.fontColor = Color.WHITE;
 		
 		labelStyle = new Label.LabelStyle();
-		labelStyle.font = bitmapFont;
+		labelStyle.font = bitmapFont2;
 		labelStyle.fontColor= Color.RED;
 		
 		//TextButton backButton = new TextButton("Back", textButtonStyle);
