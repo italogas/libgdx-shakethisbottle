@@ -15,7 +15,6 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useCompass = true;
 		config.useGLSurfaceView20API18 = true;
 		
-	
 		initialize(new ShakeThisBottle(), config);
 	}
 }

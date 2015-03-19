@@ -51,9 +51,10 @@ public class ShakeTheBottleDifficultyMenu implements Screen {
 	private LanguageManager languageManager;
 	public String language;
 	
-	private ShakeTheBottleGameScreen gameInstance;
+	//private ShakeTheBottleGameScreen gameInstance;
+	private fakeTheBottleGameScreen gameInstance;
 	
-	public ShakeTheBottleDifficultyMenu(ShakeTheBottleGameScreen gameInstance) {
+	public ShakeTheBottleDifficultyMenu(fakeTheBottleGameScreen gameInstance) {//ShakeTheBottleGameScreen gameInstance) {
 		if(gameInstance!=null)this.gameInstance = gameInstance;
 	}
 	

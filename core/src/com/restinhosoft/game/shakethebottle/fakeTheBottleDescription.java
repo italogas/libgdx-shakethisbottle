@@ -21,7 +21,7 @@ import com.restinhosoft.ui.MainMenuScreen;
 import com.restinhosoft.ui.SoundOptionsScreen;
 
 
-public class ShakeTheBottleDescription implements Screen {
+public class fakeTheBottleDescription implements Screen {
 
 	private ShakeThisBottle game;
 	private Stage stage;
@@ -76,14 +76,17 @@ public class ShakeTheBottleDescription implements Screen {
 		
 		String description = "The goal of this mini game"
 				+ "\n smashing the bottle."
+				+ "\n hit the bottle in screen"
+				+ "\n until it burst.Or "
 				+ "\n shake the phone"
 				+ "\n like you're holding a"
 				+ "\n real bottle of champagne."
 				+ "\n Have fun.";
 		String descricao   = "O objetivo deste mini game"
 						+ "\n estourar a garrafa"
-						+ "\n para isso você"
-						+ "\n deve agitar o celular"
+						+ "\n acertea garrafa da"
+						+ "\n tela ate ela estourar."
+						+ "\n Ou agite o celular"
 						+ "\n como se estivesse agitando."
 						+ "\n uma garrafa de verdade."
 						+ "\n Divirta-se.";

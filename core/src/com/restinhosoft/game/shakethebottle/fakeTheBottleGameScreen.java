@@ -41,7 +41,7 @@ import com.restinhosoft.ui.AuxScreenCreation;
  * @author Mailson
  *
  */
-public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF,ApplicationListener{
+public class fakeTheBottleGameScreen implements Screen, MiniGamesIF,ApplicationListener{
 	//********************************Novo**************************
 	private final int max = 30;
 	
@@ -154,6 +154,7 @@ public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF,Application
 	
 	private void levelup(){
 		next=0;
+		shakes=0;
 		timerChange = 0;
 		estimateTime();
 		saveScore(score);
@@ -202,6 +203,7 @@ public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF,Application
 	private TextButton bottleBT;
 	
 	private TextButtonStyle bottleStyle;
+	private TextButtonStyle bottleStyle2;
 	
 	private int width = 320;
 	private int height= 480;
@@ -269,8 +271,23 @@ public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF,Application
         this.atlasBottle=creatingAtlas( "games/garrafa.atlas");
 		this.bottleSkin  =creatingSkin( this.atlasBottle);
 		this.bottleStyle   =creatingTextButtonStyles( this.bottleSkin, "garrafa", bitmapFont);
+		this.bottleStyle2   =creatingTextButtonStyles( this.bottleSkin, "garrafa_im", bitmapFont);
 
 		this.bottleBT=creatingTextButton( "", this.bottleStyle, true);
+		bottleBT.addListener(new ChangeListener(){
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if(start){
+					score+=13;
+		        	shakes++;
+					saveScore(score);
+					if(bottleBT.getStyle().equals(bottleStyle))	bottleBT.setStyle(bottleStyle2);
+					else if(bottleBT.getStyle().equals(bottleStyle2))	bottleBT.setStyle(bottleStyle);	
+				}
+				
+				
+			}
+		});
 		LangInstance();
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -347,7 +364,7 @@ public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF,Application
 		game.batch.draw(background, 0, 0);
 
 		game.batch.end();
-
+		bottleBT.setDisabled(false);
 		if(timerNo<0){
 			gameover = true;
 			audioManager.getSoundtrack().get(2).play();
@@ -371,7 +388,9 @@ public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF,Application
 		x =move;
 		y =Gdx.input.getAccelerometerY()+minimalX;;
 		int rotation = Gdx.input.getRotation();
-        if((rotation!=rotationDefault||accelX>minimalX||accelRose!=0|| xde!=xdef) &&start){// && accelX!=move){//(accelX>move+minimalX ||accelX<move+minimalX)){
+        if(accelX>minimalX &&start){// && accelX!=move){//(accelX>move+minimalX ||accelX<move+minimalX)){
+        	if(bottleBT.getStyle().equals(bottleStyle))	bottleBT.setStyle(bottleStyle2);
+			else if(bottleBT.getStyle().equals(bottleStyle2))	bottleBT.setStyle(bottleStyle);
 			score+=13;
         	shakes++;
         	rotationDefault=rotation;

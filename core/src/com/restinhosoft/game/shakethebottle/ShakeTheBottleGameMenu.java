@@ -93,7 +93,8 @@ public class ShakeTheBottleGameMenu implements Screen {
 		description.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ShakeTheBottleDescription());
+				//game.setScreen(new ShakeTheBottleDescription());
+				game.setScreen(new fakeTheBottleDescription());
 				dispose();
 			}
 		});
@@ -113,7 +114,8 @@ public class ShakeTheBottleGameMenu implements Screen {
 		survival.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				ShakeTheBottleGameScreen neo = new ShakeTheBottleGameScreen();
+				//ShakeTheBottleGameScreen neo = new ShakeTheBottleGameScreen();
+				fakeTheBottleGameScreen neo = new fakeTheBottleGameScreen();
 				neo.setSurvival(true);
 				game.setScreen(new ShakeTheBottleDifficultyMenu(neo));
 				dispose();
@@ -125,7 +127,7 @@ public class ShakeTheBottleGameMenu implements Screen {
 		play.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ShakeTheBottleDifficultyMenu(new ShakeTheBottleGameScreen()));
+				game.setScreen(new ShakeTheBottleDifficultyMenu(new fakeTheBottleGameScreen()));//ShakeTheBottleGameScreen()));
 				dispose();
 			}
 		});
