@@ -95,8 +95,8 @@ public class MainMenuScreen implements Screen {
 		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		//textButtonStyle.up = skin.getDrawable("blue_button");
-		//textButtonStyle.down = skin.getDrawable("blue_button");
+		textButtonStyle.up = skin.getDrawable("blue_button");
+		textButtonStyle.down = skin.getDrawable("blue_button");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
 		textButtonStyle.font = bitmapFont;
