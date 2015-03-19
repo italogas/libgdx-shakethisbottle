@@ -197,7 +197,6 @@ public class NovaGeniusGameScreen implements Screen , MiniGamesIF {
 		}
 		if(level==10){
 			aManager.addAchievement("superGenius", "Level 10 NOVA GENIUS");
-			audioManager.getSoundtrack().get(0).play();
 		}if(level>=20){
 			aManager.addAchievement("Lucky", "FINAL LEVEL");
 		}

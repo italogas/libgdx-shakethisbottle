@@ -14,7 +14,8 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useAccelerometer = true;
 		config.useCompass = true;
 		config.useGLSurfaceView20API18 = true;
-		
+		 config.useWakelock = true;
+		 
 		initialize(new ShakeThisBottle(), config);
 	}
 }

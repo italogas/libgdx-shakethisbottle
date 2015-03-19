@@ -174,7 +174,6 @@ public class fakeTheBottleGameScreen implements Screen, MiniGamesIF,ApplicationL
 		}
 		if(level==10){
 			aManager.addAchievement("superShake", "Level 10 Shake the bottle");
-			audioManager.getSoundtrack().get(0).play();
 		}if(level>=20){
 			aManager.addAchievement("Lucky", "FINAL LEVEL");
 		}
@@ -345,11 +344,6 @@ public class fakeTheBottleGameScreen implements Screen, MiniGamesIF,ApplicationL
 		addGameButtons();
 	}
 	
-	private int rotationDefault = 0;
-	private float xdef = 0;
-	private float x = 0;
-	private float y = 0;
-
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.Screen#render(float)
 	 */
@@ -366,6 +360,7 @@ public class fakeTheBottleGameScreen implements Screen, MiniGamesIF,ApplicationL
 		game.batch.end();
 		bottleBT.setDisabled(false);
 		if(timerNo<0){
+			saveScore(score);
 			gameover = true;
 			audioManager.getSoundtrack().get(2).play();
 			aManager.addAchievement("Loser", "GAMEOVER");
@@ -376,25 +371,16 @@ public class fakeTheBottleGameScreen implements Screen, MiniGamesIF,ApplicationL
 		timerBt.setText((language.equals(languageManager.languageEN)?"TIME LEFT: "+timerNo:"TEMPO RESTANTE: "+timerNo));
 		scoreBt.setText((language.equals(languageManager.languageEN)?"SCORE: "+score:"PONTUACAO: "+score));
 		levelBt.setText((language.equals(languageManager.languageEN)?"LEVEL: "+level:"NIVEL: "+level));
-		//************************game logic*******************************************
 		
 
-		float accelRose = 0.0f;
-		accelRose = Gdx.input.getAccelerometerX();
 		
-		float xde = Gdx.input.getPitch();
 		float accelX = Gdx.input.getAccelerometerX();
 		move = accelX+minimalX;
-		x =move;
-		y =Gdx.input.getAccelerometerY()+minimalX;;
-		int rotation = Gdx.input.getRotation();
-        if(accelX>minimalX &&start){// && accelX!=move){//(accelX>move+minimalX ||accelX<move+minimalX)){
+        if(accelX>minimalX &&start){
         	if(bottleBT.getStyle().equals(bottleStyle))	bottleBT.setStyle(bottleStyle2);
 			else if(bottleBT.getStyle().equals(bottleStyle2))	bottleBT.setStyle(bottleStyle);
 			score+=13;
         	shakes++;
-        	rotationDefault=rotation;
-        	xdef=xde;
 			try{Thread.currentThread().sleep(100);}catch(Exception e){gameover=true;};
 		}
 		stage.act(delta);
@@ -419,8 +405,6 @@ public class fakeTheBottleGameScreen implements Screen, MiniGamesIF,ApplicationL
 		gameTextTable.row();
 		gameTextTable.add(bottleBT);
 		gameTextTable.getCell(bottleBT).align(Align.center);
-		if(start)gameTextTable.getCell(bottleBT).pad(x);
-		if(start)gameTextTable.getCell(bottleBT).pad(y);
 		gameTextTable.row();
 		gameTextTable.row().pad(30);
 		gameTextTable.add(back);
