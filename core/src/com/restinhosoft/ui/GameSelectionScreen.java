@@ -158,7 +158,7 @@ public class GameSelectionScreen implements Screen {
 		skin1 = new Skin(atlas1);
 		skin2 = new Skin(atlas2);
 		
-		bitmapFont = new BitmapFont(Gdx.files.internal("default.fnt"));
+		bitmapFont = new BitmapFont(Gdx.files.internal("font.fnt"));
 		
 		//******************************MUDANCAS**************************************************
 
