@@ -77,7 +77,7 @@ public class Player {
 				ID+pula+
 				numberOfAchievements+pula+
 				highScoreEver,false);
-		return Integer.parseInt(playerProfile[2])-1;
+		return Integer.parseInt(playerProfile[2]);
 	}
 	
 	public int highScoreEver(int score){

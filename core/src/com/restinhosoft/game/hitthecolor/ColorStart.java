@@ -454,8 +454,7 @@ public class ColorStart implements MiniGamesIF, Screen {
 		audioManager = new AudioManager("audio/gameselection.ogg");
 		audioManager.addToSoundTrack("audio/clear.ogg");
 		audioManager.addToSoundTrack("audio/botoes_first.mp3");
-		audioManager.addToSoundTrack("audio/clear.ogg");
-		
+		audioManager.addToSoundTrack("audio/gameover.ogg");		
 		stage = new Stage();
 		stage.setViewport(fitViewport);
 		

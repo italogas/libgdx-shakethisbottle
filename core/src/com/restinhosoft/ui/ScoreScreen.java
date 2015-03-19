@@ -119,7 +119,7 @@ public class ScoreScreen implements Screen {
 				balloonBT.setVisible(true);
 				balloonBT.setDisabled(false);
 			}
-			if(tempArray[0].equals("MEMORIZE FAST")||tempArray[0].equals("MEMORIZE RAPIDO")){
+			if(tempArray[0].equals("NOVA GENIUS")||tempArray[0].equals("NOVA GENIUS")){
 				scoreMaster[2] = tempArray[1];
 				memoryBT.setVisible(true);
 				memoryBT.setDisabled(false);

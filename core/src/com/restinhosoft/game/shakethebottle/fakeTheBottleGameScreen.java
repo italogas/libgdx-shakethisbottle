@@ -95,9 +95,9 @@ public class fakeTheBottleGameScreen implements Screen, MiniGamesIF,ApplicationL
 		String temp = language;
 		try {
 			languageManager.setLanguage("engl");
-			new ScoresManager("scores_eng.txt").saveDefaultMultipleScore("NOVA GENIUS", score);
+			new ScoresManager("scores_eng.txt").saveDefaultMultipleScore("SHAKE THE BOTTLE", score);
 			languageManager.setLanguage("ptbr");
-			new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("NOVA GENIUS", score);
+			new ScoresManager("scores_pt.txt").saveDefaultMultipleScore("AGITE A GARRAFA", score);
 			languageManager.setLanguage(temp);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -257,7 +257,7 @@ public class fakeTheBottleGameScreen implements Screen, MiniGamesIF,ApplicationL
 		audioManager = new AudioManager("audio/gameselection.ogg");
 		audioManager.addToSoundTrack("audio/clear.ogg");
 		audioManager.addToSoundTrack("audio/botoes_first.mp3");
-		audioManager.addToSoundTrack("audio/clear.ogg");
+		audioManager.addToSoundTrack("audio/gameover.ogg");
 		
 		estimateTime();
 		
@@ -365,6 +365,7 @@ public class fakeTheBottleGameScreen implements Screen, MiniGamesIF,ApplicationL
 			audioManager.getSoundtrack().get(2).play();
 			aManager.addAchievement("Loser", "GAMEOVER");
 			game.setScreen(new ShakeTheBottleGameover());
+			dispose();
 		}
 		
 		changeLevel();
