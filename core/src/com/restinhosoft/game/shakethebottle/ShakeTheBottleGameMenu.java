@@ -103,7 +103,7 @@ public class ShakeTheBottleGameMenu implements Screen {
 		tutorial.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new ColorTutorial());
+				game.setScreen(new ShakeTHeBottleTutorial());
 				dispose();
 			}
 		});

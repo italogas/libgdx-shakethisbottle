@@ -6,6 +6,7 @@ package com.restinhosoft.game.shakethebottle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,8 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.restinhosoft.game.memorizefast.NovaGeniusGameMenu;
 import com.restinhosoft.main.AchievementsManager;
 import com.restinhosoft.main.AudioManager;
 import com.restinhosoft.main.LanguageManager;
@@ -164,6 +163,12 @@ public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF{
 	private void changeLevel(){
 		if(max==shakes) {
 			levelup();
+			try{
+				Gdx.input.vibrate(500);	
+			}catch(Exception e){
+				
+			}
+			
 			audioManager.getSoundtrack().get(0).play(); 
 		}
 		if(level==10){
@@ -311,8 +316,7 @@ public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF{
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				saveScore(score);
-				
-				game.setScreen(new NovaGeniusGameMenu());
+				game.setScreen(new ShakeTheBottleGameMenu());
 				dispose();
 			}
 		});
@@ -348,18 +352,21 @@ public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF{
 			aManager.addAchievement("Loser", "GAMEOVER");
 			game.setScreen(new ShakeTheBottleGameover());
 		}
+		
 		changeLevel();
 		timerBt.setText((language.equals(languageManager.languageEN)?"TIME LEFT: "+timerNo:"TEMPO RESTANTE: "+timerNo));
-		
+		float accelX = Gdx.input.getAccelerometerX();
 		scoreBt.setText((language.equals(languageManager.languageEN)?"SCORE: "+score:"PONTUACAO: "+score));
 		levelBt.setText((language.equals(languageManager.languageEN)?"LEVEL: "+level:"NIVEL: "+level));
 		//************************game logic*******************************************
-		float accelX = Gdx.input.getAccelerometerX();
+		//float accelX = Gdx.input.getAccelerometerX();
 		move = accelX+minimalX;
 		x =move;
 		y =Gdx.input.getAccelerometerY()+minimalX;;
+		
         if(accelX>minimalX &&start){// && accelX!=move){//(accelX>move+minimalX ||accelX<move+minimalX)){
-			shakes++;
+			score+=13;
+        	shakes++;
 			try{Thread.currentThread().sleep(100);}catch(Exception e){gameover=true;};
 		}
 		stage.act(delta);
@@ -384,8 +391,8 @@ public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF{
 		gameTextTable.row();
 		gameTextTable.add(bottleBT);
 		gameTextTable.getCell(bottleBT).align(Align.center);
-		gameTextTable.getCell(bottleBT).pad(x);
-		gameTextTable.getCell(bottleBT).pad(y);
+		//gameTextTable.getCell(bottleBT).pad(x);
+		//gameTextTable.getCell(bottleBT).pad(y);
 		gameTextTable.row();
 		gameTextTable.row().pad(30);
 		gameTextTable.add(back);
@@ -433,10 +440,10 @@ public class ShakeTheBottleGameScreen implements Screen, MiniGamesIF{
 //	 */
         @Override
 	public void dispose() {
-		atlasBottle.dispose();
-		bitmapFont.dispose();
-		background.dispose();
-		stage.dispose();
+        	//atlasBottle.dispose();
+		//bitmapFont.dispose();
+		//background.dispose();
+		//stage.dispose();
 		audioManager.close();
 
 	}
