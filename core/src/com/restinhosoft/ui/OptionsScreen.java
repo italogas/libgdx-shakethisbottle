@@ -59,7 +59,7 @@ public class OptionsScreen implements Screen {
 		
 		skin = new Skin(atlas);
 		
-		bitmapFont = new BitmapFont(Gdx.files.internal("font.fnt"));
+		bitmapFont = new BitmapFont(Gdx.files.internal("neuropol-x-free-m.fnt"));
 		
 		TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		//textButtonStyle.up = skin.getDrawable("blue_button");

@@ -45,7 +45,7 @@ public class SoundOptionsScreen implements Screen {
 	public Stage stage;
 	public TextureAtlas atlas;
 	public Skin skin;
-	public final BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal("font.fnt"));
+	public final BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal("neuropol-x-free-m.fnt"));
 	public Table table;
 	public Label enableSoundLabel;
 	public Label gameMusicLabel;

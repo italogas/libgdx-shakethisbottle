@@ -32,7 +32,7 @@ public class SplashScreen implements Screen {
 		fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage();
 		stage.setViewport(fitViewport);
-		texture = new Texture(Gdx.files.internal("badge.png"));
+		texture = new Texture(Gdx.files.internal("badge_restinho.png"));
 		splashSprite = new Sprite(texture);
 		splashSprite.setCenterX(Gdx.graphics.getWidth()/2);
 		splashSprite.setCenterY(Gdx.graphics.getHeight()/2);

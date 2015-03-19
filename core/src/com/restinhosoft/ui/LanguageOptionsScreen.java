@@ -105,7 +105,7 @@ public class LanguageOptionsScreen implements Screen {
 		flagSkinBR= creatingSkin(flagAtlasBR);//new Skin(flagAtlasBR);
 		flagSkinUS= creatingSkin(flagAtlasUS);//new Skin(flagAtlasUS);
 		
-		bitmapFont = new BitmapFont(Gdx.files.internal("font.fnt"));
+		bitmapFont = new BitmapFont(Gdx.files.internal("neuropol-x-free-m.fnt"));
 		
 		LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = bitmapFont;
